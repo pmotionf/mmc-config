@@ -2,7 +2,7 @@ const std = @import("std");
 const mcl = @import("mcl");
 pub const message = @import("message.zig");
 
-const Direction = enum(u2) {
+pub const Direction = enum(u2) {
     backward,
     forward,
     no_direction,
