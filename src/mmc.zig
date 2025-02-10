@@ -129,6 +129,15 @@ pub const Param = union(enum) {
         line_idx: mcl.Line.Index,
         axis_idx: mcl.Axis.Index.Line,
     },
+
+    pub fn ParamType(comptime kind: @typeInfo(Param).@"union".tag_type.?) type {
+        const fields = @typeInfo(Param).@"union".fields;
+        inline for (fields) |field| {
+            if (std.mem.eql(u8, field.name, @tagName(kind))) {
+                return field.type;
+            }
+        }
+    }
 };
 
 test {
