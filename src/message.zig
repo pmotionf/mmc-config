@@ -11,7 +11,7 @@ pub const rest_kind_size: type = defineRestKindSize();
 /// - parameters of the active parameter
 /// - unused bit from the given 8 byte buffer
 pub fn messageType(comptime tag: @typeInfo(config.Param).@"union".tag_type.?) type {
-    const Param: type = @field(config.Param, @tagName(tag));
+    const Param: type = config.Param.ParamType(tag);
     const param_bit_size: comptime_int = @bitSizeOf(Param);
     comptime var max_param_size = 1;
     for (0..param_bit_size) |_| {
