@@ -4,16 +4,8 @@ pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    const mcl = b.dependency("mcl", .{
-        .target = target,
-        .optimize = optimize,
-    });
-
     _ = b.addModule("mmc", .{
         .root_source_file = b.path("src/mmc.zig"),
-        .imports = &.{
-            .{ .name = "mcl", .module = mcl.module("mcl") },
-        },
     });
 
     const unit_tests = b.addTest(.{
@@ -21,7 +13,6 @@ pub fn build(b: *std.Build) !void {
         .target = target,
         .optimize = optimize,
     });
-    unit_tests.root_module.addImport("mcl", mcl.module("mcl"));
 
     const run_unit_tests = b.addRunArtifact(unit_tests);
     const test_step = b.step("test", "Run unit tests");
