@@ -10,12 +10,9 @@ pub const Direction = enum(u2) {
 };
 
 pub const Param = union(enum) {
-    set_speed: packed struct {
+    set_config: packed struct {
         line_idx: mcl.Line.Index,
         speed: u8,
-    },
-    set_acceleration: packed struct {
-        line_idx: mcl.Line.Index,
         acceleration: u8,
     },
     get_speed: packed struct {

@@ -4,25 +4,9 @@ pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    const mdfunc_lib_path = b.option(
-        []const u8,
-        "mdfunc",
-        "Specify the path to the MELSEC static library artifact.",
-    ) orelse if (target.result.cpu.arch == .x86_64)
-        "vendor/mdfunc/lib/x64/MdFunc32.lib"
-    else
-        "vendor/mdfunc/lib/mdfunc32.lib";
-    const mdfunc_mock_build = b.option(
-        bool,
-        "mdfunc_mock",
-        "Enable building a mock version of the MELSEC data link library.",
-    ) orelse (target.result.os.tag != .windows);
-
     const mcl = b.dependency("mcl", .{
         .target = target,
         .optimize = optimize,
-        .mdfunc = mdfunc_lib_path,
-        .mdfunc_mock = mdfunc_mock_build,
     });
 
     _ = b.addModule("mmc", .{
