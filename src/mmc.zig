@@ -59,6 +59,22 @@ pub const Param = union(enum) {
     get_acceleration: packed struct {
         line_idx: Line.Index,
     },
+    get_x: packed struct {
+        line_idx: Line.Index,
+        axis_idx: Axis.Index.LocalLine,
+    },
+    get_y: packed struct {
+        line_idx: Line.Index,
+        axis_idx: Axis.Index.LocalLine,
+    },
+    get_wr: packed struct {
+        line_idx: Line.Index,
+        axis_idx: Axis.Index.LocalLine,
+    },
+    get_ww: packed struct {
+        line_idx: Line.Index,
+        axis_idx: Axis.Index.LocalLine,
+    },
     axis_carrier: packed struct {
         line_idx: Line.Index,
         axis_idx: Axis.Index.LocalLine,
@@ -71,14 +87,19 @@ pub const Param = union(enum) {
         line_idx: Line.Index,
         carrier_id: u16,
     },
-    clear_errors: packed struct {
+    clear_errors: void,
+    clear_carrier_info: void,
+    get_hall_status: packed struct {
+        line_idx: Line.Index,
+        axis_id: Axis.Id.LocalLine,
+    },
+    assert_hall: packed struct {
         line_idx: Line.Index,
         axis_idx: Axis.Index.LocalLine,
+        side: Direction,
+        alarm_state: bool,
     },
-    clear_carrier_info: packed struct {
-        line_idx: Line.Index,
-        axis_idx: Axis.Index.LocalLine,
-    },
+    reset_mcl: void,
     release_axis_servo: packed struct {
         line_idx: Line.Index,
         axis_idx: Axis.Index.LocalLine,
