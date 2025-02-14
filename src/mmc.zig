@@ -97,7 +97,6 @@ pub const Param = union(enum) {
         line_idx: Line.Index,
         axis_idx: Axis.Index.LocalLine,
         side: Direction,
-        alarm_state: bool,
     },
     reset_mcl: void,
     release_axis_servo: packed struct {
