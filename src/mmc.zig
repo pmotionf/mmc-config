@@ -48,17 +48,6 @@ pub const Axis = struct {
 };
 
 pub const Param = union(enum) {
-    set_config: packed struct {
-        line_idx: Line.Index,
-        speed: u8,
-        acceleration: u8,
-    },
-    get_speed: packed struct {
-        line_idx: Line.Index,
-    },
-    get_acceleration: packed struct {
-        line_idx: Line.Index,
-    },
     get_x: packed struct {
         line_idx: Line.Index,
         axis_idx: Axis.Index.LocalLine,
@@ -75,29 +64,8 @@ pub const Param = union(enum) {
         line_idx: Line.Index,
         axis_idx: Axis.Index.LocalLine,
     },
-    axis_carrier: packed struct {
-        line_idx: Line.Index,
-        axis_idx: Axis.Index.LocalLine,
-    },
-    carrier_location: packed struct {
-        line_idx: Line.Index,
-        carrier_id: u16,
-    },
-    carrier_axis: packed struct {
-        line_idx: Line.Index,
-        carrier_id: u16,
-    },
     clear_errors: void,
     clear_carrier_info: void,
-    get_hall_status: packed struct {
-        line_idx: Line.Index,
-        axis_id: Axis.Id.LocalLine,
-    },
-    assert_hall: packed struct {
-        line_idx: Line.Index,
-        axis_idx: Axis.Index.LocalLine,
-        side: Direction,
-    },
     reset_mcl: void,
     release_axis_servo: packed struct {
         line_idx: Line.Index,
