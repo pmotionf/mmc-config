@@ -103,16 +103,6 @@ pub const Param = union(enum) {
         line_idx: Line.Index,
         axis_idx: Axis.Index.LocalLine,
     },
-    stop_traffic: packed struct {
-        line_idx: Line.Index,
-        axis_idx: Axis.Index.LocalLine,
-        direction: Direction,
-    },
-    allow_traffic: packed struct {
-        line_idx: Line.Index,
-        axis_idx: Axis.Index.LocalLine,
-        direction: Direction,
-    },
     calibrate: packed struct {
         line_idx: Line.Index,
     },
