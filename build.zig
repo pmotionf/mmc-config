@@ -4,12 +4,12 @@ pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    _ = b.addModule("mmc", .{
-        .root_source_file = b.path("src/mmc.zig"),
+    _ = b.addModule("mmc-config", .{
+        .root_source_file = b.path("src/mmc-config.zig"),
     });
 
     const unit_tests = b.addTest(.{
-        .root_source_file = b.path("src/mmc.zig"),
+        .root_source_file = b.path("src/mmc-config.zig"),
         .target = target,
         .optimize = optimize,
     });
