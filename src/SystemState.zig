@@ -3,14 +3,14 @@ const Line = @import("mmc-config.zig").Line;
 const Axis = @import("mmc-config.zig").Axis;
 const Direction = @import("mmc-config.zig").Direction;
 
-num_of_carriers: u16,
+num_of_carriers: u10,
 num_of_active_axis: Axis.Id.Line,
 carriers: []Carrier,
 hall_sensors: []Hall,
 
 pub const Carrier = packed struct {
     line_id: Line.Id,
-    carrier_id: u16,
+    carrier_id: u10,
     axis_ids: packed struct {
         first: Axis.Id.Line,
         second: Axis.Id.Line,
