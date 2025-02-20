@@ -11,6 +11,8 @@ pub fn Message(comptime tag: @typeInfo(Param).@"union".tag_type.?) type {
         _rest_param: Unused,
 
         const kind_bit_size = @bitSizeOf(@typeInfo(Param).@"union".tag_type.?);
+
+        /// Integer type that fit the number of commands used in the mmc-server
         pub const KindFittedSize: type = getKindSize();
         const rest_kind_bit_size = 8 - kind_bit_size;
         pub const RestKindFittedSize: type = getRestKindSize();

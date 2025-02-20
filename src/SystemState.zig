@@ -8,19 +8,20 @@ num_of_active_axis: Axis.Id.Line,
 carriers: []Carrier,
 hall_sensors: []Hall,
 
-pub const Carrier = struct {
+pub const Carrier = packed struct {
+    line_id: Line.Id,
     carrier_id: u16,
-    axis_ids: struct {
+    axis_ids: packed struct {
         first: Axis.Id.Line,
         second: Axis.Id.Line,
     },
     location: f32,
 };
 
-pub const Hall = struct {
-    line_id: Axis.Id.Line,
+pub const Hall = packed struct {
+    line_id: Line.Id,
     axis_id: Axis.Id.Line,
-    hall_states: struct {
+    hall_states: packed struct {
         front: bool,
         back: bool,
     },
