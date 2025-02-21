@@ -3,6 +3,33 @@ const Line = @import("mmc-config.zig").Line;
 const Axis = @import("mmc-config.zig").Axis;
 const Direction = @import("mmc-config.zig").Direction;
 
+pub const CommandCode = enum(i16) {
+    None = 0x0,
+    SetLineZero = 0x1,
+    // "By Position" commands calculate carrier movement by constant hall
+    // sensor position feedback, and is much more precise in destination.
+    PositionMoveCarrierAxis = 0x12,
+    PositionMoveCarrierLocation = 0x13,
+    PositionMoveCarrierDistance = 0x14,
+    // "By Speed" commands calculate carrier movement by constant hall
+    // sensor speed feedback. It should mostly not be used, as the
+    // destination position becomes far too imprecise. However, it is
+    // meant to maintain a certain speed while the carrier is traveling,
+    // and to avoid the requirement of having a known system position.
+    SpeedMoveCarrierAxis = 0x15,
+    SpeedMoveCarrierLocation = 0x16,
+    SpeedMoveCarrierDistance = 0x17,
+    IsolateForward = 0x18,
+    IsolateBackward = 0x19,
+    Calibration = 0x1A,
+    RecoverCarrierAtAxis = 0x1C,
+    SetCarrierIdAtAxis = 0x1D,
+    PushAxisCarrierForward = 0x1E,
+    PushAxisCarrierBackward = 0x1F,
+    PullAxisCarrierForward = 0x20,
+    PullAxisCarrierBackward = 0x21,
+};
+
 pub const Param = union(enum) {
     get_x: packed struct {
         line_idx: Line.Index,
@@ -30,72 +57,17 @@ pub const Param = union(enum) {
         line_idx: Line.Index,
         axis_idx: Axis.Index.Line,
     },
-    calibrate: packed struct {
-        line_idx: Line.Index,
-    },
-    set_line_zero: packed struct {
-        line_idx: Line.Index,
-    },
-    isolate: packed struct {
+    /// send command to cc-link
+    set_command: packed struct {
+        command_code: CommandCode,
         line_idx: Line.Index,
         axis_idx: Axis.Index.Line,
-        direction: Direction,
-        carrier_id: u16,
+        carrier_id: u10,
+        location_distance: f32,
+        speed_percentage: u7,
+        acceleration_percentage: u7,
         link_axis: Direction,
-    },
-    recover_carrier: packed struct {
-        line_idx: Line.Index,
-        axis_idx: Axis.Index.Line,
-        new_carrier_id: u16,
         use_sensor: Direction,
-    },
-    move_carrier_axis: packed struct {
-        line_idx: Line.Index,
-        carrier_id: u16,
-        axis_idx: Axis.Index.Line,
-    },
-    move_carrier_location: packed struct {
-        line_idx: Line.Index,
-        carrier_id: u16,
-        location: f32,
-    },
-    move_carrier_distance: packed struct {
-        line_idx: Line.Index,
-        carrier_id: u16,
-        distance: f32,
-    },
-    spd_move_carrier_axis: packed struct {
-        line_idx: Line.Index,
-        carrier_id: u16,
-        axis_idx: Axis.Index.Line,
-    },
-    spd_move_carrier_location: packed struct {
-        line_idx: Line.Index,
-        carrier_id: u16,
-        location: f32,
-    },
-    spd_move_carrier_distance: packed struct {
-        line_idx: Line.Index,
-        carrier_id: u16,
-        distance: f32,
-    },
-    push_carrier_forward: packed struct {
-        line_idx: Line.Index,
-        carrier_id: u16,
-    },
-    push_carrier_backward: packed struct {
-        line_idx: Line.Index,
-        carrier_id: u16,
-    },
-    pull_carrier_forward: packed struct {
-        line_idx: Line.Index,
-        axis_idx: Axis.Index.Line,
-        carrier_id: u16,
-    },
-    pull_carrier_backward: packed struct {
-        line_idx: Line.Index,
-        axis_idx: Axis.Index.Line,
-        carrier_id: u16,
     },
     stop_pull_carrier: packed struct {
         line_idx: Line.Index,

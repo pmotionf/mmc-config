@@ -4,7 +4,7 @@ const ParamType =
     @import("mmc-config.zig").ParamType;
 
 pub fn Message(comptime tag: @typeInfo(Param).@"union".tag_type.?) type {
-    return packed struct {
+    return packed struct(u104) {
         kind: KindFittedSize,
         _unused_kind: RestKindFittedSize,
         param: ParamType(tag),
@@ -13,12 +13,12 @@ pub fn Message(comptime tag: @typeInfo(Param).@"union".tag_type.?) type {
         const kind_bit_size = @bitSizeOf(@typeInfo(Param).@"union".tag_type.?);
 
         /// Integer type that fit the number of commands used in the mmc-server
-        pub const KindFittedSize: type = getKindSize();
+        const KindFittedSize: type = getKindSize();
         const rest_kind_bit_size = 8 - kind_bit_size;
-        pub const RestKindFittedSize: type = getRestKindSize();
+        const RestKindFittedSize: type = getRestKindSize();
         const param_bit_size = @bitSizeOf(ParamType(tag));
         const unused_bit_size =
-            64 - param_bit_size - kind_bit_size - rest_kind_bit_size;
+            104 - param_bit_size - kind_bit_size - rest_kind_bit_size;
         const Unused: type = getUnusedType(unused_bit_size);
 
         fn getUnusedType(size: comptime_int) type {

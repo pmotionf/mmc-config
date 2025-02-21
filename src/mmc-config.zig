@@ -3,6 +3,7 @@ pub const Message =
     @import("message.zig").Message;
 pub const Param = @import("Param.zig").Param;
 pub const SystemState = @import("SystemState.zig");
+pub const CommandCode = @import("Param.zig").CommandCode;
 
 pub const Direction = enum(u2) {
     backward,
@@ -57,8 +58,8 @@ pub fn ParamType(comptime kind: @typeInfo(Param).@"union".tag_type.?) type {
 test {
     std.testing.refAllDeclsRecursive(@This());
     try std.testing.expectEqual(
-        @bitSizeOf(Message(.isolate)),
-        64,
+        @bitSizeOf(Message(.set_command)),
+        104,
     );
-    std.testing.refAllDeclsRecursive(Message(.isolate));
+    std.testing.refAllDeclsRecursive(Message(.set_command));
 }
