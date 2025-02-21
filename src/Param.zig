@@ -65,7 +65,7 @@ pub const Param = union(enum) {
         carrier_id: u10,
         location_distance: f32,
         link_axis: Direction,
-        direction: Direction,
+        use_sensor: Direction,
     },
     stop_pull_carrier: packed struct {
         line_idx: Line.Index,
