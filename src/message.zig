@@ -18,7 +18,7 @@ pub fn Message(comptime tag: @typeInfo(Param).@"union".tag_type.?) type {
         pub const RestKindFittedSize: type = getRestKindSize();
         const param_bit_size = @bitSizeOf(ParamType(tag));
         const unused_bit_size =
-            64 - param_bit_size - kind_bit_size - rest_kind_bit_size;
+            88 - param_bit_size - kind_bit_size - rest_kind_bit_size;
         const Unused: type = getUnusedType(unused_bit_size);
 
         fn getUnusedType(size: comptime_int) type {

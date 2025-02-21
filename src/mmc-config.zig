@@ -58,8 +58,8 @@ pub fn ParamType(comptime kind: @typeInfo(Param).@"union".tag_type.?) type {
 test {
     std.testing.refAllDeclsRecursive(@This());
     try std.testing.expectEqual(
-        @bitSizeOf(Message(.isolate)),
-        64,
+        @bitSizeOf(Message(.set_command)),
+        88,
     );
-    std.testing.refAllDeclsRecursive(Message(.isolate));
+    std.testing.refAllDeclsRecursive(Message(.set_command));
 }
