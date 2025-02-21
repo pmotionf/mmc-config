@@ -4,7 +4,7 @@ const ParamType =
     @import("mmc-config.zig").ParamType;
 
 pub fn Message(comptime tag: @typeInfo(Param).@"union".tag_type.?) type {
-    return packed struct {
+    return packed struct(u104) {
         kind: KindFittedSize,
         _unused_kind: RestKindFittedSize,
         param: ParamType(tag),
