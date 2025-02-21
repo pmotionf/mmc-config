@@ -3,12 +3,11 @@ pub const Message =
     @import("message.zig").Message;
 pub const Param = @import("Param.zig").Param;
 pub const SystemState = @import("SystemState.zig");
+pub const CommandCode = @import("Param.zig").CommandCode;
 
-pub const Direction = enum(u2) {
+pub const Direction = enum(u1) {
     backward,
     forward,
-    no_direction,
-    _,
 };
 
 /// Index within configured line, spanning across connection ranges.
