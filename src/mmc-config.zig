@@ -59,7 +59,7 @@ test {
     std.testing.refAllDeclsRecursive(@This());
     try std.testing.expectEqual(
         @bitSizeOf(Message(.set_command)),
-        88,
+        104,
     );
     std.testing.refAllDeclsRecursive(Message(.set_command));
 }

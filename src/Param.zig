@@ -64,6 +64,8 @@ pub const Param = union(enum) {
         axis_idx: Axis.Index.Line,
         carrier_id: u10,
         location_distance: f32,
+        speed_percentage: u7,
+        acceleration_percentage: u7,
         link_axis: Direction,
         use_sensor: Direction,
     },
