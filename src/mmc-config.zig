@@ -6,9 +6,9 @@ pub const SystemState = @import("SystemState.zig");
 pub const CommandCode = @import("Param.zig").CommandCode;
 
 pub const Direction = enum(u2) {
+    no_direction,
     backward,
     forward,
-    no_direction,
     _,
 };
 
