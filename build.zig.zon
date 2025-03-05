@@ -3,6 +3,11 @@
     .version = "0.0.1",
     .fingerprint = 0x840e319cc984ac0c,
     .minimum_zig_version = "0.14.0-dev.1392+37df6ba86",
-    .dependencies = .{},
+    .dependencies = .{
+        .mcl = .{
+            .url = "https://github.com/pmotionf/mcl/archive/1aeb2e8.tar.gz",
+            .hash = "mcl-0.5.0-bTecRnO4AABUmdj7YjW8ttGim2sUWH_LDmMNxu-mTB__",
+        },
+    },
     .paths = .{""},
 }
