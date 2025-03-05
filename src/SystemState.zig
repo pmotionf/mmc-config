@@ -1,8 +1,8 @@
 const std = @import("std");
-const Line = @import("mmc-config.zig").Line;
-const Axis = @import("mmc-config.zig").Axis;
 const Direction = @import("mmc-config.zig").Direction;
 const mcl = @import("mcl");
+const Line = mcl.Line;
+const Axis = mcl.Axis;
 
 num_of_carriers: u10,
 num_of_active_axis: Axis.Id.Line,
