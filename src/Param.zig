@@ -24,8 +24,14 @@ pub const Param = union(enum) {
     get_status: packed struct {
         kind: enum(u1) { Hall, Carrier },
     },
-    clear_errors: void,
-    clear_carrier_info: void,
+    clear_errors: packed struct {
+        line_idx: Line.Index,
+        axis_idx: Axis.Index.Line,
+    },
+    clear_carrier_info: packed struct {
+        line_idx: Line.Index,
+        axis_idx: Axis.Index.Line,
+    },
     reset_mcl: void,
     release_axis_servo: packed struct {
         line_idx: Line.Index,
