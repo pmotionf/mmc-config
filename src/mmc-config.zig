@@ -16,14 +16,17 @@ pub fn ParamType(comptime kind: @typeInfo(Param).@"union".tag_type.?) type {
     return @FieldType(Param, @tagName(kind));
 }
 
-/// This enum is used across both the client and server for cross-referencing
-/// error types. It is used to avoid sending string message from server
-/// to client when notifying the client if an error occurred in the server.
+/// Cross-reference error types between client and server. It is used to avoid
+/// sending string message from server to client when notifying the client if
+/// an error occurred in the server.
 pub const MMCErrorEnum: type = generateErrorCodeEnum(MMCError);
 
+/// `Unexpected` error is the way to tell the client that the error is not
+/// coming from CC-Link. The actual error is printed in the server side.
+/// Developer must fix the error immediately if `Unexpected` error is thrown.
 const MMCError =
     generateErrorSet(mcl.registers.Wr.CommandResponseCode) ||
-    error{CCLinkDisconnected};
+    error{ CCLinkDisconnected, Unexpected };
 
 /// Convert an enum into an error set. The field of enum with value 0 will be
 /// ignored. This behavior is consistent with zig Error set definition.
