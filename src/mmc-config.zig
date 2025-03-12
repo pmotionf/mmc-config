@@ -18,7 +18,8 @@ pub fn ParamType(comptime kind: @typeInfo(Param).@"union".tag_type.?) type {
 
 /// Cross-reference error types between client and server. It is used to avoid
 /// sending string message from server to client when notifying the client if
-/// an error occurred in the server.
+/// an error occurred in the server. `NoError` value is used to notify the
+/// client that the error is already resolved and server is working normally.
 pub const MMCErrorEnum: type = generateErrorCodeEnum(MMCError);
 
 /// `Unexpected` error is the way to tell the client that the error is not
@@ -48,10 +49,14 @@ fn generateErrorSet(comptime Enum: type) type {
 /// and server for cross reference.
 fn generateErrorCodeEnum(comptime Error: type) type {
     const result_len = @typeInfo(Error).error_set.?.len;
-    const tag_type = std.math.IntFittingRange(0, result_len - 1);
-    comptime var result_field: [result_len]std.builtin.Type.EnumField = undefined;
+    const tag_type = std.math.IntFittingRange(0, result_len);
+    comptime var result_field: [result_len + 1]std.builtin.Type.EnumField = undefined;
+    result_field[0] = .{
+        .name = "NoError",
+        .value = 0,
+    };
     const fields = @typeInfo(Error).error_set.?;
-    inline for (fields, 0..) |field, i| {
+    inline for (fields, 1..) |field, i| {
         result_field[i] = .{
             .name = field.name,
             .value = i,
