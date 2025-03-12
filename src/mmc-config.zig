@@ -24,7 +24,7 @@ pub const MMCErrorEnum: type = generateErrorCodeEnum(MMCError);
 /// `Unexpected` error is the way to tell the client that the error is not
 /// coming from CC-Link. The actual error is printed in the server side.
 /// Developer must fix the error immediately if `Unexpected` error is thrown.
-const MMCError =
+pub const MMCError =
     generateErrorSet(mcl.registers.Wr.CommandResponseCode) ||
     error{ CCLinkDisconnected, Unexpected };
 
