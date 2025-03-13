@@ -25,11 +25,11 @@ pub const Param = union(enum) {
         kind: enum(u1) { Hall, Carrier },
     },
     clear_errors: packed struct {
-        line_idx: Line.Index,
+        line_id: Line.Id,
         axis_idx: Axis.Index.Line,
     },
     clear_carrier_info: packed struct {
-        line_idx: Line.Index,
+        line_id: Line.Id,
         axis_idx: Axis.Index.Line,
     },
     reset_mcl: void,
