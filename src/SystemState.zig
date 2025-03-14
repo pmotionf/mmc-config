@@ -7,6 +7,7 @@ const Station = mcl.Station;
 
 num_of_carriers: u10,
 num_of_active_axis: Axis.Id.Line,
+num_of_command_errors: Axis.Id.Line,
 carriers: []Carrier,
 hall_sensors: []Hall,
 command_status: []CommandStatus,
