@@ -77,3 +77,12 @@ pub const MessageType = enum {
     StatusCommand,
     LineConfig,
 };
+
+/// `getMessageStartIdx` helps to avoid writing the starting index of actual message
+/// from the buffer manually.
+pub const MessageStructure = struct {
+    const MessageLengthType = u13; // support up to 8192 bytes of message
+    pub fn getMessageStartIdx() usize {
+        return @bitSizeOf(MessageType) + @bitSizeOf(MessageLengthType);
+    }
+};
