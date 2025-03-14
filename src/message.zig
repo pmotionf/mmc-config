@@ -1,9 +1,18 @@
+//! The message passed between client and server will have the following format:
+//!
+//! MessageType|MessageLength|ActualMessage (without character "|")
+//!
+//! MessageType is an enum described in this file. MessageLength is the byte
+//! size of the whole message, help the client and server to know if the
+//! message containing other message or not or if the receiver already receive
+//! full message or not.
 const std = @import("std");
 const Param = @import("mmc-config.zig").Param;
 const ParamType =
     @import("mmc-config.zig").ParamType;
 
-pub fn Message(comptime tag: @typeInfo(Param).@"union".tag_type.?) type {
+/// Command message description from client to server
+pub fn CommandMessage(comptime tag: @typeInfo(Param).@"union".tag_type.?) type {
     return packed struct(u104) {
         kind: KindFittedSize,
         _unused_kind: RestKindFittedSize,
@@ -55,3 +64,16 @@ pub fn Message(comptime tag: @typeInfo(Param).@"union".tag_type.?) type {
         }
     };
 }
+
+/// Type of message that is sent between client and server
+pub const MessageType = enum {
+    Command,
+    RegisterX,
+    RegisterY,
+    RegisterWr,
+    RegisterWw,
+    StatusCarrier,
+    StatusHall,
+    StatusCommand,
+    LineConfig,
+};

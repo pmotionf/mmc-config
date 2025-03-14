@@ -1,7 +1,7 @@
 const std = @import("std");
 const mcl = @import("mcl");
-pub const Message =
-    @import("message.zig").Message;
+pub const CommandMessage =
+    @import("message.zig").CommandMessage;
 pub const Param = @import("Param.zig").Param;
 pub const SystemState = @import("SystemState.zig");
 
@@ -75,8 +75,8 @@ fn generateErrorCodeEnum(comptime Error: type) type {
 test {
     std.testing.refAllDeclsRecursive(@This());
     try std.testing.expectEqual(
-        @bitSizeOf(Message(.set_command)),
+        @bitSizeOf(CommandMessage(.set_command)),
         104,
     );
-    std.testing.refAllDeclsRecursive(Message(.set_command));
+    std.testing.refAllDeclsRecursive(CommandMessage(.set_command));
 }
