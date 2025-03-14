@@ -12,8 +12,8 @@ hall_sensors: []Hall,
 command_status: []CommandStatus,
 
 pub const Carrier = packed struct {
+    id: u10,
     line_id: Line.Id,
-    carrier_id: u10,
     axis_ids: packed struct {
         first: Axis.Id.Line,
         second: Axis.Id.Line,
