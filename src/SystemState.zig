@@ -31,8 +31,16 @@ pub const Hall = packed struct {
     },
 };
 
+/// `CommandStatus` will be used to determine whether the CC-Link has successfully
+/// received the command. When a client sends a command that triggers register
+/// `x.command_received`, it should notify the server that it has read the status.
+/// Upon receiving this notification, the server will clear the `status` and `received`
+/// fields, setting them to `NoError` and `false`, respectively.
 pub const CommandStatus = packed struct {
     line_id: Line.Id,
-    station_id: Station.Id,
+    axis_id: Axis.Id.Line,
+    /// `carrier_id` with value 0 means there is no carrier on top of the axis
+    carrier_id: u10,
     status: Station.Wr.CommandResponseCode,
+    received: bool,
 };
