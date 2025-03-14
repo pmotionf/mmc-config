@@ -2,6 +2,7 @@ const std = @import("std");
 const mcl = @import("mcl");
 pub const CommandMessage =
     @import("message.zig").CommandMessage;
+pub const MessageType = @import("message.zig").MessageType;
 pub const Param = @import("Param.zig").Param;
 pub const SystemState = @import("SystemState.zig");
 
