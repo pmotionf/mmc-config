@@ -7,9 +7,11 @@ const Station = mcl.Station;
 
 num_of_carriers: u10,
 num_of_active_axis: Axis.Id.Line,
-num_of_command_errors: Axis.Id.Line,
+num_of_running_commands: Station.Id,
 carriers: []Carrier,
 hall_sensors: []Hall,
+/// `command_status` indexing will follow the system configuration. It starts
+/// from the first line and the first
 command_status: []CommandStatus,
 
 pub const Carrier = packed struct {
@@ -35,12 +37,15 @@ pub const Hall = packed struct {
 /// `CommandStatus` will be used to determine whether the CC-Link has successfully
 /// received the command. When a client sends a command that triggers register
 /// `x.command_received`, it should notify the server that it has read the status.
-/// Upon receiving this notification, the server will clear the `status` and `received`
-/// fields, setting them to `NoError` and `false`, respectively.
+/// Upon receiving the notification, the server will remove the entry based on
+/// the parameter given by the client.
+///
+/// If the command targets an axis, then `carrier_id` will be zero. If the
+/// command targets a carrier, then both `line_id` and `axis_id` will be zero
 pub const CommandStatus = packed struct {
+    command_type: mcl.registers.Ww.Command,
     line_id: Line.Id,
-    axis_id: Axis.Id.Line,
-    /// `carrier_id` with value 0 means there is no carrier on top of the axis
+    station_id: Station.Id,
     carrier_id: u10,
     status: Station.Wr.CommandResponseCode,
     received: bool,
