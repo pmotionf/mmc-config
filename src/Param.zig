@@ -24,6 +24,10 @@ pub const Param = union(enum) {
     get_status: packed struct {
         kind: enum(u1) { Hall, Carrier },
     },
+    clear_command_status: packed struct {
+        line_idx: Line.Index,
+        carrier_id: u10,
+    },
     clear_errors: packed struct {
         line_id: Line.Id,
         axis_idx: Axis.Index.Line,
