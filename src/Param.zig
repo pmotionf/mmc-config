@@ -27,6 +27,7 @@ pub const Param = union(enum) {
     clear_command_status: packed struct {
         line_idx: Line.Index,
         carrier_id: u10,
+        status: enum(u1) { StateAndReceived, Response },
     },
     clear_errors: packed struct {
         line_id: Line.Id,
