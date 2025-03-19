@@ -5,10 +5,11 @@ const Line = mcl.Line;
 const Axis = mcl.Axis;
 const Station = mcl.Station;
 
+// TODO: Length of carriers and hall_sensors should be specified correctly
 num_of_carriers: u10,
 num_of_active_axis: Axis.Id.Line,
-carriers: []Carrier,
-hall_sensors: []Hall,
+carriers: [64 * 4 * 3]Carrier,
+hall_sensors: [64 * 4 * 3]Hall,
 
 pub const Carrier = packed struct {
     id: u10,
