@@ -76,6 +76,7 @@ pub const MessageType = enum {
     StatusHall,
     StatusCommand,
     LineConfig,
+    Version,
 };
 
 /// `getMessageStartIdx` helps to avoid writing the starting index of actual message

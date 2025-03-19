@@ -18,6 +18,12 @@ pub fn ParamType(comptime kind: @typeInfo(Param).@"union".tag_type.?) type {
     return @FieldType(Param, @tagName(kind));
 }
 
+pub const Version = packed struct {
+    major: u8,
+    minor: u8,
+    patch: u8,
+};
+
 /// Cross-reference error types between client and server. It is used to avoid
 /// sending string message from server to client when notifying the client if
 /// an error occurred in the server. `NoError` value is used to notify the
