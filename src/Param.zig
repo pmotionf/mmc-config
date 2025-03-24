@@ -62,4 +62,7 @@ pub const Param = union(enum) {
         line_idx: Line.Index,
         axis_idx: Axis.Index.Line,
     },
+    auto_initialize: packed struct {
+        line_id: Line.Id,
+    },
 };
