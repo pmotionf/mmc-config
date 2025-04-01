@@ -35,11 +35,11 @@ pub const Param = union(enum) {
     },
     clear_errors: packed struct {
         line_id: Line.Id,
-        axis_idx: Axis.Index.Line,
+        axis_id: Axis.Id.Line,
     },
     clear_carrier_info: packed struct {
         line_id: Line.Id,
-        axis_idx: Axis.Index.Line,
+        axis_id: Axis.Id.Line,
     },
     reset_mcl: void,
     release_axis_servo: packed struct {
