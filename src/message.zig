@@ -1,10 +1,19 @@
+//! The message passed between client and server will have the following format:
+//!
+//! MessageType|MessageLength|ActualMessage (without character "|")
+//!
+//! MessageType is an enum described in this file. MessageLength is the byte
+//! size of the whole message, help the client and server to know if the
+//! message containing other message or not or if the receiver already receive
+//! full message or not.
 const std = @import("std");
 const Param = @import("mmc-config.zig").Param;
 const ParamType =
     @import("mmc-config.zig").ParamType;
 
-pub fn Message(comptime tag: @typeInfo(Param).@"union".tag_type.?) type {
-    return packed struct {
+/// Command message description from client to server
+pub fn CommandMessage(comptime tag: @typeInfo(Param).@"union".tag_type.?) type {
+    return packed struct(u104) {
         kind: KindFittedSize,
         _unused_kind: RestKindFittedSize,
         param: ParamType(tag),
@@ -13,12 +22,12 @@ pub fn Message(comptime tag: @typeInfo(Param).@"union".tag_type.?) type {
         const kind_bit_size = @bitSizeOf(@typeInfo(Param).@"union".tag_type.?);
 
         /// Integer type that fit the number of commands used in the mmc-server
-        pub const KindFittedSize: type = getKindSize();
+        const KindFittedSize: type = getKindSize();
         const rest_kind_bit_size = 8 - kind_bit_size;
-        pub const RestKindFittedSize: type = getRestKindSize();
+        const RestKindFittedSize: type = getRestKindSize();
         const param_bit_size = @bitSizeOf(ParamType(tag));
         const unused_bit_size =
-            64 - param_bit_size - kind_bit_size - rest_kind_bit_size;
+            104 - param_bit_size - kind_bit_size - rest_kind_bit_size;
         const Unused: type = getUnusedType(unused_bit_size);
 
         fn getUnusedType(size: comptime_int) type {
@@ -55,3 +64,26 @@ pub fn Message(comptime tag: @typeInfo(Param).@"union".tag_type.?) type {
         }
     };
 }
+
+/// Type of message that is sent between client and server
+pub const MessageType = enum {
+    Command,
+    RegisterX,
+    RegisterY,
+    RegisterWr,
+    RegisterWw,
+    StatusCarrier,
+    StatusHall,
+    StatusCommand,
+    LineConfig,
+    Version,
+};
+
+/// `getMessageStartIdx` helps to avoid writing the starting index of actual message
+/// from the buffer manually.
+pub const MessageStructure = struct {
+    const MessageLengthType = u13; // support up to 8192 bytes of message
+    pub fn getMessageStartIdx() usize {
+        return @bitSizeOf(MessageType) + @bitSizeOf(MessageLengthType);
+    }
+};

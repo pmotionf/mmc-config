@@ -1,64 +1,90 @@
 const std = @import("std");
-pub const Message =
-    @import("message.zig").Message;
+const mcl = @import("mcl");
+pub const CommandMessage =
+    @import("message.zig").CommandMessage;
+pub const MessageType = @import("message.zig").MessageType;
+pub const MessageStructure = @import("message.zig").MessageStructure;
 pub const Param = @import("Param.zig").Param;
 pub const SystemState = @import("SystemState.zig");
 
 pub const Direction = enum(u2) {
+    no_direction,
     backward,
     forward,
-    no_direction,
     _,
-};
-
-/// Index within configured line, spanning across connection ranges.
-pub const Station = struct {
-    pub const Index: type = std.math.IntFittingRange(0, 64 * 4 - 1);
-    pub const Id: type = std.math.IntFittingRange(1, 64 * 4);
-};
-
-/// The maximum number of stations is also the maximum number of lines, as
-/// there can be a minimum of one station per line.
-pub const Line = Station;
-
-/// Axis Index and Id for the configured line and station.
-pub const Axis = struct {
-    pub const Index = struct {
-        station: Axis.Index.Station,
-        line: Axis.Index.Line,
-
-        /// Local axis index within station.
-        pub const Station: type = std.math.IntFittingRange(0, 2);
-        /// Axis index within line.
-        pub const Line: type = std.math.IntFittingRange(
-            0,
-            64 * 4 * 3 - 1,
-        );
-    };
-
-    pub const Id = struct {
-        station: Axis.Id.Station,
-        line: Axis.Id.Line,
-
-        /// Local axis ID within station.
-        pub const Station: type = std.math.IntFittingRange(1, 3);
-        /// Axis ID within line.
-        pub const Line: type = std.math.IntFittingRange(
-            1,
-            64 * 4 * 3,
-        );
-    };
 };
 
 pub fn ParamType(comptime kind: @typeInfo(Param).@"union".tag_type.?) type {
     return @FieldType(Param, @tagName(kind));
 }
 
+pub const Version = packed struct {
+    major: u8,
+    minor: u8,
+    patch: u8,
+};
+
+/// Cross-reference error types between client and server. It is used to avoid
+/// sending string message from server to client when notifying the client if
+/// an error occurred in the server. `NoError` value is used to notify the
+/// client that the error is already resolved and server is working normally.
+pub const MMCErrorEnum: type = generateErrorCodeEnum(MMCError);
+
+/// `Unexpected` error is the way to tell the client that the error is not
+/// coming from CC-Link. The actual error is printed in the server side.
+/// Developer must fix the error immediately if `Unexpected` error is thrown.
+pub const MMCError =
+    generateErrorSet(mcl.registers.Wr.CommandResponseCode) ||
+    error{ CCLinkDisconnected, Unexpected };
+
+/// Convert an enum into an error set. The field of enum with value 0 will be
+/// ignored. This behavior is consistent with zig Error set definition.
+/// Convert an enum into an error set. The field of enum with value 0 will be
+/// ignored. This behavior is consistent with zig Error set definition.
+fn generateErrorSet(comptime Enum: type) type {
+    if (@typeInfo(Enum) != .@"enum") return error.NotEnumType;
+    const fields = @typeInfo(Enum).@"enum".fields;
+    const error_len = fields.len - 1;
+    comptime var error_set: [error_len]std.builtin.Type.Error = undefined;
+    inline for (fields) |enum_field| {
+        if (enum_field.value == 0) continue;
+        error_set[enum_field.value - 1].name = enum_field.name;
+    }
+    return @Type(.{ .error_set = &error_set });
+}
+
+/// Convert error set to enum. The field of this enum is used in both client
+/// and server for cross reference.
+fn generateErrorCodeEnum(comptime Error: type) type {
+    const result_len = @typeInfo(Error).error_set.?.len;
+    const tag_type = std.math.IntFittingRange(0, result_len);
+    comptime var result_field: [result_len + 1]std.builtin.Type.EnumField = undefined;
+    result_field[0] = .{
+        .name = "NoError",
+        .value = 0,
+    };
+    const fields = @typeInfo(Error).error_set.?;
+    inline for (fields, 1..) |field, i| {
+        result_field[i] = .{
+            .name = field.name,
+            .value = i,
+        };
+    }
+    return @Type(.{
+        .@"enum" = .{
+            .decls = &.{},
+            .fields = &result_field,
+            .is_exhaustive = true,
+            .tag_type = tag_type,
+        },
+    });
+}
+
 test {
     std.testing.refAllDeclsRecursive(@This());
     try std.testing.expectEqual(
-        @bitSizeOf(Message(.isolate)),
-        64,
+        @bitSizeOf(CommandMessage(.set_command)),
+        104,
     );
-    std.testing.refAllDeclsRecursive(Message(.isolate));
+    std.testing.refAllDeclsRecursive(CommandMessage(.set_command));
 }
