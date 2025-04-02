@@ -2,6 +2,7 @@ const std = @import("std");
 const mcl = @import("mcl");
 const Line = mcl.Line;
 const Axis = mcl.Axis;
+const Station = mcl.Station;
 const Direction = @import("mmc-config.zig").Direction;
 
 pub const Param = union(enum) {
@@ -30,8 +31,8 @@ pub const Param = union(enum) {
     get_version: void,
     clear_command_status: packed struct {
         line_idx: Line.Index,
-        carrier_id: u10,
-        status: enum(u1) { StateAndReceived, Response },
+        station_idx: Station.Index,
+        status: enum(u1) { CommandReceived, CommandResponse },
     },
     clear_errors: packed struct {
         line_id: Line.Id,
