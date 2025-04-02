@@ -14,11 +14,6 @@ carriers: [64 * 4 * 3]Carrier,
 hall_sensors: [64 * 4 * 3]Hall,
 
 pub const Carrier = packed struct {
-    /// The `initialized` flag is used to check whether the carrier at that
-    /// index has already been initialized. This approach is taken because
-    /// the `carriers` field of `SystemState` is an array, not a slice. It can
-    /// also be used to check whether there is a carrier on that index or not.
-    initialized: bool,
     id: u10,
     axis_idx: packed struct {
         main_axis: Axis.Id.Line,
