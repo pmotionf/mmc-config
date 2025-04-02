@@ -22,7 +22,7 @@ pub const Param = union(enum) {
         axis_idx: Axis.Index.Line,
     },
     get_status: packed struct {
-        kind: enum(u1) { Hall, Carrier },
+        kind: enum(u2) { Hall, Carrier, Command },
         line_idx: Line.Index,
         axis_idx: Axis.Index.Line,
         carrier_id: u10,
