@@ -12,6 +12,7 @@ const Axis = mcl.Axis;
 num_of_carriers: u10,
 carriers: [64 * 4 * 3]Carrier,
 hall_sensors: [64 * 4 * 3]Hall,
+command: [64 * 4]Command,
 
 pub const Carrier = packed struct {
     id: u10,
@@ -21,8 +22,6 @@ pub const Carrier = packed struct {
     },
     location: f32,
     state: mcl.registers.Wr.Carrier.State,
-    command_received: bool,
-    command_response: mcl.registers.Wr.CommandResponseCode,
 };
 
 pub const Hall = packed struct {
@@ -32,4 +31,9 @@ pub const Hall = packed struct {
     configured: bool,
     front: bool,
     back: bool,
+};
+
+pub const Command = packed struct {
+    command_received: bool,
+    command_response: mcl.registers.Wr.CommandResponseCode,
 };
