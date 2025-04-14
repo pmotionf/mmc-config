@@ -38,7 +38,7 @@ pub const Hall = packed struct {
     back: bool,
 };
 
-fn init(a: std.mem.Allocator, config: mcl.Config) !void {
+pub fn init(a: std.mem.Allocator, config: mcl.Config) !void {
     line_states = try a.alloc(LineState, config.lines.len);
     for (config.lines, 0..) |line, line_idx| {
         line_states[line_idx].index = line_idx;
@@ -63,7 +63,7 @@ fn init(a: std.mem.Allocator, config: mcl.Config) !void {
     }
 }
 
-fn deinit() void {
+pub fn deinit() void {
     if (allocator) |a| {
         for (0..line_states.len) |line_idx| {
             a.free(line_states[line_idx].hall_sensors);
