@@ -5,7 +5,7 @@ pub const CommandMessage =
 pub const MessageType = @import("message.zig").MessageType;
 pub const MessageStructure = @import("message.zig").MessageStructure;
 pub const Param = @import("Param.zig").Param;
-pub const SystemState = @import("SystemState.zig");
+pub const LineState = @import("LineState.zig");
 
 pub const Direction = enum(u2) {
     no_direction,
@@ -79,6 +79,12 @@ fn generateErrorCodeEnum(comptime Error: type) type {
         },
     });
 }
+
+/// Describe the status of command sent by the client
+pub const CommandStatus = packed struct {
+    command_received: bool,
+    command_response: mcl.registers.Wr.CommandResponseCode,
+};
 
 test {
     std.testing.refAllDeclsRecursive(@This());
