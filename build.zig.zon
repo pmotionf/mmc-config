@@ -8,6 +8,10 @@
             .url = "https://github.com/pmotionf/mcl/archive/4324630.tar.gz",
             .hash = "mcl-0.7.0-bTecRgrAAADzI3tL74dXnvudi2is5KSf2TFoJe9KB01L",
         },
+        .protobuf = .{
+            .url = "https://github.com/aaumar25/zig-protobuf/archive/a7fad34.tar.gz",
+            .hash = "protobuf-2.0.0-0e82arubGwB0fEbE9_Pe_bVfBcd04H0BZO1B7oB09dqK",
+        },
     },
     .paths = .{""},
 }
