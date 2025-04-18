@@ -2,7 +2,7 @@
     .name = .mmc_config,
     .version = "0.0.1",
     .fingerprint = 0x840e319cc984ac0c,
-    .minimum_zig_version = "0.14.0-dev.1392+37df6ba86",
+    .minimum_zig_version = "0.15.0-dev.369+1a2ceb36c",
     .dependencies = .{
         .mcl = .{
             .url = "https://github.com/pmotionf/mcl/archive/4324630.tar.gz",
