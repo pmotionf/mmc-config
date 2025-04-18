@@ -1,0 +1,378 @@
+syntax = "proto3";
+package mmc;
+
+message SendCommand{
+    message GetX{
+        int32 line_idx = 1;
+        int32 axis_idx = 2;
+    }
+
+    message GetY{
+        int32 line_idx = 1;
+        int32 axis_idx = 2;
+    }
+
+    message GetWr{
+        int32 line_idx = 1;
+        int32 axis_idx = 2;
+    }
+
+    message GetWw{
+        int32 line_idx = 1;
+        int32 axis_idx = 2;
+    }
+
+    message ReleaseAxisServo{
+        int32 line_idx = 1;
+        int32 axis_idx = 2;
+    }
+
+    message StopPullCarrier{
+        int32 line_idx = 1;
+        int32 axis_idx = 2;
+    }
+
+    message ClearErrors{
+        int32 line_idx = 1;
+        optional int32 axis_idx = 2;
+    }
+
+    message ClearCarrierInfo{
+        int32 line_idx = 1;
+        optional int32 axis_idx = 2;
+    }
+
+    message GetStatus{
+        message Carrier{
+            int32 line_idx = 1;
+            optional int32 axis_idx = 2;
+            optional int32 carrier_id = 3;
+        }
+        message Hall{
+            int32 line_idx = 1;
+            optional int32 axis_idx = 2;
+        }
+        message Command{
+            int32 line_idx = 1;
+        }
+        oneof status_kind{
+            Carrier carrier = 1;
+            Hall hall = 2;
+            Command command = 3;
+        }
+    }
+
+    message NoParam {}
+
+    message SetCommand{
+        enum Direction{
+            DirectionUnspecified = 0;
+            Backward = 1;
+            Forward = 2;
+        }
+        RegisterWw.CommandCode command_code = 1;
+        int32 line_idx = 2;
+        int32 axis_idx = 3;
+        optional int32 carrier_id = 4;
+        optional float location_distance = 5;
+        optional int32 speed = 6;
+        optional int32 acceleration = 7;
+        optional Direction link_axis = 8;
+        optional Direction use_sensor = 9;
+    }
+
+    message AutoInitialize{
+        optional int32 line_id = 1;
+    }
+
+    oneof command_kind{
+        GetX get_x = 1;
+        GetY get_y = 2;
+        GetWr get_wr = 3;
+        GetWw get_ww = 4;
+        GetStatus get_status = 5;
+        NoParam get_version = 6;
+        ClearErrors clear_errors = 7;
+        ClearCarrierInfo clear_carrier_info = 8;
+        NoParam reset_mcl = 9;
+        ReleaseAxisServo release_axis_servo = 10;
+        SetCommand set_command = 11;
+        StopPullCarrier stop_pull_carrier = 12;
+        AutoInitialize auto_initialize = 13;
+    }
+}
+
+message LineConfig{
+    message LineConfiguration{
+        message Range{
+            enum Channel{
+                CHANNEL_UNSPECIFIED = 0;
+                cc_link_1slot = 1;
+                cc_link_2slot = 2;
+                cc_link_3slot = 3;
+                cc_link_4slot = 4;
+            }
+            Channel channel = 1;
+            int32 start = 2;
+            int32 end = 3;
+        }
+        int32 axes = 1;
+        repeated Range ranges = 2;
+    }
+    repeated LineConfiguration lines = 1;
+    repeated string line_names = 2;
+}
+
+message ServerVersion{
+    int32 major = 1;
+    int32 minor = 2;
+    int32 patch = 3;
+}
+
+message HallStatus{
+    bool configured = 1;
+    bool front = 2;
+    bool back = 3;
+}
+
+message CarrierStatus{
+    message AxisIndices{
+        int32 main_axis = 1;
+        int32 aux_axis = 2;
+    }
+    int32 id = 1;
+    AxisIndices axis_idx = 2;
+    float location = 3;
+    RegisterWr.Carrier.CarrierDescription.State state = 4;        
+}
+
+message CommandStatus{
+    bool received = 1;
+    RegisterWr.CommandResponse response = 2;
+}
+
+message RegisterX{
+    bool cc_link_enabled = 1;
+    bool command_ready = 2;
+    bool command_received = 3;
+    bool axis_cleared_carrier = 4;
+    bool cleared_carrier = 5;
+    bool servo_enabled = 6;
+    bool emergency_stop_enabled = 7;
+    bool paused = 8;
+    message MotorEnabled{
+        bool axis1 = 1;
+        bool axis2 = 2;
+        bool axis3 = 3;
+    }
+    MotorEnabled motor_enabled = 9;
+    bool vdc_undervoltage_detected = 10;
+    bool vdc_overvoltage_detected = 11;
+    bool errors_cleared = 12;
+    message CommunicationError{
+        bool from_prev = 1;
+        bool from_next = 2;
+    }
+    CommunicationError communication_error = 13;
+    bool inverter_overheat_detected = 14;
+    message OvercurrentDetected{
+        bool axis1 = 1;
+        bool axis2 = 2;
+        bool axis3 = 3;
+    }
+    OvercurrentDetected overcurrent_detected = 15;
+    message HallAlarm{
+        message Side{
+            bool back = 1;
+            bool front = 2;
+        }
+        Side axis1 = 1;
+        Side axis2 = 2;
+        Side axis3 = 3;
+    }
+    HallAlarm hall_alarm = 16;
+    message WaitPullCarrier{
+        bool axis1 = 1;
+        bool axis2 = 2;
+        bool axis3 = 3;
+    }
+    WaitPullCarrier wait_pull_carrier = 17;
+    message WaitPushCarrier{
+        bool axis1 = 1;
+        bool axis2 = 2;
+        bool axis3 = 3;
+    }
+    WaitPushCarrier wait_push_carrier = 18;
+    bool control_loop_max_time_exceeded = 19;
+    bool initial_data_processing_request = 20;
+    bool initial_data_setting_complete = 21;
+    bool error_status = 22;
+    bool remote_ready = 23;
+}
+
+message RegisterY{
+    bool cc_link_enable = 1;
+    bool start_command = 2;
+    bool reset_command_received = 3;
+    bool axis_clear_carrier = 4;
+    bool clear_carrier = 5;
+    bool axis_servo_release = 6;
+    bool servo_release = 7;
+    bool emergency_stop = 8;
+    bool temporary_pause = 9;
+    bool clear_errors = 10;
+    message ResetPullCarrier{
+        bool axis1 = 1;
+        bool axis2 = 2;
+        bool axis3 = 3;
+    }
+    ResetPullCarrier reset_pull_carrier = 11;
+    message ResetPushCarrier{
+        bool axis1 = 1;
+        bool axis2 = 2;
+        bool axis3 = 3;
+    }
+    ResetPushCarrier reset_push_carrier = 12;
+
+}
+
+message RegisterWw{
+    enum CommandCode{
+        None = 0x0;
+        SetLineZero = 0x1;
+        // "By Position" commands calculate carrier movement by constant hall
+        // sensor position feedback, and is much more precise in destination.
+        PositionMoveCarrierAxis = 0x12;
+        PositionMoveCarrierLocation = 0x13;
+        PositionMoveCarrierDistance = 0x14;
+        // "By Speed" commands calculate carrier movement by constant hall
+        // sensor speed feedback. It should mostly not be used, as the
+        // destination position becomes far too imprecise. However, it is
+        // meant to maintain a certain speed while the carrier is traveling,
+        // and to avoid the requirement of having a known system position.
+        SpeedMoveCarrierAxis = 0x15;
+        SpeedMoveCarrierLocation = 0x16;
+        SpeedMoveCarrierDistance = 0x17;
+        IsolateForward = 0x18;
+        IsolateBackward = 0x19;
+        Calibration = 0x1A;
+        SetCarrierIdAtAxis = 0x1D;
+        PushForward = 0x1E;
+        PushBackward = 0x1F;
+        PullForward = 0x20;
+        PullBackward = 0x21;
+        PushTransitionForward = 0x22;
+        PushTransitionBackward = 0x23;
+        PullTransitionAxisForward = 0x24;
+        PullTransitionAxisBackward = 0x25;
+        PullTransitionLocationForward = 0x26;
+        PullTransitionLocationBackward = 0x27;
+    }
+    CommandCode command = 1;
+    int32 axis = 2;
+    message Carrier{
+        oneof target{
+            float f32 = 1;
+            int32 u32 = 2;
+            sint32 i32 = 3;
+        }
+        int32 id = 4;
+        bool enable_cas = 5;
+        bool isolate_link_prev_axis = 6;
+        bool isolate_link_next_axis = 7;
+        int32 speed = 8;
+        int32 acceleration = 9;
+    }
+    Carrier carrier = 3;
+}
+
+message RegisterWr{
+    enum CommandResponse{
+        NoError = 0;
+        InvalidCommand = 1;
+        CarrierNotFound = 2;
+        HomingFailed = 3;
+        InvalidParameter = 4;
+        InvalidSystemState = 5;
+        CarrierAlreadyExists = 6;
+        InvalidAxis = 7;
+    }
+    CommandResponse command_response = 1;
+    message CommunicationReceived{
+        int32 id = 1;
+        enum DriverMessageKind{
+            none = 0;
+            update = 1;
+            prof_req = 2;
+            prof_noti = 3;
+            update_cali_home = 4;
+            update_mech_angle_offset = 5;
+            on_pos_req = 6;
+            on_pos_rsp = 7;
+            off_pos_req = 8;
+            off_pos_rsp = 9;
+            clear_carrier_info = 10;
+        }
+        DriverMessageKind kind = 2;
+        bool failed_bcc = 3;
+    }
+    CommunicationReceived received_backward = 2;
+    CommunicationReceived received_forward = 3;
+    message Carrier{
+        message CarrierDescription{
+            float location = 1;
+            int32 id = 2;
+            bool arrived = 3;
+            bool auxiliary = 4;
+            bool enabled = 5;
+            bool quasi = 6;
+            message CAS{
+                bool enabled = 1;
+                bool triggered = 2;
+            }
+            CAS cas = 7;
+            enum State{
+                None = 0x0;
+
+                WarmupProgressing = 0x1;
+                WarmupCompleted = 0x2;
+
+                PosMoveProgressing = 0x4;
+                PosMoveCompleted = 0x5;
+                SpdMoveProgressing = 0x6;
+                SpdMoveCompleted = 0x7;
+                Auxiliary = 0x8;
+                AuxiliaryCompleted = 0x9;
+
+                ForwardCalibrationProgressing = 0xA;
+                ForwardCalibrationCompleted = 0xB;
+                BackwardCalibrationProgressing = 0xC;
+                BackwardCalibrationCompleted = 0xD;
+
+                ForwardIsolationProgressing = 0x10;
+                ForwardIsolationCompleted = 0x11;
+                BackwardIsolationProgressing = 0x12;
+                BackwardIsolationCompleted = 0x13;
+                ForwardRestartProgressing = 0x14;
+                ForwardRestartCompleted = 0x15;
+                BackwardRestartProgressing = 0x16;
+                BackwardRestartCompleted = 0x17;
+
+                PullForward = 0x19;
+                PullForwardCompleted = 0x1A;
+                PullBackward = 0x1B;
+                PullBackwardCompleted = 0x1C;
+                Push = 0x1D;
+                PushCompleted = 0x1E;
+
+                Overcurrent = 0x1F;
+            }
+            State state = 8;
+        }
+        CarrierDescription axis1 = 1;
+        CarrierDescription axis2 = 2;
+        CarrierDescription axis3 = 3;
+    }
+    Carrier carrier = 4;
+
+}

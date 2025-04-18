@@ -7,6 +7,9 @@ pub const MessageStructure = @import("message.zig").MessageStructure;
 pub const Param = @import("Param.zig").Param;
 pub const SystemState = @import("SystemState.zig");
 
+pub const protobuf_msg = @import("proto/mmc.pb.zig");
+pub const protobuf = @import("protobuf");
+
 pub const Direction = enum(u2) {
     no_direction,
     backward,
