@@ -1,25 +1,9 @@
 const std = @import("std");
 const mcl = @import("mcl");
-pub const CommandMessage =
-    @import("message.zig").CommandMessage;
-pub const MessageType = @import("message.zig").MessageType;
-pub const MessageStructure = @import("message.zig").MessageStructure;
-pub const Param = @import("Param.zig").Param;
 pub const SystemState = @import("SystemState.zig");
 
 pub const protobuf_msg = @import("proto/mmc.pb.zig");
 pub const protobuf = @import("protobuf");
-
-pub const Direction = enum(u2) {
-    no_direction,
-    backward,
-    forward,
-    _,
-};
-
-pub fn ParamType(comptime kind: @typeInfo(Param).@"union".tag_type.?) type {
-    return @FieldType(Param, @tagName(kind));
-}
 
 pub const Version = packed struct {
     major: u8,
@@ -81,13 +65,4 @@ fn generateErrorCodeEnum(comptime Error: type) type {
             .tag_type = tag_type,
         },
     });
-}
-
-test {
-    std.testing.refAllDeclsRecursive(@This());
-    try std.testing.expectEqual(
-        @bitSizeOf(CommandMessage(.set_command)),
-        104,
-    );
-    std.testing.refAllDeclsRecursive(CommandMessage(.set_command));
 }
