@@ -302,7 +302,7 @@ pub const LineConfig = struct {
             };
 
             pub const Channel = enum(i32) {
-                CHANNEL_UNSPECIFIED = 0,
+                ChannelUnspecified = 0,
                 cc_link_1slot = 1,
                 cc_link_2slot = 2,
                 cc_link_3slot = 3,
@@ -607,8 +607,9 @@ pub const RegisterWw = struct {
     };
 
     pub const CommandCode = enum(i32) {
-        None = 0,
-        SetLineZero = 1,
+        CommandCodeUnspecified = 0,
+        None = 1,
+        SetLineZero = 2,
         PositionMoveCarrierAxis = 18,
         PositionMoveCarrierLocation = 19,
         PositionMoveCarrierDistance = 20,
@@ -687,14 +688,15 @@ pub const RegisterWr = struct {
     };
 
     pub const CommandResponse = enum(i32) {
-        NoError = 0,
-        InvalidCommand = 1,
-        CarrierNotFound = 2,
-        HomingFailed = 3,
-        InvalidParameter = 4,
-        InvalidSystemState = 5,
-        CarrierAlreadyExists = 6,
-        InvalidAxis = 7,
+        CommandResponseUnspecified = 0,
+        NoError = 1,
+        InvalidCommand = 2,
+        CarrierNotFound = 3,
+        HomingFailed = 4,
+        InvalidParameter = 5,
+        InvalidSystemState = 6,
+        CarrierAlreadyExists = 7,
+        InvalidAxis = 8,
         _,
     };
 
@@ -710,17 +712,18 @@ pub const RegisterWr = struct {
         };
 
         pub const DriverMessageKind = enum(i32) {
-            none = 0,
-            update = 1,
-            prof_req = 2,
-            prof_noti = 3,
-            update_cali_home = 4,
-            update_mech_angle_offset = 5,
-            on_pos_req = 6,
-            on_pos_rsp = 7,
-            off_pos_req = 8,
-            off_pos_rsp = 9,
-            clear_carrier_info = 10,
+            DriverMessageKindUnspecified = 0,
+            none = 1,
+            update = 2,
+            prof_req = 3,
+            prof_noti = 4,
+            update_cali_home = 5,
+            update_mech_angle_offset = 6,
+            on_pos_req = 7,
+            on_pos_rsp = 8,
+            off_pos_req = 9,
+            off_pos_rsp = 10,
+            clear_carrier_info = 11,
             _,
         };
 
@@ -760,9 +763,10 @@ pub const RegisterWr = struct {
             };
 
             pub const State = enum(i32) {
-                None = 0,
-                WarmupProgressing = 1,
-                WarmupCompleted = 2,
+                StateUnspecified = 0,
+                None = 1,
+                WarmupProgressing = 2,
+                WarmupCompleted = 3,
                 PosMoveProgressing = 4,
                 PosMoveCompleted = 5,
                 SpdMoveProgressing = 6,
