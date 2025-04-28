@@ -86,7 +86,7 @@ message SendCommand{
         }
         RegisterWw.CommandCode command_code = 1;
         int32 line_idx = 2;
-        int32 axis_idx = 3;
+        optional int32 axis_idx = 3;
         optional int32 carrier_id = 4;
         optional float location_distance = 5;
         optional int32 speed = 6;
