@@ -42,6 +42,7 @@ pub const SendCommand = struct {
         set_command,
         stop_pull_carrier,
         auto_initialize,
+        stop_push_carrier,
     };
     pub const command_kind_union = union(_command_kind_case) {
         get_x: GetX,
@@ -57,6 +58,7 @@ pub const SendCommand = struct {
         set_command: SetCommand,
         stop_pull_carrier: StopPullCarrier,
         auto_initialize: AutoInitialize,
+        stop_push_carrier: StopPushCarrier,
         pub const _union_desc = .{
             .get_x = fd(1, .{ .SubMessage = {} }),
             .get_y = fd(2, .{ .SubMessage = {} }),
@@ -71,6 +73,7 @@ pub const SendCommand = struct {
             .set_command = fd(11, .{ .SubMessage = {} }),
             .stop_pull_carrier = fd(12, .{ .SubMessage = {} }),
             .auto_initialize = fd(13, .{ .SubMessage = {} }),
+            .stop_push_carrier = fd(15, .{ .SubMessage = {} }),
         };
     };
 
@@ -140,6 +143,18 @@ pub const SendCommand = struct {
     };
 
     pub const StopPullCarrier = struct {
+        line_idx: i32 = 0,
+        axis_idx: i32 = 0,
+
+        pub const _desc_table = .{
+            .line_idx = fd(1, .{ .Varint = .Simple }),
+            .axis_idx = fd(2, .{ .Varint = .Simple }),
+        };
+
+        pub usingnamespace protobuf.MessageMixins(@This());
+    };
+
+    pub const StopPushCarrier = struct {
         line_idx: i32 = 0,
         axis_idx: i32 = 0,
 
