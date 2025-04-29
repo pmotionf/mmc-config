@@ -9,7 +9,23 @@ const ManagedString = protobuf.ManagedString;
 const fd = protobuf.fd;
 const ManagedStruct = protobuf.ManagedStruct;
 
+pub const MessageType = enum(i32) {
+    MESSAGE_TYPE_UNSPECIFIED = 0,
+    SEND_COMMAND = 1,
+    LINE_CONFIG = 2,
+    SERVER_VERSION = 3,
+    HALL_STATUS = 4,
+    CARRIER_STATUS = 5,
+    COMMAND_STATUS = 6,
+    REGISTER_X = 7,
+    REGISTER_Y = 8,
+    REGISTER_WW = 9,
+    REGISTER_WR = 10,
+    _,
+};
+
 pub const SendCommand = struct {
+    message_type: MessageType = @enumFromInt(0),
     command_kind: ?command_kind_union,
 
     pub const _command_kind_case = enum {
@@ -59,6 +75,7 @@ pub const SendCommand = struct {
     };
 
     pub const _desc_table = .{
+        .message_type = fd(14, .{ .Varint = .Simple }),
         .command_kind = fd(null, .{ .OneOf = command_kind_union }),
     };
 
@@ -229,7 +246,7 @@ pub const SendCommand = struct {
     pub const SetCommand = struct {
         command_code: RegisterWw.CommandCode = @enumFromInt(0),
         line_idx: i32 = 0,
-        axis_idx: i32 = 0,
+        axis_idx: ?i32 = null,
         carrier_id: ?i32 = null,
         location_distance: ?f32 = null,
         speed: ?i32 = null,
@@ -273,10 +290,12 @@ pub const SendCommand = struct {
 };
 
 pub const LineConfig = struct {
+    message_type: MessageType = @enumFromInt(0),
     lines: ArrayList(LineConfiguration),
     line_names: ArrayList(ManagedString),
 
     pub const _desc_table = .{
+        .message_type = fd(3, .{ .Varint = .Simple }),
         .lines = fd(1, .{ .List = .{ .SubMessage = {} } }),
         .line_names = fd(2, .{ .List = .String }),
     };
@@ -320,11 +339,13 @@ pub const LineConfig = struct {
 };
 
 pub const ServerVersion = struct {
+    message_type: MessageType = @enumFromInt(0),
     major: i32 = 0,
     minor: i32 = 0,
     patch: i32 = 0,
 
     pub const _desc_table = .{
+        .message_type = fd(4, .{ .Varint = .Simple }),
         .major = fd(1, .{ .Varint = .Simple }),
         .minor = fd(2, .{ .Varint = .Simple }),
         .patch = fd(3, .{ .Varint = .Simple }),
@@ -334,11 +355,13 @@ pub const ServerVersion = struct {
 };
 
 pub const HallStatus = struct {
+    message_type: MessageType = @enumFromInt(0),
     configured: bool = false,
     front: bool = false,
     back: bool = false,
 
     pub const _desc_table = .{
+        .message_type = fd(4, .{ .Varint = .Simple }),
         .configured = fd(1, .{ .Varint = .Simple }),
         .front = fd(2, .{ .Varint = .Simple }),
         .back = fd(3, .{ .Varint = .Simple }),
@@ -348,12 +371,14 @@ pub const HallStatus = struct {
 };
 
 pub const CarrierStatus = struct {
+    message_type: MessageType = @enumFromInt(0),
     id: i32 = 0,
     axis_idx: ?AxisIndices = null,
     location: f32 = 0,
     state: RegisterWr.Carrier.CarrierDescription.State = @enumFromInt(0),
 
     pub const _desc_table = .{
+        .message_type = fd(5, .{ .Varint = .Simple }),
         .id = fd(1, .{ .Varint = .Simple }),
         .axis_idx = fd(2, .{ .SubMessage = {} }),
         .location = fd(3, .{ .FixedInt = .I32 }),
@@ -376,10 +401,12 @@ pub const CarrierStatus = struct {
 };
 
 pub const CommandStatus = struct {
+    message_type: MessageType = @enumFromInt(0),
     received: bool = false,
     response: RegisterWr.CommandResponse = @enumFromInt(0),
 
     pub const _desc_table = .{
+        .message_type = fd(3, .{ .Varint = .Simple }),
         .received = fd(1, .{ .Varint = .Simple }),
         .response = fd(2, .{ .Varint = .Simple }),
     };
@@ -388,6 +415,7 @@ pub const CommandStatus = struct {
 };
 
 pub const RegisterX = struct {
+    message_type: MessageType = @enumFromInt(0),
     cc_link_enabled: bool = false,
     command_ready: bool = false,
     command_received: bool = false,
@@ -413,6 +441,7 @@ pub const RegisterX = struct {
     remote_ready: bool = false,
 
     pub const _desc_table = .{
+        .message_type = fd(24, .{ .Varint = .Simple }),
         .cc_link_enabled = fd(1, .{ .Varint = .Simple }),
         .command_ready = fd(2, .{ .Varint = .Simple }),
         .command_received = fd(3, .{ .Varint = .Simple }),
@@ -536,6 +565,7 @@ pub const RegisterX = struct {
 };
 
 pub const RegisterY = struct {
+    message_type: MessageType = @enumFromInt(0),
     cc_link_enable: bool = false,
     start_command: bool = false,
     reset_command_received: bool = false,
@@ -550,6 +580,7 @@ pub const RegisterY = struct {
     reset_push_carrier: ?ResetPushCarrier = null,
 
     pub const _desc_table = .{
+        .message_type = fd(13, .{ .Varint = .Simple }),
         .cc_link_enable = fd(1, .{ .Varint = .Simple }),
         .start_command = fd(2, .{ .Varint = .Simple }),
         .reset_command_received = fd(3, .{ .Varint = .Simple }),
@@ -596,11 +627,13 @@ pub const RegisterY = struct {
 };
 
 pub const RegisterWw = struct {
+    message_type: MessageType = @enumFromInt(0),
     command: CommandCode = @enumFromInt(0),
     axis: i32 = 0,
     carrier: ?Carrier = null,
 
     pub const _desc_table = .{
+        .message_type = fd(4, .{ .Varint = .Simple }),
         .command = fd(1, .{ .Varint = .Simple }),
         .axis = fd(2, .{ .Varint = .Simple }),
         .carrier = fd(3, .{ .SubMessage = {} }),
@@ -675,12 +708,14 @@ pub const RegisterWw = struct {
 };
 
 pub const RegisterWr = struct {
+    message_type: MessageType = @enumFromInt(0),
     command_response: CommandResponse = @enumFromInt(0),
     received_backward: ?CommunicationReceived = null,
     received_forward: ?CommunicationReceived = null,
     carrier: ?Carrier = null,
 
     pub const _desc_table = .{
+        .message_type = fd(5, .{ .Varint = .Simple }),
         .command_response = fd(1, .{ .Varint = .Simple }),
         .received_backward = fd(2, .{ .SubMessage = {} }),
         .received_forward = fd(3, .{ .SubMessage = {} }),

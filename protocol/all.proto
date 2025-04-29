@@ -1,6 +1,20 @@
 syntax = "proto3";
 package mmc;
 
+enum MessageType{
+    MESSAGE_TYPE_UNSPECIFIED = 0;
+    SEND_COMMAND = 1;
+    LINE_CONFIG = 2;
+    SERVER_VERSION = 3;
+    HALL_STATUS = 4;
+    CARRIER_STATUS = 5;
+    COMMAND_STATUS = 6;
+    REGISTER_X = 7;
+    REGISTER_Y = 8;
+    REGISTER_WW = 9;
+    REGISTER_WR = 10;
+}
+
 message SendCommand{
     message GetX{
         int32 line_idx = 1;
@@ -72,7 +86,7 @@ message SendCommand{
         }
         RegisterWw.CommandCode command_code = 1;
         int32 line_idx = 2;
-        int32 axis_idx = 3;
+        optional int32 axis_idx = 3;
         optional int32 carrier_id = 4;
         optional float location_distance = 5;
         optional int32 speed = 6;
@@ -84,6 +98,8 @@ message SendCommand{
     message AutoInitialize{
         optional int32 line_id = 1;
     }
+
+    MessageType message_type = 14;
 
     oneof command_kind{
         GetX get_x = 1;
@@ -119,17 +135,20 @@ message LineConfig{
         int32 axes = 1;
         repeated Range ranges = 2;
     }
+    MessageType message_type = 3;
     repeated LineConfiguration lines = 1;
     repeated string line_names = 2;
 }
 
 message ServerVersion{
+    MessageType message_type = 4;
     int32 major = 1;
     int32 minor = 2;
     int32 patch = 3;
 }
 
 message HallStatus{
+    MessageType message_type = 4;
     bool configured = 1;
     bool front = 2;
     bool back = 3;
@@ -140,6 +159,7 @@ message CarrierStatus{
         int32 main_axis = 1;
         int32 aux_axis = 2;
     }
+    MessageType message_type = 5;
     int32 id = 1;
     AxisIndices axis_idx = 2;
     float location = 3;
@@ -147,11 +167,13 @@ message CarrierStatus{
 }
 
 message CommandStatus{
+    MessageType message_type = 3;
     bool received = 1;
     RegisterWr.CommandResponse response = 2;
 }
 
 message RegisterX{
+    MessageType message_type = 24;
     bool cc_link_enabled = 1;
     bool command_ready = 2;
     bool command_received = 3;
@@ -211,6 +233,7 @@ message RegisterX{
 }
 
 message RegisterY{
+    MessageType message_type = 13;
     bool cc_link_enable = 1;
     bool start_command = 2;
     bool reset_command_received = 3;
@@ -237,6 +260,7 @@ message RegisterY{
 }
 
 message RegisterWw{
+    MessageType message_type = 4;
     enum CommandCode{
         CommandCodeUnspecified = 0x0;
         None = 0x1;
@@ -288,6 +312,7 @@ message RegisterWw{
 }
 
 message RegisterWr{
+    MessageType message_type = 5;
     enum CommandResponse{
         CommandResponseUnspecified = 0;
         NoError = 1;
