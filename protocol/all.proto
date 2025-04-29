@@ -46,6 +46,11 @@ message SendCommand{
         int32 axis_idx = 2;
     }
 
+    message StopPushCarrier{
+        int32 line_idx = 1;
+        int32 axis_idx = 2;
+    }
+
     message ClearErrors{
         int32 line_idx = 1;
         optional int32 axis_idx = 2;
@@ -115,6 +120,7 @@ message SendCommand{
         SetCommand set_command = 11;
         StopPullCarrier stop_pull_carrier = 12;
         AutoInitialize auto_initialize = 13;
+        StopPushCarrier stop_push_carrier = 15;
     }
 }
 
