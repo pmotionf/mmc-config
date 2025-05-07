@@ -292,10 +292,10 @@ pub const SendCommand = struct {
     };
 
     pub const AutoInitialize = struct {
-        line_id: ?i32 = null,
+        lines: ArrayList(i32),
 
         pub const _desc_table = .{
-            .line_id = fd(1, .{ .Varint = .Simple }),
+            .lines = fd(1, .{ .PackedList = .{ .Varint = .Simple } }),
         };
 
         pub usingnamespace protobuf.MessageMixins(@This());
