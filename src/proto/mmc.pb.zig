@@ -21,6 +21,7 @@ pub const MessageType = enum(i32) {
     REGISTER_Y = 8,
     REGISTER_WW = 9,
     REGISTER_WR = 10,
+    SYSTEM_ERROR = 11,
     _,
 };
 
@@ -856,6 +857,42 @@ pub const RegisterWr = struct {
             };
 
             pub usingnamespace protobuf.MessageMixins(@This());
+        };
+
+        pub usingnamespace protobuf.MessageMixins(@This());
+    };
+
+    pub usingnamespace protobuf.MessageMixins(@This());
+};
+
+pub const SystemError = struct {
+    message_type: MessageType = @enumFromInt(0),
+    errors: ArrayList(ErrorLocation),
+
+    pub const _desc_table = .{
+        .message_type = fd(1, .{ .Varint = .Simple }),
+        .errors = fd(2, .{ .List = .{ .SubMessage = {} } }),
+    };
+
+    pub const ErrorType = enum(i32) {
+        ERROR_UNSPECIFIED = 0,
+        CC_LINK_DISCONNECTED = 1,
+        VDC_UNDERVOLTAGE_DETECTED = 2,
+        VDC_OVERVOLTAGE_DETECTED = 3,
+        COMMUNICATION_ERROR_DETECTED = 4,
+        INVERTER_OVERHEAT_DETECTED = 5,
+        OVERCURRENT_DETECTED = 6,
+        CONTROL_LOOP_MAX_TIME_EXCEEDED = 7,
+        _,
+    };
+
+    pub const ErrorLocation = struct {
+        error_type: SystemError.ErrorType = @enumFromInt(0),
+        axis_idx: i32 = 0,
+
+        pub const _desc_table = .{
+            .error_type = fd(1, .{ .Varint = .Simple }),
+            .axis_idx = fd(2, .{ .Varint = .Simple }),
         };
 
         pub usingnamespace protobuf.MessageMixins(@This());

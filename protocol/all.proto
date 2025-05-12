@@ -13,6 +13,7 @@ enum MessageType{
     REGISTER_Y = 8;
     REGISTER_WW = 9;
     REGISTER_WR = 10;
+    SYSTEM_ERROR = 11;
 }
 
 message SendCommand{
@@ -409,4 +410,23 @@ message RegisterWr{
     }
     Carrier carrier = 4;
 
+}
+
+message SystemError{
+    MessageType message_type = 1;
+    enum ErrorType{
+        ERROR_UNSPECIFIED = 0;
+        CC_LINK_DISCONNECTED = 1;
+        VDC_UNDERVOLTAGE_DETECTED = 2;
+        VDC_OVERVOLTAGE_DETECTED = 3;
+        COMMUNICATION_ERROR_DETECTED = 4;
+        INVERTER_OVERHEAT_DETECTED = 5;
+        OVERCURRENT_DETECTED = 6;
+        CONTROL_LOOP_MAX_TIME_EXCEEDED = 7;
+    }
+    message ErrorLocation{
+        ErrorType error_type = 1;
+        int32 axis_idx = 2;
+    }
+    repeated ErrorLocation errors = 2;
 }
