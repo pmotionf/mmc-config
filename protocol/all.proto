@@ -154,8 +154,7 @@ message ServerVersion{
 }
 
 message HallStatus{
-    MessageType message_type = 4;
-    bool configured = 1;
+    MessageType message_type = 1;
     bool front = 2;
     bool back = 3;
 }

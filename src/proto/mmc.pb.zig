@@ -371,13 +371,11 @@ pub const ServerVersion = struct {
 
 pub const HallStatus = struct {
     message_type: MessageType = @enumFromInt(0),
-    configured: bool = false,
     front: bool = false,
     back: bool = false,
 
     pub const _desc_table = .{
-        .message_type = fd(4, .{ .Varint = .Simple }),
-        .configured = fd(1, .{ .Varint = .Simple }),
+        .message_type = fd(1, .{ .Varint = .Simple }),
         .front = fd(2, .{ .Varint = .Simple }),
         .back = fd(3, .{ .Varint = .Simple }),
     };
