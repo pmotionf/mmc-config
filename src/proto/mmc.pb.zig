@@ -9,6 +9,13 @@ const ManagedString = protobuf.ManagedString;
 const fd = protobuf.fd;
 const ManagedStruct = protobuf.ManagedStruct;
 
+pub const Direction = enum(i32) {
+    DIRECTION_UNSPECIFIED = 0,
+    BACKWARD = 1,
+    FORWARD = 2,
+    _,
+};
+
 pub const MessageType = enum(i32) {
     MESSAGE_TYPE_UNSPECIFIED = 0,
     SEND_COMMAND = 1,
@@ -23,6 +30,7 @@ pub const MessageType = enum(i32) {
     REGISTER_WR = 10,
     SYSTEM_ERROR = 11,
     MOVE_CARRIER = 12,
+    PUSH_CARRIER = 13,
     _,
 };
 
@@ -46,6 +54,7 @@ pub const SendCommand = struct {
         auto_initialize,
         stop_push_carrier,
         move_carrier,
+        push_carrier,
     };
     pub const command_kind_union = union(_command_kind_case) {
         get_x: GetX,
@@ -63,6 +72,7 @@ pub const SendCommand = struct {
         auto_initialize: AutoInitialize,
         stop_push_carrier: StopPushCarrier,
         move_carrier: MoveCarrier,
+        push_carrier: PushCarrier,
         pub const _union_desc = .{
             .get_x = fd(2, .{ .SubMessage = {} }),
             .get_y = fd(3, .{ .SubMessage = {} }),
@@ -79,6 +89,7 @@ pub const SendCommand = struct {
             .auto_initialize = fd(14, .{ .SubMessage = {} }),
             .stop_push_carrier = fd(15, .{ .SubMessage = {} }),
             .move_carrier = fd(16, .{ .SubMessage = {} }),
+            .push_carrier = fd(17, .{ .SubMessage = {} }),
         };
     };
 
@@ -286,13 +297,6 @@ pub const SendCommand = struct {
             .use_sensor = fd(9, .{ .Varint = .Simple }),
         };
 
-        pub const Direction = enum(i32) {
-            DIRECTION_UNSPECIFIED = 0,
-            BACKWARD = 1,
-            FORWARD = 2,
-            _,
-        };
-
         pub usingnamespace protobuf.MessageMixins(@This());
     };
 
@@ -307,7 +311,6 @@ pub const SendCommand = struct {
     };
 
     pub const MoveCarrier = struct {
-        message_type: MessageType = @enumFromInt(0),
         line_idx: i32 = 0,
         carrier_id: i32 = 0,
         target: ?target_union,
@@ -320,16 +323,31 @@ pub const SendCommand = struct {
             axis_id: i32,
             location_distance: f32,
             pub const _union_desc = .{
-                .axis_id = fd(4, .{ .Varint = .Simple }),
-                .location_distance = fd(5, .{ .FixedInt = .I32 }),
+                .axis_id = fd(3, .{ .Varint = .Simple }),
+                .location_distance = fd(4, .{ .FixedInt = .I32 }),
             };
         };
 
         pub const _desc_table = .{
-            .message_type = fd(1, .{ .Varint = .Simple }),
-            .line_idx = fd(2, .{ .Varint = .Simple }),
-            .carrier_id = fd(3, .{ .Varint = .Simple }),
+            .line_idx = fd(1, .{ .Varint = .Simple }),
+            .carrier_id = fd(2, .{ .Varint = .Simple }),
             .target = fd(null, .{ .OneOf = target_union }),
+        };
+
+        pub usingnamespace protobuf.MessageMixins(@This());
+    };
+
+    pub const PushCarrier = struct {
+        line_idx: i32 = 0,
+        carrier_id: i32 = 0,
+        direction: Direction = @enumFromInt(0),
+        local_axis_id: ?i32 = null,
+
+        pub const _desc_table = .{
+            .line_idx = fd(1, .{ .Varint = .Simple }),
+            .carrier_id = fd(2, .{ .Varint = .Simple }),
+            .direction = fd(3, .{ .Varint = .Simple }),
+            .local_axis_id = fd(4, .{ .Varint = .Simple }),
         };
 
         pub usingnamespace protobuf.MessageMixins(@This());
