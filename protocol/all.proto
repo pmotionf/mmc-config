@@ -86,9 +86,9 @@ message SendCommand{
 
     message SetCommand{
         enum Direction{
-            DirectionUnspecified = 0;
-            Backward = 1;
-            Forward = 2;
+            DIRECTION_UNSPECIFIED = 0;
+            BACKWARD = 1;
+            FORWARD = 2;
         }
         RegisterWw.CommandCode command_code = 1;
         int32 line_idx = 2;
@@ -129,11 +129,11 @@ message LineConfig{
     message LineConfiguration{
         message Range{
             enum Channel{
-                ChannelUnspecified = 0;
-                cc_link_1slot = 1;
-                cc_link_2slot = 2;
-                cc_link_3slot = 3;
-                cc_link_4slot = 4;
+                CHANNEL_UNSPECIFIED = 0;
+                CC_LINK_1SLOT = 1;
+                CC_LINK_2SLOT = 2;
+                CC_LINK_3SLOT = 3;
+                CC_LINK_4SLOT = 4;
             }
             Channel channel = 1;
             int32 start = 2;
@@ -268,36 +268,36 @@ message RegisterY{
 message RegisterWw{
     MessageType message_type = 4;
     enum CommandCode{
-        CommandCodeUnspecified = 0x0;
-        None = 0x1;
-        SetLineZero = 0x2;
+        COMMAND_CODE_UNSPECIFIED = 0;
+        NONE = 1;
+        SET_LINE_ZERO = 2;
         // "By Position" commands calculate carrier movement by constant hall
         // sensor position feedback, and is much more precise in destination.
-        PositionMoveCarrierAxis = 0x12;
-        PositionMoveCarrierLocation = 0x13;
-        PositionMoveCarrierDistance = 0x14;
+        POSITION_MOVE_CARRIER_AXIS = 3;
+        POSITION_MOVE_CARRIER_LOCATION = 4;
+        POSITION_MOVE_CARRIER_DISTANCE = 5;
         // "By Speed" commands calculate carrier movement by constant hall
         // sensor speed feedback. It should mostly not be used, as the
         // destination position becomes far too imprecise. However, it is
         // meant to maintain a certain speed while the carrier is traveling,
         // and to avoid the requirement of having a known system position.
-        SpeedMoveCarrierAxis = 0x15;
-        SpeedMoveCarrierLocation = 0x16;
-        SpeedMoveCarrierDistance = 0x17;
-        IsolateForward = 0x18;
-        IsolateBackward = 0x19;
-        Calibration = 0x1A;
-        SetCarrierIdAtAxis = 0x1D;
-        PushForward = 0x1E;
-        PushBackward = 0x1F;
-        PullForward = 0x20;
-        PullBackward = 0x21;
-        PushTransitionForward = 0x22;
-        PushTransitionBackward = 0x23;
-        PullTransitionAxisForward = 0x24;
-        PullTransitionAxisBackward = 0x25;
-        PullTransitionLocationForward = 0x26;
-        PullTransitionLocationBackward = 0x27;
+        SPEED_MOVE_CARRIER_AXIS = 6;
+        SPEED_MOVE_CARRIER_LOCATION = 7;
+        SPEED_MOVE_CARRIER_DISTANCE = 8;
+        ISOLATE_FORWARD = 9;
+        ISOLATE_BACKWARD = 10;
+        CALIBRATION = 11;
+        SET_CARRIER_ID_AT_AXIS = 12;
+        PUSH_FORWARD = 13;
+        PUSH_BACKWARD = 14;
+        PULL_FORWARD = 15;
+        PULL_BACKWARD = 16;
+        PUSH_TRANSITION_FORWARD = 17;
+        PUSH_TRANSITION_BACKWARD = 18;
+        PULL_TRANSITION_AXIS_FORWARD = 19;
+        PULL_TRANSITION_AXIS_BACKWARD = 20;
+        PULL_TRANSITION_LOCATION_FORWARD = 21;
+        PULL_TRANSITION_LOCATION_BACKWARD = 22;
     }
     CommandCode command = 1;
     int32 axis = 2;
@@ -320,32 +320,32 @@ message RegisterWw{
 message RegisterWr{
     MessageType message_type = 5;
     enum CommandResponse{
-        CommandResponseUnspecified = 0;
-        NoError = 1;
-        InvalidCommand = 2;
-        CarrierNotFound = 3;
-        HomingFailed = 4;
-        InvalidParameter = 5;
-        InvalidSystemState = 6;
-        CarrierAlreadyExists = 7;
-        InvalidAxis = 8;
+        COMMAND_RESPONSE_UNSPECIFIED = 0;
+        NO_ERROR = 1;
+        INVALID_COMMAND = 2;
+        CARRIER_NOT_FOUND = 3;
+        HOMING_FAILED = 4;
+        INVALID_PARAMETER = 5;
+        INVALID_SYSTEM_STATE = 6;
+        CARRIER_ALREADY_EXISTS = 7;
+        INVALID_AXIS = 8;
     }
     CommandResponse command_response = 1;
     message CommunicationReceived{
         int32 id = 1;
         enum DriverMessageKind{
-            DriverMessageKindUnspecified = 0;
-            none = 1;
-            update = 2;
-            prof_req = 3;
-            prof_noti = 4;
-            update_cali_home = 5;
-            update_mech_angle_offset = 6;
-            on_pos_req = 7;
-            on_pos_rsp = 8;
-            off_pos_req = 9;
-            off_pos_rsp = 10;
-            clear_carrier_info = 11;
+            DRIVER_MESSAGE_KIND_UNSPECIFIED = 0;
+            NONE = 1;
+            UPDATE = 2;
+            PROF_REQ = 3;
+            PROF_NOTI = 4;
+            UPDATE_CALI_HOME = 5;
+            UPDATE_MECH_ANGLE_OFFSET = 6;
+            ON_POS_REQ = 7;
+            ON_POS_RSP = 8;
+            OFF_POS_REQ = 9;
+            OFF_POS_RSP = 10;
+            CLEAR_CARRIER_INFO = 11;
         }
         DriverMessageKind kind = 2;
         bool failed_bcc = 3;
@@ -366,41 +366,41 @@ message RegisterWr{
             }
             CAS cas = 7;
             enum State{
-                StateUnspecified = 0x0;
-                None = 0x1;
+                STATE_UNSPECIFIED = 0;
+                NONE = 1;
 
-                WarmupProgressing = 0x2;
-                WarmupCompleted = 0x3;
+                WARMUP_PROGRESSING = 2;
+                WARMUP_COMPLETED = 3;
 
-                PosMoveProgressing = 0x4;
-                PosMoveCompleted = 0x5;
-                SpdMoveProgressing = 0x6;
-                SpdMoveCompleted = 0x7;
-                Auxiliary = 0x8;
-                AuxiliaryCompleted = 0x9;
+                POS_MOVE_PROGRESSING = 4;
+                POS_MOVE_COMPLETED = 5;
+                SPD_MOVE_PROGRESSING = 6;
+                SPD_MOVE_COMPLETED = 7;
+                AUXILIARY = 8;
+                AUXILIARY_COMPLETED = 9;
 
-                ForwardCalibrationProgressing = 0xA;
-                ForwardCalibrationCompleted = 0xB;
-                BackwardCalibrationProgressing = 0xC;
-                BackwardCalibrationCompleted = 0xD;
+                FORWARD_CALIBRATION_PROGRESSING = 10;
+                FORWARD_CALIBRATION_COMPLETED = 11;
+                BACKWARD_CALIBRATION_PROGRESSING = 12;
+                BACKWARD_CALIBRATION_COMPLETED = 13;
 
-                ForwardIsolationProgressing = 0x10;
-                ForwardIsolationCompleted = 0x11;
-                BackwardIsolationProgressing = 0x12;
-                BackwardIsolationCompleted = 0x13;
-                ForwardRestartProgressing = 0x14;
-                ForwardRestartCompleted = 0x15;
-                BackwardRestartProgressing = 0x16;
-                BackwardRestartCompleted = 0x17;
+                FORWARD_ISOLATION_PROGRESSING = 14;
+                FORWARD_ISOLATION_COMPLETED = 15;
+                BACKWARD_ISOLATION_PROGRESSING = 16;
+                BACKWARD_ISOLATION_COMPLETED = 17;
+                FORWARD_RESTART_PROGRESSING = 18;
+                FORWARD_RESTART_COMPLETED = 19;
+                BACKWARD_RESTART_PROGRESSING = 20;
+                BACKWARD_RESTART_COMPLETED = 21;
 
-                PullForward = 0x19;
-                PullForwardCompleted = 0x1A;
-                PullBackward = 0x1B;
-                PullBackwardCompleted = 0x1C;
-                Push = 0x1D;
-                PushCompleted = 0x1E;
+                PULL_FORWARD = 22;
+                PULL_FORWARD_COMPLETED = 23;
+                PULL_BACKWARD = 24;
+                PULL_BACKWARD_COMPLETED = 25;
+                PUSH = 26;
+                PUSH_COMPLETED = 27;
 
-                Overcurrent = 0x1F;
+                OVERCURRENT = 28;
             }
             State state = 8;
         }
