@@ -22,6 +22,7 @@ pub const MessageType = enum(i32) {
     REGISTER_WW = 9,
     REGISTER_WR = 10,
     SYSTEM_ERROR = 11,
+    MOVE_CARRIER = 12,
     _,
 };
 
@@ -44,6 +45,7 @@ pub const SendCommand = struct {
         stop_pull_carrier,
         auto_initialize,
         stop_push_carrier,
+        move_carrier,
     };
     pub const command_kind_union = union(_command_kind_case) {
         get_x: GetX,
@@ -60,6 +62,7 @@ pub const SendCommand = struct {
         stop_pull_carrier: StopPullCarrier,
         auto_initialize: AutoInitialize,
         stop_push_carrier: StopPushCarrier,
+        move_carrier: MoveCarrier,
         pub const _union_desc = .{
             .get_x = fd(2, .{ .SubMessage = {} }),
             .get_y = fd(3, .{ .SubMessage = {} }),
@@ -75,6 +78,7 @@ pub const SendCommand = struct {
             .stop_pull_carrier = fd(13, .{ .SubMessage = {} }),
             .auto_initialize = fd(14, .{ .SubMessage = {} }),
             .stop_push_carrier = fd(15, .{ .SubMessage = {} }),
+            .move_carrier = fd(16, .{ .SubMessage = {} }),
         };
     };
 
@@ -297,6 +301,35 @@ pub const SendCommand = struct {
 
         pub const _desc_table = .{
             .line_id = fd(1, .{ .Varint = .Simple }),
+        };
+
+        pub usingnamespace protobuf.MessageMixins(@This());
+    };
+
+    pub const MoveCarrier = struct {
+        message_type: MessageType = @enumFromInt(0),
+        line_idx: i32 = 0,
+        carrier_id: i32 = 0,
+        target: ?target_union,
+
+        pub const _target_case = enum {
+            axis_id,
+            location_distance,
+        };
+        pub const target_union = union(_target_case) {
+            axis_id: i32,
+            location_distance: f32,
+            pub const _union_desc = .{
+                .axis_id = fd(4, .{ .Varint = .Simple }),
+                .location_distance = fd(5, .{ .FixedInt = .I32 }),
+            };
+        };
+
+        pub const _desc_table = .{
+            .message_type = fd(1, .{ .Varint = .Simple }),
+            .line_idx = fd(2, .{ .Varint = .Simple }),
+            .carrier_id = fd(3, .{ .Varint = .Simple }),
+            .target = fd(null, .{ .OneOf = target_union }),
         };
 
         pub usingnamespace protobuf.MessageMixins(@This());

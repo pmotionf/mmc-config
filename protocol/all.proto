@@ -14,6 +14,7 @@ enum MessageType{
     REGISTER_WW = 9;
     REGISTER_WR = 10;
     SYSTEM_ERROR = 11;
+    MOVE_CARRIER = 12;
 }
 
 message SendCommand{
@@ -105,6 +106,16 @@ message SendCommand{
         optional int32 line_id = 1;
     }
 
+    message MoveCarrier{
+        MessageType message_type = 1;
+        int32 line_idx = 2;
+        int32 carrier_id = 3;
+        oneof target{
+            int32 axis_id = 4;
+            float location_distance = 5;
+        }
+    }
+
     MessageType message_type = 1;
 
     oneof command_kind{
@@ -122,6 +133,7 @@ message SendCommand{
         StopPullCarrier stop_pull_carrier = 13;
         AutoInitialize auto_initialize = 14;
         StopPushCarrier stop_push_carrier = 15;
+        MoveCarrier move_carrier = 16;
     }
 }
 
