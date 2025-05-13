@@ -29,8 +29,6 @@ pub const MessageType = enum(i32) {
     REGISTER_WW = 9,
     REGISTER_WR = 10,
     SYSTEM_ERROR = 11,
-    MOVE_CARRIER = 12,
-    PUSH_CARRIER = 13,
     _,
 };
 
