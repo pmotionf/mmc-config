@@ -347,13 +347,13 @@ pub const SendCommand = struct {
         line_idx: i32 = 0,
         carrier_id: i32 = 0,
         direction: Direction = @enumFromInt(0),
-        local_axis_id: ?i32 = null,
+        axis_idx: ?i32 = null,
 
         pub const _desc_table = .{
             .line_idx = fd(1, .{ .Varint = .Simple }),
             .carrier_id = fd(2, .{ .Varint = .Simple }),
             .direction = fd(3, .{ .Varint = .Simple }),
-            .local_axis_id = fd(4, .{ .Varint = .Simple }),
+            .axis_idx = fd(4, .{ .Varint = .Simple }),
         };
 
         pub usingnamespace protobuf.MessageMixins(@This());
