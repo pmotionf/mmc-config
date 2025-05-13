@@ -61,25 +61,25 @@ pub const SendCommand = struct {
         auto_initialize: AutoInitialize,
         stop_push_carrier: StopPushCarrier,
         pub const _union_desc = .{
-            .get_x = fd(1, .{ .SubMessage = {} }),
-            .get_y = fd(2, .{ .SubMessage = {} }),
-            .get_wr = fd(3, .{ .SubMessage = {} }),
-            .get_ww = fd(4, .{ .SubMessage = {} }),
-            .get_status = fd(5, .{ .SubMessage = {} }),
-            .get_version = fd(6, .{ .SubMessage = {} }),
-            .clear_errors = fd(7, .{ .SubMessage = {} }),
-            .clear_carrier_info = fd(8, .{ .SubMessage = {} }),
-            .reset_mcl = fd(9, .{ .SubMessage = {} }),
-            .release_axis_servo = fd(10, .{ .SubMessage = {} }),
-            .set_command = fd(11, .{ .SubMessage = {} }),
-            .stop_pull_carrier = fd(12, .{ .SubMessage = {} }),
-            .auto_initialize = fd(13, .{ .SubMessage = {} }),
+            .get_x = fd(2, .{ .SubMessage = {} }),
+            .get_y = fd(3, .{ .SubMessage = {} }),
+            .get_wr = fd(4, .{ .SubMessage = {} }),
+            .get_ww = fd(5, .{ .SubMessage = {} }),
+            .get_status = fd(6, .{ .SubMessage = {} }),
+            .get_version = fd(7, .{ .SubMessage = {} }),
+            .clear_errors = fd(8, .{ .SubMessage = {} }),
+            .clear_carrier_info = fd(9, .{ .SubMessage = {} }),
+            .reset_mcl = fd(10, .{ .SubMessage = {} }),
+            .release_axis_servo = fd(11, .{ .SubMessage = {} }),
+            .set_command = fd(12, .{ .SubMessage = {} }),
+            .stop_pull_carrier = fd(13, .{ .SubMessage = {} }),
+            .auto_initialize = fd(14, .{ .SubMessage = {} }),
             .stop_push_carrier = fd(15, .{ .SubMessage = {} }),
         };
     };
 
     pub const _desc_table = .{
-        .message_type = fd(14, .{ .Varint = .Simple }),
+        .message_type = fd(1, .{ .Varint = .Simple }),
         .command_kind = fd(null, .{ .OneOf = command_kind_union }),
     };
 
@@ -311,9 +311,9 @@ pub const LineConfig = struct {
     line_names: ArrayList(ManagedString),
 
     pub const _desc_table = .{
-        .message_type = fd(3, .{ .Varint = .Simple }),
-        .lines = fd(1, .{ .List = .{ .SubMessage = {} } }),
-        .line_names = fd(2, .{ .List = .String }),
+        .message_type = fd(1, .{ .Varint = .Simple }),
+        .lines = fd(2, .{ .List = .{ .SubMessage = {} } }),
+        .line_names = fd(3, .{ .List = .String }),
     };
 
     pub const LineConfiguration = struct {
@@ -361,10 +361,10 @@ pub const ServerVersion = struct {
     patch: i32 = 0,
 
     pub const _desc_table = .{
-        .message_type = fd(4, .{ .Varint = .Simple }),
-        .major = fd(1, .{ .Varint = .Simple }),
-        .minor = fd(2, .{ .Varint = .Simple }),
-        .patch = fd(3, .{ .Varint = .Simple }),
+        .message_type = fd(1, .{ .Varint = .Simple }),
+        .major = fd(2, .{ .Varint = .Simple }),
+        .minor = fd(3, .{ .Varint = .Simple }),
+        .patch = fd(4, .{ .Varint = .Simple }),
     };
 
     pub usingnamespace protobuf.MessageMixins(@This());
@@ -392,11 +392,11 @@ pub const CarrierStatus = struct {
     state: RegisterWr.Carrier.CarrierDescription.State = @enumFromInt(0),
 
     pub const _desc_table = .{
-        .message_type = fd(5, .{ .Varint = .Simple }),
-        .id = fd(1, .{ .Varint = .Simple }),
-        .axis_idx = fd(2, .{ .SubMessage = {} }),
-        .location = fd(3, .{ .FixedInt = .I32 }),
-        .state = fd(4, .{ .Varint = .Simple }),
+        .message_type = fd(1, .{ .Varint = .Simple }),
+        .id = fd(2, .{ .Varint = .Simple }),
+        .axis_idx = fd(3, .{ .SubMessage = {} }),
+        .location = fd(4, .{ .FixedInt = .I32 }),
+        .state = fd(5, .{ .Varint = .Simple }),
     };
 
     pub const AxisIndices = struct {
@@ -420,9 +420,9 @@ pub const CommandStatus = struct {
     response: RegisterWr.CommandResponse = @enumFromInt(0),
 
     pub const _desc_table = .{
-        .message_type = fd(3, .{ .Varint = .Simple }),
-        .received = fd(1, .{ .Varint = .Simple }),
-        .response = fd(2, .{ .Varint = .Simple }),
+        .message_type = fd(1, .{ .Varint = .Simple }),
+        .received = fd(2, .{ .Varint = .Simple }),
+        .response = fd(3, .{ .Varint = .Simple }),
     };
 
     pub usingnamespace protobuf.MessageMixins(@This());
@@ -455,30 +455,30 @@ pub const RegisterX = struct {
     remote_ready: bool = false,
 
     pub const _desc_table = .{
-        .message_type = fd(24, .{ .Varint = .Simple }),
-        .cc_link_enabled = fd(1, .{ .Varint = .Simple }),
-        .command_ready = fd(2, .{ .Varint = .Simple }),
-        .command_received = fd(3, .{ .Varint = .Simple }),
-        .axis_cleared_carrier = fd(4, .{ .Varint = .Simple }),
-        .cleared_carrier = fd(5, .{ .Varint = .Simple }),
-        .servo_enabled = fd(6, .{ .Varint = .Simple }),
-        .emergency_stop_enabled = fd(7, .{ .Varint = .Simple }),
-        .paused = fd(8, .{ .Varint = .Simple }),
-        .motor_enabled = fd(9, .{ .SubMessage = {} }),
-        .vdc_undervoltage_detected = fd(10, .{ .Varint = .Simple }),
-        .vdc_overvoltage_detected = fd(11, .{ .Varint = .Simple }),
-        .errors_cleared = fd(12, .{ .Varint = .Simple }),
-        .communication_error = fd(13, .{ .SubMessage = {} }),
-        .inverter_overheat_detected = fd(14, .{ .Varint = .Simple }),
-        .overcurrent_detected = fd(15, .{ .SubMessage = {} }),
-        .hall_alarm = fd(16, .{ .SubMessage = {} }),
-        .wait_pull_carrier = fd(17, .{ .SubMessage = {} }),
-        .wait_push_carrier = fd(18, .{ .SubMessage = {} }),
-        .control_loop_max_time_exceeded = fd(19, .{ .Varint = .Simple }),
-        .initial_data_processing_request = fd(20, .{ .Varint = .Simple }),
-        .initial_data_setting_complete = fd(21, .{ .Varint = .Simple }),
-        .error_status = fd(22, .{ .Varint = .Simple }),
-        .remote_ready = fd(23, .{ .Varint = .Simple }),
+        .message_type = fd(1, .{ .Varint = .Simple }),
+        .cc_link_enabled = fd(2, .{ .Varint = .Simple }),
+        .command_ready = fd(3, .{ .Varint = .Simple }),
+        .command_received = fd(4, .{ .Varint = .Simple }),
+        .axis_cleared_carrier = fd(5, .{ .Varint = .Simple }),
+        .cleared_carrier = fd(6, .{ .Varint = .Simple }),
+        .servo_enabled = fd(7, .{ .Varint = .Simple }),
+        .emergency_stop_enabled = fd(8, .{ .Varint = .Simple }),
+        .paused = fd(9, .{ .Varint = .Simple }),
+        .motor_enabled = fd(10, .{ .SubMessage = {} }),
+        .vdc_undervoltage_detected = fd(11, .{ .Varint = .Simple }),
+        .vdc_overvoltage_detected = fd(12, .{ .Varint = .Simple }),
+        .errors_cleared = fd(13, .{ .Varint = .Simple }),
+        .communication_error = fd(14, .{ .SubMessage = {} }),
+        .inverter_overheat_detected = fd(15, .{ .Varint = .Simple }),
+        .overcurrent_detected = fd(16, .{ .SubMessage = {} }),
+        .hall_alarm = fd(17, .{ .SubMessage = {} }),
+        .wait_pull_carrier = fd(18, .{ .SubMessage = {} }),
+        .wait_push_carrier = fd(19, .{ .SubMessage = {} }),
+        .control_loop_max_time_exceeded = fd(20, .{ .Varint = .Simple }),
+        .initial_data_processing_request = fd(21, .{ .Varint = .Simple }),
+        .initial_data_setting_complete = fd(22, .{ .Varint = .Simple }),
+        .error_status = fd(23, .{ .Varint = .Simple }),
+        .remote_ready = fd(24, .{ .Varint = .Simple }),
     };
 
     pub const MotorEnabled = struct {
@@ -594,19 +594,19 @@ pub const RegisterY = struct {
     reset_push_carrier: ?ResetPushCarrier = null,
 
     pub const _desc_table = .{
-        .message_type = fd(13, .{ .Varint = .Simple }),
-        .cc_link_enable = fd(1, .{ .Varint = .Simple }),
-        .start_command = fd(2, .{ .Varint = .Simple }),
-        .reset_command_received = fd(3, .{ .Varint = .Simple }),
-        .axis_clear_carrier = fd(4, .{ .Varint = .Simple }),
-        .clear_carrier = fd(5, .{ .Varint = .Simple }),
-        .axis_servo_release = fd(6, .{ .Varint = .Simple }),
-        .servo_release = fd(7, .{ .Varint = .Simple }),
-        .emergency_stop = fd(8, .{ .Varint = .Simple }),
-        .temporary_pause = fd(9, .{ .Varint = .Simple }),
-        .clear_errors = fd(10, .{ .Varint = .Simple }),
-        .reset_pull_carrier = fd(11, .{ .SubMessage = {} }),
-        .reset_push_carrier = fd(12, .{ .SubMessage = {} }),
+        .message_type = fd(1, .{ .Varint = .Simple }),
+        .cc_link_enable = fd(2, .{ .Varint = .Simple }),
+        .start_command = fd(3, .{ .Varint = .Simple }),
+        .reset_command_received = fd(4, .{ .Varint = .Simple }),
+        .axis_clear_carrier = fd(5, .{ .Varint = .Simple }),
+        .clear_carrier = fd(6, .{ .Varint = .Simple }),
+        .axis_servo_release = fd(7, .{ .Varint = .Simple }),
+        .servo_release = fd(8, .{ .Varint = .Simple }),
+        .emergency_stop = fd(9, .{ .Varint = .Simple }),
+        .temporary_pause = fd(10, .{ .Varint = .Simple }),
+        .clear_errors = fd(11, .{ .Varint = .Simple }),
+        .reset_pull_carrier = fd(12, .{ .SubMessage = {} }),
+        .reset_push_carrier = fd(13, .{ .SubMessage = {} }),
     };
 
     pub const ResetPullCarrier = struct {
@@ -647,10 +647,10 @@ pub const RegisterWw = struct {
     carrier: ?Carrier = null,
 
     pub const _desc_table = .{
-        .message_type = fd(4, .{ .Varint = .Simple }),
-        .command = fd(1, .{ .Varint = .Simple }),
-        .axis = fd(2, .{ .Varint = .Simple }),
-        .carrier = fd(3, .{ .SubMessage = {} }),
+        .message_type = fd(1, .{ .Varint = .Simple }),
+        .command = fd(2, .{ .Varint = .Simple }),
+        .axis = fd(3, .{ .Varint = .Simple }),
+        .carrier = fd(4, .{ .SubMessage = {} }),
     };
 
     pub const CommandCode = enum(i32) {
@@ -729,11 +729,11 @@ pub const RegisterWr = struct {
     carrier: ?Carrier = null,
 
     pub const _desc_table = .{
-        .message_type = fd(5, .{ .Varint = .Simple }),
-        .command_response = fd(1, .{ .Varint = .Simple }),
-        .received_backward = fd(2, .{ .SubMessage = {} }),
-        .received_forward = fd(3, .{ .SubMessage = {} }),
-        .carrier = fd(4, .{ .SubMessage = {} }),
+        .message_type = fd(1, .{ .Varint = .Simple }),
+        .command_response = fd(2, .{ .Varint = .Simple }),
+        .received_backward = fd(3, .{ .SubMessage = {} }),
+        .received_forward = fd(4, .{ .SubMessage = {} }),
+        .carrier = fd(5, .{ .SubMessage = {} }),
     };
 
     pub const CommandResponse = enum(i32) {
