@@ -124,6 +124,14 @@ message SendCommand{
         optional int32 local_axis_id = 4;
     }
 
+    message PullCarrier{
+        int32 line_idx = 1;
+        int32 axis_idx = 2;
+        int32 carrier_id = 3;
+        Direction direction = 4;
+        optional float destination = 5;
+    }
+
     message IsolateCarrier{
         int32 line_idx = 1;
         int32 axis_idx = 2;
@@ -151,7 +159,8 @@ message SendCommand{
         StopPushCarrier stop_push_carrier = 15;
         MoveCarrier move_carrier = 16;
         PushCarrier push_carrier = 17;
-        IsolateCarrier isolate_carrier = 18;
+        PullCarrier pull_carrier = 18;
+        IsolateCarrier isolate_carrier = 19;
     }
 }
 
