@@ -105,22 +105,22 @@ message SendCommand{
         optional int32 line_id = 1;
     }
 
-    MessageType message_type = 14;
+    MessageType message_type = 1;
 
     oneof command_kind{
-        GetX get_x = 1;
-        GetY get_y = 2;
-        GetWr get_wr = 3;
-        GetWw get_ww = 4;
-        GetStatus get_status = 5;
-        NoParam get_version = 6;
-        ClearErrors clear_errors = 7;
-        ClearCarrierInfo clear_carrier_info = 8;
-        NoParam reset_mcl = 9;
-        ReleaseAxisServo release_axis_servo = 10;
-        SetCommand set_command = 11;
-        StopPullCarrier stop_pull_carrier = 12;
-        AutoInitialize auto_initialize = 13;
+        GetX get_x = 2;
+        GetY get_y = 3;
+        GetWr get_wr = 4;
+        GetWw get_ww = 5;
+        GetStatus get_status = 6;
+        NoParam get_version = 7;
+        ClearErrors clear_errors = 8;
+        ClearCarrierInfo clear_carrier_info = 9;
+        NoParam reset_mcl = 10;
+        ReleaseAxisServo release_axis_servo = 11;
+        SetCommand set_command = 12;
+        StopPullCarrier stop_pull_carrier = 13;
+        AutoInitialize auto_initialize = 14;
         StopPushCarrier stop_push_carrier = 15;
     }
 }
@@ -142,16 +142,16 @@ message LineConfig{
         int32 axes = 1;
         repeated Range ranges = 2;
     }
-    MessageType message_type = 3;
-    repeated LineConfiguration lines = 1;
-    repeated string line_names = 2;
+    MessageType message_type = 1;
+    repeated LineConfiguration lines = 2;
+    repeated string line_names = 3;
 }
 
 message ServerVersion{
-    MessageType message_type = 4;
-    int32 major = 1;
-    int32 minor = 2;
-    int32 patch = 3;
+    MessageType message_type = 1;
+    int32 major = 2;
+    int32 minor = 3;
+    int32 patch = 4;
 }
 
 message HallStatus{
@@ -165,50 +165,50 @@ message CarrierStatus{
         int32 main_axis = 1;
         int32 aux_axis = 2;
     }
-    MessageType message_type = 5;
-    int32 id = 1;
-    AxisIndices axis_idx = 2;
-    float location = 3;
-    RegisterWr.Carrier.CarrierDescription.State state = 4;        
+    MessageType message_type = 1;
+    int32 id = 2;
+    AxisIndices axis_idx = 3;
+    float location = 4;
+    RegisterWr.Carrier.CarrierDescription.State state = 5;        
 }
 
 message CommandStatus{
-    MessageType message_type = 3;
-    bool received = 1;
-    RegisterWr.CommandResponse response = 2;
+    MessageType message_type = 1;
+    bool received = 2;
+    RegisterWr.CommandResponse response = 3;
 }
 
 message RegisterX{
-    MessageType message_type = 24;
-    bool cc_link_enabled = 1;
-    bool command_ready = 2;
-    bool command_received = 3;
-    bool axis_cleared_carrier = 4;
-    bool cleared_carrier = 5;
-    bool servo_enabled = 6;
-    bool emergency_stop_enabled = 7;
-    bool paused = 8;
+    MessageType message_type = 1;
+    bool cc_link_enabled = 2;
+    bool command_ready = 3;
+    bool command_received = 4;
+    bool axis_cleared_carrier = 5;
+    bool cleared_carrier = 6;
+    bool servo_enabled = 7;
+    bool emergency_stop_enabled = 8;
+    bool paused = 9;
     message MotorEnabled{
         bool axis1 = 1;
         bool axis2 = 2;
         bool axis3 = 3;
     }
-    MotorEnabled motor_enabled = 9;
-    bool vdc_undervoltage_detected = 10;
-    bool vdc_overvoltage_detected = 11;
-    bool errors_cleared = 12;
+    MotorEnabled motor_enabled = 10;
+    bool vdc_undervoltage_detected = 11;
+    bool vdc_overvoltage_detected = 12;
+    bool errors_cleared = 13;
     message CommunicationError{
         bool from_prev = 1;
         bool from_next = 2;
     }
-    CommunicationError communication_error = 13;
-    bool inverter_overheat_detected = 14;
+    CommunicationError communication_error = 14;
+    bool inverter_overheat_detected = 15;
     message OvercurrentDetected{
         bool axis1 = 1;
         bool axis2 = 2;
         bool axis3 = 3;
     }
-    OvercurrentDetected overcurrent_detected = 15;
+    OvercurrentDetected overcurrent_detected = 16;
     message HallAlarm{
         message Side{
             bool back = 1;
@@ -218,55 +218,55 @@ message RegisterX{
         Side axis2 = 2;
         Side axis3 = 3;
     }
-    HallAlarm hall_alarm = 16;
+    HallAlarm hall_alarm = 17;
     message WaitPullCarrier{
         bool axis1 = 1;
         bool axis2 = 2;
         bool axis3 = 3;
     }
-    WaitPullCarrier wait_pull_carrier = 17;
+    WaitPullCarrier wait_pull_carrier = 18;
     message WaitPushCarrier{
         bool axis1 = 1;
         bool axis2 = 2;
         bool axis3 = 3;
     }
-    WaitPushCarrier wait_push_carrier = 18;
-    bool control_loop_max_time_exceeded = 19;
-    bool initial_data_processing_request = 20;
-    bool initial_data_setting_complete = 21;
-    bool error_status = 22;
-    bool remote_ready = 23;
+    WaitPushCarrier wait_push_carrier = 19;
+    bool control_loop_max_time_exceeded = 20;
+    bool initial_data_processing_request = 21;
+    bool initial_data_setting_complete = 22;
+    bool error_status = 23;
+    bool remote_ready = 24;
 }
 
 message RegisterY{
-    MessageType message_type = 13;
-    bool cc_link_enable = 1;
-    bool start_command = 2;
-    bool reset_command_received = 3;
-    bool axis_clear_carrier = 4;
-    bool clear_carrier = 5;
-    bool axis_servo_release = 6;
-    bool servo_release = 7;
-    bool emergency_stop = 8;
-    bool temporary_pause = 9;
-    bool clear_errors = 10;
+    MessageType message_type = 1;
+    bool cc_link_enable = 2;
+    bool start_command = 3;
+    bool reset_command_received = 4;
+    bool axis_clear_carrier = 5;
+    bool clear_carrier = 6;
+    bool axis_servo_release = 7;
+    bool servo_release = 8;
+    bool emergency_stop = 9;
+    bool temporary_pause = 10;
+    bool clear_errors = 11;
     message ResetPullCarrier{
         bool axis1 = 1;
         bool axis2 = 2;
         bool axis3 = 3;
     }
-    ResetPullCarrier reset_pull_carrier = 11;
+    ResetPullCarrier reset_pull_carrier = 12;
     message ResetPushCarrier{
         bool axis1 = 1;
         bool axis2 = 2;
         bool axis3 = 3;
     }
-    ResetPushCarrier reset_push_carrier = 12;
+    ResetPushCarrier reset_push_carrier = 13;
 
 }
 
 message RegisterWw{
-    MessageType message_type = 4;
+    MessageType message_type = 1;
     enum CommandCode{
         COMMAND_CODE_UNSPECIFIED = 0;
         NONE = 1;
@@ -299,8 +299,8 @@ message RegisterWw{
         PULL_TRANSITION_LOCATION_FORWARD = 21;
         PULL_TRANSITION_LOCATION_BACKWARD = 22;
     }
-    CommandCode command = 1;
-    int32 axis = 2;
+    CommandCode command = 2;
+    int32 axis = 3;
     message Carrier{
         oneof target{
             float f32 = 1;
@@ -314,11 +314,11 @@ message RegisterWw{
         int32 speed = 8;
         int32 acceleration = 9;
     }
-    Carrier carrier = 3;
+    Carrier carrier = 4;
 }
 
 message RegisterWr{
-    MessageType message_type = 5;
+    MessageType message_type = 1;
     enum CommandResponse{
         COMMAND_RESPONSE_UNSPECIFIED = 0;
         NO_ERROR = 1;
@@ -330,7 +330,7 @@ message RegisterWr{
         CARRIER_ALREADY_EXISTS = 7;
         INVALID_AXIS = 8;
     }
-    CommandResponse command_response = 1;
+    CommandResponse command_response = 2;
     message CommunicationReceived{
         int32 id = 1;
         enum DriverMessageKind{
@@ -350,8 +350,8 @@ message RegisterWr{
         DriverMessageKind kind = 2;
         bool failed_bcc = 3;
     }
-    CommunicationReceived received_backward = 2;
-    CommunicationReceived received_forward = 3;
+    CommunicationReceived received_backward = 3;
+    CommunicationReceived received_forward = 4;
     message Carrier{
         message CarrierDescription{
             float location = 1;
@@ -408,7 +408,7 @@ message RegisterWr{
         CarrierDescription axis2 = 2;
         CarrierDescription axis3 = 3;
     }
-    Carrier carrier = 4;
+    Carrier carrier = 5;
 
 }
 
