@@ -317,6 +317,8 @@ pub const SendCommand = struct {
     pub const MoveCarrier = struct {
         line_idx: i32 = 0,
         carrier_id: i32 = 0,
+        speed: i32 = 0,
+        acceleration: i32 = 0,
         target: ?target_union,
 
         pub const _target_case = enum {
@@ -327,14 +329,16 @@ pub const SendCommand = struct {
             axis_id: i32,
             location_distance: f32,
             pub const _union_desc = .{
-                .axis_id = fd(3, .{ .Varint = .Simple }),
-                .location_distance = fd(4, .{ .FixedInt = .I32 }),
+                .axis_id = fd(5, .{ .Varint = .Simple }),
+                .location_distance = fd(6, .{ .FixedInt = .I32 }),
             };
         };
 
         pub const _desc_table = .{
             .line_idx = fd(1, .{ .Varint = .Simple }),
             .carrier_id = fd(2, .{ .Varint = .Simple }),
+            .speed = fd(3, .{ .Varint = .Simple }),
+            .acceleration = fd(4, .{ .Varint = .Simple }),
             .target = fd(null, .{ .OneOf = target_union }),
         };
 
@@ -345,13 +349,17 @@ pub const SendCommand = struct {
         line_idx: i32 = 0,
         carrier_id: i32 = 0,
         direction: Direction = @enumFromInt(0),
+        speed: i32 = 0,
+        acceleration: i32 = 0,
         axis_idx: ?i32 = null,
 
         pub const _desc_table = .{
             .line_idx = fd(1, .{ .Varint = .Simple }),
             .carrier_id = fd(2, .{ .Varint = .Simple }),
             .direction = fd(3, .{ .Varint = .Simple }),
-            .axis_idx = fd(4, .{ .Varint = .Simple }),
+            .speed = fd(4, .{ .Varint = .Simple }),
+            .acceleration = fd(5, .{ .Varint = .Simple }),
+            .axis_idx = fd(6, .{ .Varint = .Simple }),
         };
 
         pub usingnamespace protobuf.MessageMixins(@This());
@@ -362,6 +370,8 @@ pub const SendCommand = struct {
         axis_idx: i32 = 0,
         carrier_id: i32 = 0,
         direction: Direction = @enumFromInt(0),
+        speed: i32 = 0,
+        acceleration: i32 = 0,
         destination: ?f32 = null,
 
         pub const _desc_table = .{
@@ -369,7 +379,9 @@ pub const SendCommand = struct {
             .axis_idx = fd(2, .{ .Varint = .Simple }),
             .carrier_id = fd(3, .{ .Varint = .Simple }),
             .direction = fd(4, .{ .Varint = .Simple }),
-            .destination = fd(5, .{ .FixedInt = .I32 }),
+            .speed = fd(5, .{ .Varint = .Simple }),
+            .acceleration = fd(6, .{ .Varint = .Simple }),
+            .destination = fd(7, .{ .FixedInt = .I32 }),
         };
 
         pub usingnamespace protobuf.MessageMixins(@This());
