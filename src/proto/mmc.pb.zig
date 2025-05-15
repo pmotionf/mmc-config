@@ -34,6 +34,7 @@ pub const MessageType = enum(i32) {
 
 pub const SendCommand = struct {
     message_type: MessageType = @enumFromInt(0),
+    command_code: RegisterWw.CommandCode = @enumFromInt(0),
     command_kind: ?command_kind_union,
 
     pub const _command_kind_case = enum {
@@ -47,7 +48,6 @@ pub const SendCommand = struct {
         clear_carrier_info,
         reset_mcl,
         release_axis_servo,
-        set_command,
         stop_pull_carrier,
         auto_initialize,
         stop_push_carrier,
@@ -67,7 +67,6 @@ pub const SendCommand = struct {
         clear_carrier_info: ClearCarrierInfo,
         reset_mcl: NoParam,
         release_axis_servo: ReleaseAxisServo,
-        set_command: SetCommand,
         stop_pull_carrier: StopPullCarrier,
         auto_initialize: AutoInitialize,
         stop_push_carrier: StopPushCarrier,
@@ -76,17 +75,16 @@ pub const SendCommand = struct {
         pull_carrier: PullCarrier,
         isolate_carrier: IsolateCarrier,
         pub const _union_desc = .{
-            .get_x = fd(2, .{ .SubMessage = {} }),
-            .get_y = fd(3, .{ .SubMessage = {} }),
-            .get_wr = fd(4, .{ .SubMessage = {} }),
-            .get_ww = fd(5, .{ .SubMessage = {} }),
-            .get_status = fd(6, .{ .SubMessage = {} }),
-            .get_version = fd(7, .{ .SubMessage = {} }),
-            .clear_errors = fd(8, .{ .SubMessage = {} }),
-            .clear_carrier_info = fd(9, .{ .SubMessage = {} }),
-            .reset_mcl = fd(10, .{ .SubMessage = {} }),
-            .release_axis_servo = fd(11, .{ .SubMessage = {} }),
-            .set_command = fd(12, .{ .SubMessage = {} }),
+            .get_x = fd(3, .{ .SubMessage = {} }),
+            .get_y = fd(4, .{ .SubMessage = {} }),
+            .get_wr = fd(5, .{ .SubMessage = {} }),
+            .get_ww = fd(6, .{ .SubMessage = {} }),
+            .get_status = fd(7, .{ .SubMessage = {} }),
+            .get_version = fd(8, .{ .SubMessage = {} }),
+            .clear_errors = fd(9, .{ .SubMessage = {} }),
+            .clear_carrier_info = fd(10, .{ .SubMessage = {} }),
+            .reset_mcl = fd(11, .{ .SubMessage = {} }),
+            .release_axis_servo = fd(12, .{ .SubMessage = {} }),
             .stop_pull_carrier = fd(13, .{ .SubMessage = {} }),
             .auto_initialize = fd(14, .{ .SubMessage = {} }),
             .stop_push_carrier = fd(15, .{ .SubMessage = {} }),
@@ -99,6 +97,7 @@ pub const SendCommand = struct {
 
     pub const _desc_table = .{
         .message_type = fd(1, .{ .Varint = .Simple }),
+        .command_code = fd(2, .{ .Varint = .Simple }),
         .command_kind = fd(null, .{ .OneOf = command_kind_union }),
     };
 
@@ -274,32 +273,6 @@ pub const SendCommand = struct {
 
     pub const NoParam = struct {
         pub const _desc_table = .{};
-
-        pub usingnamespace protobuf.MessageMixins(@This());
-    };
-
-    pub const SetCommand = struct {
-        command_code: RegisterWw.CommandCode = @enumFromInt(0),
-        line_idx: i32 = 0,
-        axis_idx: ?i32 = null,
-        carrier_id: ?i32 = null,
-        location_distance: ?f32 = null,
-        speed: ?i32 = null,
-        acceleration: ?i32 = null,
-        link_axis: ?Direction = null,
-        use_sensor: ?Direction = null,
-
-        pub const _desc_table = .{
-            .command_code = fd(1, .{ .Varint = .Simple }),
-            .line_idx = fd(2, .{ .Varint = .Simple }),
-            .axis_idx = fd(3, .{ .Varint = .Simple }),
-            .carrier_id = fd(4, .{ .Varint = .Simple }),
-            .location_distance = fd(5, .{ .FixedInt = .I32 }),
-            .speed = fd(6, .{ .Varint = .Simple }),
-            .acceleration = fd(7, .{ .Varint = .Simple }),
-            .link_axis = fd(8, .{ .Varint = .Simple }),
-            .use_sensor = fd(9, .{ .Varint = .Simple }),
-        };
 
         pub usingnamespace protobuf.MessageMixins(@This());
     };
