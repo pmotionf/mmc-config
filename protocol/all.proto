@@ -90,18 +90,6 @@ message SendCommand{
 
     message NoParam {}
 
-    message SetCommand{
-        RegisterWw.CommandCode command_code = 1;
-        int32 line_idx = 2;
-        optional int32 axis_idx = 3;
-        optional int32 carrier_id = 4;
-        optional float location_distance = 5;
-        optional int32 speed = 6;
-        optional int32 acceleration = 7;
-        optional Direction link_axis = 8;
-        optional Direction use_sensor = 9;
-    }
-
     message AutoInitialize{
         optional int32 line_id = 1;
     }
@@ -145,19 +133,19 @@ message SendCommand{
     }
 
     MessageType message_type = 1;
+    RegisterWw.CommandCode command_code = 2;
 
     oneof command_kind{
-        GetX get_x = 2;
-        GetY get_y = 3;
-        GetWr get_wr = 4;
-        GetWw get_ww = 5;
-        GetStatus get_status = 6;
-        NoParam get_version = 7;
-        ClearErrors clear_errors = 8;
-        ClearCarrierInfo clear_carrier_info = 9;
-        NoParam reset_mcl = 10;
-        ReleaseAxisServo release_axis_servo = 11;
-        SetCommand set_command = 12;
+        GetX get_x = 3;
+        GetY get_y = 4;
+        GetWr get_wr = 5;
+        GetWw get_ww = 6;
+        GetStatus get_status = 7;
+        NoParam get_version = 8;
+        ClearErrors clear_errors = 9;
+        ClearCarrierInfo clear_carrier_info = 10;
+        NoParam reset_mcl = 11;
+        ReleaseAxisServo release_axis_servo = 12;
         StopPullCarrier stop_pull_carrier = 13;
         AutoInitialize auto_initialize = 14;
         StopPushCarrier stop_push_carrier = 15;
