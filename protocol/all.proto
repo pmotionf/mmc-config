@@ -76,7 +76,7 @@ message SendCommand{
         }
         message Hall{
             int32 line_idx = 1;
-            optional int32 axis_idx = 2;
+            int32 axis_idx = 2;
         }
         message Command{
             int32 line_idx = 1;

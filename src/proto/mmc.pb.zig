@@ -248,7 +248,7 @@ pub const SendCommand = struct {
 
         pub const Hall = struct {
             line_idx: i32 = 0,
-            axis_idx: ?i32 = null,
+            axis_idx: i32 = 0,
 
             pub const _desc_table = .{
                 .line_idx = fd(1, .{ .Varint = .Simple }),
