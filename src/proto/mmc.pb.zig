@@ -43,7 +43,6 @@ pub const SendCommand = struct {
         get_y,
         get_wr,
         get_ww,
-        get_status,
         get_version,
         clear_errors,
         clear_carrier_info,
@@ -56,13 +55,14 @@ pub const SendCommand = struct {
         push_carrier,
         pull_carrier,
         isolate_carrier,
+        get_command_status,
+        get_hall_status,
     };
     pub const command_kind_union = union(_command_kind_case) {
         get_x: GetX,
         get_y: GetY,
         get_wr: GetWr,
         get_ww: GetWw,
-        get_status: GetStatus,
         get_version: NoParam,
         clear_errors: ClearErrors,
         clear_carrier_info: ClearCarrierInfo,
@@ -75,12 +75,13 @@ pub const SendCommand = struct {
         push_carrier: PushCarrier,
         pull_carrier: PullCarrier,
         isolate_carrier: IsolateCarrier,
+        get_command_status: GetCommandStatus,
+        get_hall_status: GetHallStatus,
         pub const _union_desc = .{
             .get_x = fd(3, .{ .SubMessage = {} }),
             .get_y = fd(4, .{ .SubMessage = {} }),
             .get_wr = fd(5, .{ .SubMessage = {} }),
             .get_ww = fd(6, .{ .SubMessage = {} }),
-            .get_status = fd(7, .{ .SubMessage = {} }),
             .get_version = fd(8, .{ .SubMessage = {} }),
             .clear_errors = fd(9, .{ .SubMessage = {} }),
             .clear_carrier_info = fd(10, .{ .SubMessage = {} }),
@@ -93,6 +94,8 @@ pub const SendCommand = struct {
             .push_carrier = fd(17, .{ .SubMessage = {} }),
             .pull_carrier = fd(18, .{ .SubMessage = {} }),
             .isolate_carrier = fd(19, .{ .SubMessage = {} }),
+            .get_command_status = fd(20, .{ .SubMessage = {} }),
+            .get_hall_status = fd(21, .{ .SubMessage = {} }),
         };
     };
 
@@ -210,63 +213,23 @@ pub const SendCommand = struct {
         pub usingnamespace protobuf.MessageMixins(@This());
     };
 
-    pub const GetStatus = struct {
-        status_kind: ?status_kind_union,
-
-        pub const _status_kind_case = enum {
-            carrier,
-            hall,
-            command,
-        };
-        pub const status_kind_union = union(_status_kind_case) {
-            carrier: Carrier,
-            hall: Hall,
-            command: Command,
-            pub const _union_desc = .{
-                .carrier = fd(1, .{ .SubMessage = {} }),
-                .hall = fd(2, .{ .SubMessage = {} }),
-                .command = fd(3, .{ .SubMessage = {} }),
-            };
-        };
+    pub const GetHallStatus = struct {
+        line_idx: i32 = 0,
+        axis_idx: i32 = 0,
 
         pub const _desc_table = .{
-            .status_kind = fd(null, .{ .OneOf = status_kind_union }),
+            .line_idx = fd(1, .{ .Varint = .Simple }),
+            .axis_idx = fd(2, .{ .Varint = .Simple }),
         };
 
-        pub const Carrier = struct {
-            line_idx: i32 = 0,
-            axis_idx: ?i32 = null,
-            carrier_id: ?i32 = null,
+        pub usingnamespace protobuf.MessageMixins(@This());
+    };
 
-            pub const _desc_table = .{
-                .line_idx = fd(1, .{ .Varint = .Simple }),
-                .axis_idx = fd(2, .{ .Varint = .Simple }),
-                .carrier_id = fd(3, .{ .Varint = .Simple }),
-            };
+    pub const GetCommandStatus = struct {
+        command_id: i32 = 0,
 
-            pub usingnamespace protobuf.MessageMixins(@This());
-        };
-
-        pub const Hall = struct {
-            line_idx: i32 = 0,
-            axis_idx: i32 = 0,
-
-            pub const _desc_table = .{
-                .line_idx = fd(1, .{ .Varint = .Simple }),
-                .axis_idx = fd(2, .{ .Varint = .Simple }),
-            };
-
-            pub usingnamespace protobuf.MessageMixins(@This());
-        };
-
-        pub const Command = struct {
-            line_idx: i32 = 0,
-
-            pub const _desc_table = .{
-                .line_idx = fd(1, .{ .Varint = .Simple }),
-            };
-
-            pub usingnamespace protobuf.MessageMixins(@This());
+        pub const _desc_table = .{
+            .command_id = fd(1, .{ .Varint = .Simple }),
         };
 
         pub usingnamespace protobuf.MessageMixins(@This());
@@ -486,20 +449,6 @@ pub const CarrierStatus = struct {
         };
 
         pub usingnamespace protobuf.MessageMixins(@This());
-    };
-
-    pub usingnamespace protobuf.MessageMixins(@This());
-};
-
-pub const CommandStatus = struct {
-    message_type: MessageType = @enumFromInt(0),
-    received: bool = false,
-    response: RegisterWr.CommandResponse = @enumFromInt(0),
-
-    pub const _desc_table = .{
-        .message_type = fd(1, .{ .Varint = .Simple }),
-        .received = fd(2, .{ .Varint = .Simple }),
-        .response = fd(3, .{ .Varint = .Simple }),
     };
 
     pub usingnamespace protobuf.MessageMixins(@This());
@@ -949,6 +898,18 @@ pub const CommandID = struct {
     pub const _desc_table = .{
         .message_type = fd(1, .{ .Varint = .Simple }),
         .command_id = fd(2, .{ .Varint = .Simple }),
+    };
+
+    pub usingnamespace protobuf.MessageMixins(@This());
+};
+
+pub const CommandStatus = struct {
+    message_type: MessageType = @enumFromInt(0),
+    is_completed: bool = false,
+
+    pub const _desc_table = .{
+        .message_type = fd(1, .{ .Varint = .Simple }),
+        .is_completed = fd(2, .{ .Varint = .Simple }),
     };
 
     pub usingnamespace protobuf.MessageMixins(@This());
