@@ -77,6 +77,12 @@ message SendCommand{
     message GetCommandStatus{
         int32 command_id = 1;
     }
+    message GetCarrierStatus{
+        oneof param{
+            int32 carrier_id = 1;
+            int32 axis_idx = 2;
+        }
+    }
 
     message NoParam {}
 
@@ -147,6 +153,7 @@ message SendCommand{
         IsolateCarrier isolate_carrier = 19;
         GetCommandStatus get_command_status = 20;
         GetHallStatus get_hall_status = 21;
+        GetCarrierStatus get_carrier_status = 22;
     }
 }
 
@@ -186,15 +193,14 @@ message HallStatus{
 }
 
 message CarrierStatus{
-    message AxisIndices{
-        int32 main_axis = 1;
-        int32 aux_axis = 2;
-    }
     MessageType message_type = 1;
-    int32 id = 2;
-    AxisIndices axis_idx = 3;
-    float location = 4;
-    RegisterWr.Carrier.CarrierDescription.State state = 5;        
+    int32 main_axis = 2;
+    int32 aux_axis = 3;
+    int32 line_idx = 4;
+    float location = 5;
+    int32 id = 6;
+    RegisterWr.Carrier.CarrierDescription.State state = 7;
+    bool is_cas_triggered = 8;        
 }
 
 message RegisterX{
