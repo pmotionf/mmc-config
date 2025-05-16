@@ -69,24 +69,13 @@ message SendCommand{
         optional int32 axis_idx = 2;
     }
 
-    message GetStatus{
-        message Carrier{
-            int32 line_idx = 1;
-            optional int32 axis_idx = 2;
-            optional int32 carrier_id = 3;
-        }
-        message Hall{
-            int32 line_idx = 1;
-            int32 axis_idx = 2;
-        }
-        message Command{
-            int32 line_idx = 1;
-        }
-        oneof status_kind{
-            Carrier carrier = 1;
-            Hall hall = 2;
-            Command command = 3;
-        }
+    message GetHallStatus{
+        int32 line_idx = 1;
+        int32 axis_idx = 2;
+    }
+
+    message GetCommandStatus{
+        int32 command_id = 1;
     }
 
     message NoParam {}
@@ -133,6 +122,9 @@ message SendCommand{
         Direction link_axis = 5;
     }
 
+    // Following protobuf guideline to reserve deleted field number
+    reserved 7;
+
     MessageType message_type = 1;
     RegisterWw.CommandCode command_code = 2;
 
@@ -141,7 +133,6 @@ message SendCommand{
         GetY get_y = 4;
         GetWr get_wr = 5;
         GetWw get_ww = 6;
-        GetStatus get_status = 7;
         NoParam get_version = 8;
         ClearErrors clear_errors = 9;
         ClearCarrierInfo clear_carrier_info = 10;
@@ -154,6 +145,8 @@ message SendCommand{
         PushCarrier push_carrier = 17;
         PullCarrier pull_carrier = 18;
         IsolateCarrier isolate_carrier = 19;
+        GetCommandStatus get_command_status = 20;
+        GetHallStatus get_hall_status = 21;
     }
 }
 
@@ -202,12 +195,6 @@ message CarrierStatus{
     AxisIndices axis_idx = 3;
     float location = 4;
     RegisterWr.Carrier.CarrierDescription.State state = 5;        
-}
-
-message CommandStatus{
-    MessageType message_type = 1;
-    bool received = 2;
-    RegisterWr.CommandResponse response = 3;
 }
 
 message RegisterX{
@@ -447,6 +434,11 @@ message RegisterWr{
 message CommandID{
     MessageType message_type = 1;
     int32 command_id = 2;
+}
+
+message CommandStatus{
+    MessageType message_type = 1;
+    bool is_completed = 2;
 }
 
 message SystemError{
