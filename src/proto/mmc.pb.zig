@@ -29,6 +29,7 @@ pub const MessageType = enum(i32) {
     REGISTER_WW = 9,
     REGISTER_WR = 10,
     SYSTEM_ERROR = 11,
+    COMMAND_ID = 12,
     _,
 };
 
@@ -936,6 +937,18 @@ pub const RegisterWr = struct {
         };
 
         pub usingnamespace protobuf.MessageMixins(@This());
+    };
+
+    pub usingnamespace protobuf.MessageMixins(@This());
+};
+
+pub const CommandID = struct {
+    message_type: MessageType = @enumFromInt(0),
+    command_id: i32 = 0,
+
+    pub const _desc_table = .{
+        .message_type = fd(1, .{ .Varint = .Simple }),
+        .command_id = fd(2, .{ .Varint = .Simple }),
     };
 
     pub usingnamespace protobuf.MessageMixins(@This());
