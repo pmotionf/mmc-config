@@ -20,6 +20,7 @@ enum MessageType{
     REGISTER_WW = 9;
     REGISTER_WR = 10;
     SYSTEM_ERROR = 11;
+    COMMAND_ID = 12;
 }
 
 message SendCommand{
@@ -441,6 +442,11 @@ message RegisterWr{
     }
     Carrier carrier = 5;
 
+}
+
+message CommandID{
+    MessageType message_type = 1;
+    int32 command_id = 2;
 }
 
 message SystemError{
