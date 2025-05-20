@@ -139,9 +139,11 @@ message SendCommand{
     }
 
     // Following protobuf guideline to reserve deleted field number
-    reserved 2,7;
+    reserved 7;
 
     MessageType message_type = 1;
+    RegisterWw.CommandCode command_code = 2;
+
     oneof command_kind{
         GetX get_x = 3;
         GetY get_y = 4;
