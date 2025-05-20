@@ -91,6 +91,11 @@ message SendCommand{
         int32 line_idx = 1;
     }
 
+    message SetLineZero{
+        int32 line_idx = 1;
+        int32 carrier_id = 2;
+    }
+
     message AutoInitialize{
         optional int32 line_id = 1;
     }
@@ -160,6 +165,7 @@ message SendCommand{
         GetHallStatus get_hall_status = 21;
         GetCarrierStatus get_carrier_status = 22;
         Calibrate calibrate = 23;
+        SetLineZero set_line_zero = 24;
     }
 }
 
