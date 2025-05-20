@@ -58,6 +58,7 @@ pub const SendCommand = struct {
         get_command_status,
         get_hall_status,
         get_carrier_status,
+        calibrate,
     };
     pub const command_kind_union = union(_command_kind_case) {
         get_x: GetX,
@@ -79,6 +80,7 @@ pub const SendCommand = struct {
         get_command_status: GetCommandStatus,
         get_hall_status: GetHallStatus,
         get_carrier_status: GetCarrierStatus,
+        calibrate: Calibrate,
         pub const _union_desc = .{
             .get_x = fd(3, .{ .SubMessage = {} }),
             .get_y = fd(4, .{ .SubMessage = {} }),
@@ -99,6 +101,7 @@ pub const SendCommand = struct {
             .get_command_status = fd(20, .{ .SubMessage = {} }),
             .get_hall_status = fd(21, .{ .SubMessage = {} }),
             .get_carrier_status = fd(22, .{ .SubMessage = {} }),
+            .calibrate = fd(23, .{ .SubMessage = {} }),
         };
     };
 
@@ -265,6 +268,16 @@ pub const SendCommand = struct {
 
     pub const NoParam = struct {
         pub const _desc_table = .{};
+
+        pub usingnamespace protobuf.MessageMixins(@This());
+    };
+
+    pub const Calibrate = struct {
+        line_idx: i32 = 0,
+
+        pub const _desc_table = .{
+            .line_idx = fd(1, .{ .Varint = .Simple }),
+        };
 
         pub usingnamespace protobuf.MessageMixins(@This());
     };

@@ -87,6 +87,10 @@ message SendCommand{
 
     message NoParam {}
 
+    message Calibrate{
+        int32 line_idx = 1;
+    }
+
     message AutoInitialize{
         optional int32 line_id = 1;
     }
@@ -155,6 +159,7 @@ message SendCommand{
         GetCommandStatus get_command_status = 20;
         GetHallStatus get_hall_status = 21;
         GetCarrierStatus get_carrier_status = 22;
+        Calibrate calibrate = 23;
     }
 }
 
