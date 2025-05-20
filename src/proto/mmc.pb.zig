@@ -35,7 +35,6 @@ pub const MessageType = enum(i32) {
 
 pub const SendCommand = struct {
     message_type: MessageType = @enumFromInt(0),
-    command_code: RegisterWw.CommandCode = @enumFromInt(0),
     command_kind: ?command_kind_union,
 
     pub const _command_kind_case = enum {
@@ -110,7 +109,6 @@ pub const SendCommand = struct {
 
     pub const _desc_table = .{
         .message_type = fd(1, .{ .Varint = .Simple }),
-        .command_code = fd(2, .{ .Varint = .Simple }),
         .command_kind = fd(null, .{ .OneOf = command_kind_union }),
     };
 
