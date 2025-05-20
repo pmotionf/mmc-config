@@ -78,9 +78,10 @@ message SendCommand{
         int32 command_id = 1;
     }
     message GetCarrierStatus{
+        int32 line_idx = 1;
         oneof param{
-            int32 carrier_id = 1;
-            int32 axis_idx = 2;
+            int32 carrier_id = 2;
+            int32 axis_idx = 3;
         }
     }
 
@@ -200,7 +201,7 @@ message CarrierStatus{
     float location = 5;
     int32 id = 6;
     RegisterWr.Carrier.CarrierDescription.State state = 7;
-    bool is_cas_triggered = 8;        
+    bool is_cas_triggered = 8;
 }
 
 message RegisterX{
