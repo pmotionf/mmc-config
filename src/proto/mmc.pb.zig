@@ -239,6 +239,7 @@ pub const SendCommand = struct {
     };
 
     pub const GetCarrierStatus = struct {
+        line_idx: i32 = 0,
         param: ?param_union,
 
         pub const _param_case = enum {
@@ -249,12 +250,13 @@ pub const SendCommand = struct {
             carrier_id: i32,
             axis_idx: i32,
             pub const _union_desc = .{
-                .carrier_id = fd(1, .{ .Varint = .Simple }),
-                .axis_idx = fd(2, .{ .Varint = .Simple }),
+                .carrier_id = fd(2, .{ .Varint = .Simple }),
+                .axis_idx = fd(3, .{ .Varint = .Simple }),
             };
         };
 
         pub const _desc_table = .{
+            .line_idx = fd(1, .{ .Varint = .Simple }),
             .param = fd(null, .{ .OneOf = param_union }),
         };
 
