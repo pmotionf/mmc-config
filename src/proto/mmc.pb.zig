@@ -953,11 +953,40 @@ pub const CommandID = struct {
 
 pub const CommandStatus = struct {
     message_type: MessageType = @enumFromInt(0),
-    is_completed: bool = false,
+    status: Status = @enumFromInt(0),
+    error_response: ?ErrorType = null,
 
     pub const _desc_table = .{
         .message_type = fd(1, .{ .Varint = .Simple }),
-        .is_completed = fd(2, .{ .Varint = .Simple }),
+        .status = fd(2, .{ .Varint = .Simple }),
+        .error_response = fd(3, .{ .Varint = .Simple }),
+    };
+
+    pub const Status = enum(i32) {
+        STATUS_UNSPECIFIED = 0,
+        PROGRESSING = 1,
+        COMPLETED = 2,
+        FAILED = 3,
+        _,
+    };
+
+    pub const ErrorType = enum(i32) {
+        ERROR_UNSPECIFIED = 0,
+        CC_LINK_DISCONNECTED = 1,
+        VDC_UNDERVOLTAGE_DETECTED = 2,
+        VDC_OVERVOLTAGE_DETECTED = 3,
+        COMMUNICATION_ERROR_DETECTED = 4,
+        INVERTER_OVERHEAT_DETECTED = 5,
+        OVERCURRENT_DETECTED = 6,
+        CONTROL_LOOP_MAX_TIME_EXCEEDED = 7,
+        INVALID_COMMAND = 8,
+        CARRIER_NOT_FOUND = 9,
+        HOMING_FAILED = 10,
+        INVALID_PARAMETER = 11,
+        INVALID_SYSTEM_STATE = 12,
+        CARRIER_ALREADY_EXISTS = 13,
+        INVALID_AXIS = 14,
+        _,
     };
 
     pub usingnamespace protobuf.MessageMixins(@This());
