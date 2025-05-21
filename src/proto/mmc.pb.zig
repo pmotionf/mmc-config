@@ -967,6 +967,7 @@ pub const CommandStatus = struct {
         PROGRESSING = 1,
         COMPLETED = 2,
         FAILED = 3,
+        QUEUED = 4,
         _,
     };
 
@@ -986,6 +987,7 @@ pub const CommandStatus = struct {
         INVALID_SYSTEM_STATE = 12,
         CARRIER_ALREADY_EXISTS = 13,
         INVALID_AXIS = 14,
+        UNEXPECTED = 15,
         _,
     };
 
