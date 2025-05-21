@@ -287,11 +287,9 @@ pub const SendCommand = struct {
 
     pub const SetLineZero = struct {
         line_idx: i32 = 0,
-        carrier_id: i32 = 0,
 
         pub const _desc_table = .{
             .line_idx = fd(1, .{ .Varint = .Simple }),
-            .carrier_id = fd(2, .{ .Varint = .Simple }),
         };
 
         pub usingnamespace protobuf.MessageMixins(@This());

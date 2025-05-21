@@ -93,7 +93,6 @@ message SendCommand{
 
     message SetLineZero{
         int32 line_idx = 1;
-        int32 carrier_id = 2;
     }
 
     message AutoInitialize{
