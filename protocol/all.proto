@@ -460,6 +460,7 @@ message CommandStatus{
         PROGRESSING = 1;
         COMPLETED = 2;
         FAILED = 3;
+        QUEUED = 4;
     }
     Status status = 2;
     enum ErrorType{
@@ -478,6 +479,7 @@ message CommandStatus{
         INVALID_SYSTEM_STATE = 12;
         CARRIER_ALREADY_EXISTS = 13;
         INVALID_AXIS = 14;
+        UNEXPECTED = 15;
     }
     optional ErrorType error_response = 3;
 }
