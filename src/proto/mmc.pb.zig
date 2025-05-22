@@ -964,7 +964,7 @@ pub const CommandStatus = struct {
 
     pub const Status = enum(i32) {
         STATUS_UNSPECIFIED = 0,
-        PROGRESSING = 1,
+        PROCESSING = 1,
         COMPLETED = 2,
         FAILED = 3,
         QUEUED = 4,
