@@ -1,30 +1,10 @@
 const std = @import("std");
+
 const protobuf = @import("protobuf");
 
 pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
-
-    const mdfunc_lib_path = b.option(
-        []const u8,
-        "mdfunc",
-        "Specify the path to the MELSEC static library artifact.",
-    ) orelse if (target.result.cpu.arch == .x86_64)
-        "vendor/mdfunc/lib/x64/MdFunc32.lib"
-    else
-        "vendor/mdfunc/lib/mdfunc32.lib";
-    const mdfunc_mock_build = b.option(
-        bool,
-        "mdfunc_mock",
-        "Enable building a mock version of the MELSEC data link library.",
-    ) orelse (target.result.os.tag != .windows);
-
-    const mcl = b.dependency("mcl", .{
-        .target = target,
-        .optimize = optimize,
-        .mdfunc = mdfunc_lib_path,
-        .mdfunc_mock = mdfunc_mock_build,
-    });
 
     // first create a build for the dependency
     const protobuf_dep = b.dependency("protobuf", .{
@@ -35,7 +15,6 @@ pub fn build(b: *std.Build) !void {
     _ = b.addModule("mmc-config", .{
         .root_source_file = b.path("src/mmc-config.zig"),
         .imports = &.{
-            .{ .name = "mcl", .module = mcl.module("mcl") },
             .{ .name = "protobuf", .module = protobuf_dep.module("protobuf") },
         },
         .target = target,
@@ -45,20 +24,11 @@ pub fn build(b: *std.Build) !void {
     // mmc_config.addImport("mcl", mcl.module("mcl"));
     // mmc_config.addImport("protobuf", protobuf_dep.module("protobuf"));
 
-    const mcl_mock = b.dependency("mcl", .{
-        .target = target,
-        .optimize = optimize,
-        .mdfunc = mdfunc_lib_path,
-        .mdfunc_mock = true,
-    });
-
     const unit_tests = b.addTest(.{
         .root_source_file = b.path("src/mmc-config.zig"),
         .target = target,
         .optimize = optimize,
     });
-
-    unit_tests.root_module.addImport("mcl", mcl_mock.module("mcl"));
     unit_tests.root_module.addImport("protobuf", protobuf_dep.module("protobuf"));
 
     const run_unit_tests = b.addRunArtifact(unit_tests);
