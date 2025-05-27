@@ -81,6 +81,8 @@ message SendCommand{
 
     message AutoInitialize{
         optional int32 line_id = 1;
+        int32 speed = 2;
+        int32 acceleration = 3;
     }
 
     message MoveCarrier{
