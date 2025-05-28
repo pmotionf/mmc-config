@@ -277,14 +277,24 @@ pub const SendCommand = struct {
     };
 
     pub const AutoInitialize = struct {
-        line_id: ?i32 = null,
-        speed: i32 = 0,
-        acceleration: i32 = 0,
+        lines: ArrayList(Lines),
 
         pub const _desc_table = .{
-            .line_id = fd(1, .{ .Varint = .Simple }),
-            .speed = fd(2, .{ .Varint = .Simple }),
-            .acceleration = fd(3, .{ .Varint = .Simple }),
+            .lines = fd(1, .{ .List = .{ .SubMessage = {} } }),
+        };
+
+        pub const Lines = struct {
+            line_idx: i32 = 0,
+            speed: i32 = 0,
+            acceleration: i32 = 0,
+
+            pub const _desc_table = .{
+                .line_idx = fd(1, .{ .Varint = .Simple }),
+                .speed = fd(2, .{ .Varint = .Simple }),
+                .acceleration = fd(3, .{ .Varint = .Simple }),
+            };
+
+            pub usingnamespace protobuf.MessageMixins(@This());
         };
 
         pub usingnamespace protobuf.MessageMixins(@This());
