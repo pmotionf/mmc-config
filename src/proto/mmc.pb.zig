@@ -17,7 +17,6 @@ pub const Direction = enum(i32) {
 };
 
 pub const SendCommand = struct {
-    command_code: Response.RegisterWw.CommandCode = @enumFromInt(0),
     command_kind: ?command_kind_union,
 
     pub const _command_kind_case = enum {
@@ -91,7 +90,6 @@ pub const SendCommand = struct {
     };
 
     pub const _desc_table = .{
-        .command_code = fd(2, .{ .Varint = .Simple }),
         .command_kind = fd(null, .{ .OneOf = command_kind_union }),
     };
 
@@ -305,6 +303,7 @@ pub const SendCommand = struct {
         carrier_id: i32 = 0,
         speed: i32 = 0,
         acceleration: i32 = 0,
+        move_type: MoveType = @enumFromInt(0),
         target: ?target_union,
 
         pub const _target_case = enum {
@@ -325,7 +324,19 @@ pub const SendCommand = struct {
             .carrier_id = fd(2, .{ .Varint = .Simple }),
             .speed = fd(3, .{ .Varint = .Simple }),
             .acceleration = fd(4, .{ .Varint = .Simple }),
+            .move_type = fd(7, .{ .Varint = .Simple }),
             .target = fd(null, .{ .OneOf = target_union }),
+        };
+
+        pub const MoveType = enum(i32) {
+            MOVE_TYPE_UNSPECIFIED = 0,
+            POSITION_AXIS = 1,
+            POSITION_LOCATION = 2,
+            POSITION_DISTANCE = 3,
+            SPEED_AXIS = 4,
+            SPEED_LOCATION = 5,
+            SPEED_DISTANCE = 6,
+            _,
         };
 
         pub usingnamespace protobuf.MessageMixins(@This());

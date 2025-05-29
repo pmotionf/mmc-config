@@ -8,6 +8,7 @@ enum Direction{
 }
 
 message SendCommand{
+    // TODO: Squeeze GetX, GetY, GetWw, GetWr to GetRegister
     message GetX{
         int32 line_idx = 1;
         int32 axis_idx = 2;
@@ -33,6 +34,7 @@ message SendCommand{
         int32 axis_idx = 2;
     }
 
+    // TODO: Squeeze StopPullCarrier and StopPushCarrier to StopPushPull
     message StopPullCarrier{
         int32 line_idx = 1;
         int32 axis_idx = 2;
@@ -89,6 +91,15 @@ message SendCommand{
     }
 
     message MoveCarrier{
+        enum MoveType{
+            MOVE_TYPE_UNSPECIFIED = 0;
+            POSITION_AXIS = 1;
+            POSITION_LOCATION = 2;
+            POSITION_DISTANCE = 3;
+            SPEED_AXIS = 4;
+            SPEED_LOCATION = 5;
+            SPEED_DISTANCE = 6;
+        }
         int32 line_idx = 1;
         int32 carrier_id = 2;
         int32 speed = 3;
@@ -97,6 +108,7 @@ message SendCommand{
             int32 axis_id = 5;
             float location_distance = 6;
         }
+        MoveType move_type = 7;
     }
 
     message PushCarrier{
@@ -127,10 +139,8 @@ message SendCommand{
     }
 
     // Following protobuf guideline to reserve deleted field number
-    reserved 1,7;
+    reserved 1,2,7;
 
-    // TODO: Remove command_code
-    Response.RegisterWw.CommandCode command_code = 2;
     oneof command_kind{
         GetX get_x = 3;
         GetY get_y = 4;
