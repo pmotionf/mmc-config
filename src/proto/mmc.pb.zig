@@ -453,44 +453,19 @@ pub const Response = struct {
     };
 
     pub const LineConfig = struct {
-        lines: ArrayList(LineConfiguration),
-        line_names: ArrayList(ManagedString),
+        lines: ArrayList(Line),
 
         pub const _desc_table = .{
             .lines = fd(1, .{ .List = .{ .SubMessage = {} } }),
-            .line_names = fd(2, .{ .List = .String }),
         };
 
-        pub const LineConfiguration = struct {
+        pub const Line = struct {
             axes: i32 = 0,
-            ranges: ArrayList(Range),
+            name: ManagedString = .Empty,
 
             pub const _desc_table = .{
                 .axes = fd(1, .{ .Varint = .Simple }),
-                .ranges = fd(2, .{ .List = .{ .SubMessage = {} } }),
-            };
-
-            pub const Range = struct {
-                channel: Channel = @enumFromInt(0),
-                start: i32 = 0,
-                end: i32 = 0,
-
-                pub const _desc_table = .{
-                    .channel = fd(1, .{ .Varint = .Simple }),
-                    .start = fd(2, .{ .Varint = .Simple }),
-                    .end = fd(3, .{ .Varint = .Simple }),
-                };
-
-                pub const Channel = enum(i32) {
-                    CHANNEL_UNSPECIFIED = 0,
-                    CC_LINK_1SLOT = 1,
-                    CC_LINK_2SLOT = 2,
-                    CC_LINK_3SLOT = 3,
-                    CC_LINK_4SLOT = 4,
-                    _,
-                };
-
-                pub usingnamespace protobuf.MessageMixins(@This());
+                .name = fd(2, .String),
             };
 
             pub usingnamespace protobuf.MessageMixins(@This());
@@ -531,7 +506,7 @@ pub const Response = struct {
         line_idx: i32 = 0,
         location: f32 = 0,
         id: i32 = 0,
-        state: Response.RegisterWr.Carrier.CarrierDescription.State = @enumFromInt(0),
+        state: Response.RegisterWr.Carrier.Description.State = @enumFromInt(0),
         is_cas_triggered: bool = false,
 
         pub const _desc_table = .{
@@ -891,9 +866,9 @@ pub const Response = struct {
         };
 
         pub const Carrier = struct {
-            axis1: ?CarrierDescription = null,
-            axis2: ?CarrierDescription = null,
-            axis3: ?CarrierDescription = null,
+            axis1: ?Description = null,
+            axis2: ?Description = null,
+            axis3: ?Description = null,
 
             pub const _desc_table = .{
                 .axis1 = fd(1, .{ .SubMessage = {} }),
@@ -901,7 +876,7 @@ pub const Response = struct {
                 .axis3 = fd(3, .{ .SubMessage = {} }),
             };
 
-            pub const CarrierDescription = struct {
+            pub const Description = struct {
                 location: f32 = 0,
                 id: i32 = 0,
                 arrived: bool = false,
