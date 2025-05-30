@@ -168,24 +168,11 @@ message SendCommand{
 
 message Response{
     message LineConfig{
-        message LineConfiguration{
-            message Range{
-                enum Channel{
-                    CHANNEL_UNSPECIFIED = 0;
-                    CC_LINK_1SLOT = 1;
-                    CC_LINK_2SLOT = 2;
-                    CC_LINK_3SLOT = 3;
-                    CC_LINK_4SLOT = 4;
-                }
-                Channel channel = 1;
-                int32 start = 2;
-                int32 end = 3;
-            }
+        message Line{
             int32 axes = 1;
-            repeated Range ranges = 2;
+            string name = 2;
         }
-        repeated LineConfiguration lines = 1;
-        repeated string line_names = 2;
+        repeated Line lines = 1;
     }
 
     message ServerVersion{
@@ -205,7 +192,7 @@ message Response{
         int32 line_idx = 4;
         float location = 5;
         int32 id = 6;
-        RegisterWr.Carrier.CarrierDescription.State state = 7;
+        RegisterWr.Carrier.Description.State state = 7;
         bool is_cas_triggered = 8;
     }
 
@@ -380,7 +367,7 @@ message Response{
         CommunicationReceived received_backward = 2;
         CommunicationReceived received_forward = 3;
         message Carrier{
-            message CarrierDescription{
+            message Description{
                 float location = 1;
                 int32 id = 2;
                 bool arrived = 3;
@@ -431,9 +418,9 @@ message Response{
                 }
                 State state = 8;
             }
-            CarrierDescription axis1 = 1;
-            CarrierDescription axis2 = 2;
-            CarrierDescription axis3 = 3;
+            Description axis1 = 1;
+            Description axis2 = 2;
+            Description axis3 = 3;
         }
         Carrier carrier = 4;
 
