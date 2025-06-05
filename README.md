@@ -1,3 +1,3 @@
-# MMC-CONFIG
+# MMC-API
 
-> Parameter description for commands of PMF's MMC utility.
+> Public client API of MMC server.

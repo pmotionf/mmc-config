@@ -1,7 +1,7 @@
 .{
-    .name = .mmc_config,
+    .name = .mmc_api,
     .version = "0.1.2",
-    .fingerprint = 0x840e319cc984ac0c,
+    .fingerprint = 0xdcdffdab47da9a3f,
     .minimum_zig_version = "0.15.0-dev.369+1a2ceb36c",
     .dependencies = .{
         .protobuf = .{

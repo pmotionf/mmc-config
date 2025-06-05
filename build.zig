@@ -16,8 +16,8 @@ pub fn build(b: *std.Build) !void {
         .optimize = optimize,
     });
 
-    const mod = b.addModule("mmc-config", .{
-        .root_source_file = b.path("src/mmc-config.zig"),
+    const mod = b.addModule("mmc-api", .{
+        .root_source_file = b.path("src/api.zig"),
         .imports = &.{
             .{ .name = "protobuf", .module = protobuf_dep.module("protobuf") },
             .{ .name = "build.zig.zon", .module = build_zig_zon },
