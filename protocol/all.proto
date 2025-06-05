@@ -29,6 +29,11 @@ message SendCommand{
         int32 axis_idx = 2;
     }
 
+    message GetAxisInfo{
+        int32 line_idx = 1;
+        int32 axis_idx = 2;
+    }
+
     message ReleaseAxisServo{
         int32 line_idx = 1;
         int32 axis_idx = 2;
@@ -165,6 +170,7 @@ message SendCommand{
         SetLineZero set_line_zero = 24;
         // Use this command kind when the param is utilized in client interface
         NoParam processed_param = 25;
+        GetAxisInfo get_axis_info = 26;
     }
 }
 
@@ -478,6 +484,10 @@ message Response{
             int32 axis_idx = 2;
         }
         repeated ErrorLocation errors = 1;
+    }
+
+    message AxisInfo{
+        
     }
 
     oneof response{
