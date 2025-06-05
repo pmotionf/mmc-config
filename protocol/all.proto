@@ -163,6 +163,8 @@ message SendCommand{
         GetCarrierStatus get_carrier_status = 22;
         Calibrate calibrate = 23;
         SetLineZero set_line_zero = 24;
+        // Use this command kind when the param is utilized in client interface
+        NoParam processed_param = 25;
     }
 }
 

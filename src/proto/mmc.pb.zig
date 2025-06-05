@@ -41,6 +41,7 @@ pub const SendCommand = struct {
         get_carrier_status,
         calibrate,
         set_line_zero,
+        processed_param,
     };
     pub const command_kind_union = union(_command_kind_case) {
         get_x: GetX,
@@ -64,6 +65,7 @@ pub const SendCommand = struct {
         get_carrier_status: GetCarrierStatus,
         calibrate: Calibrate,
         set_line_zero: SetLineZero,
+        processed_param: NoParam,
         pub const _union_desc = .{
             .get_x = fd(3, .{ .SubMessage = {} }),
             .get_y = fd(4, .{ .SubMessage = {} }),
@@ -86,6 +88,7 @@ pub const SendCommand = struct {
             .get_carrier_status = fd(22, .{ .SubMessage = {} }),
             .calibrate = fd(23, .{ .SubMessage = {} }),
             .set_line_zero = fd(24, .{ .SubMessage = {} }),
+            .processed_param = fd(25, .{ .SubMessage = {} }),
         };
     };
 
