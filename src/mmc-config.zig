@@ -1,8 +1,12 @@
 const std = @import("std");
+const build = @import("build.zig.zon");
 
 pub const protobuf = @import("protobuf");
 
 pub const protobuf_msg = @import("proto/mmc.pb.zig");
+
+pub const version =
+    std.SemanticVersion.parse(build.version) catch unreachable;
 
 // TODO: Find a way to modify generated zig protobuf file to get axis directly
 /// Get axis specific information from a register's field.
