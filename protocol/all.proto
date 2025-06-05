@@ -29,6 +29,11 @@ message SendCommand{
         int32 axis_idx = 2;
     }
 
+    message GetAxisInfo{
+        int32 line_idx = 1;
+        repeated int32 axis_idx = 2;
+    }
+
     message ReleaseAxisServo{
         int32 line_idx = 1;
         int32 axis_idx = 2;
@@ -165,6 +170,7 @@ message SendCommand{
         SetLineZero set_line_zero = 24;
         // Use this command kind when the param is utilized in client interface
         NoParam processed_param = 25;
+        GetAxisInfo get_axis_info = 26;
     }
 }
 
@@ -458,6 +464,7 @@ message Response{
             CARRIER_ALREADY_EXISTS = 13;
             INVALID_AXIS = 14;
             UNEXPECTED = 15;
+            INVALID_LINE = 16;
         }
         optional ErrorType error_response = 2;
     }
@@ -480,6 +487,22 @@ message Response{
         repeated ErrorLocation errors = 1;
     }
 
+    message AxisInfo{
+        message Axis {
+            message HallAlarm{
+                bool front = 1;
+                bool back = 2;
+            }
+            HallAlarm hall_alarm = 1;
+            bool motor_enabled = 2;
+            bool waiting_pull = 3;
+            bool waiting_push = 4;
+            bool overcurrent = 5;
+            int32 carrier_id = 6;
+        }
+        repeated Axis axes = 1;
+    }
+
     oneof response{
         LineConfig line_config = 1;
         ServerVersion server_version = 2;
@@ -492,5 +515,6 @@ message Response{
         CommandID command_id = 9;
         CommandStatus command_status = 10;
         SystemError system_error = 11;
+        AxisInfo axis_info = 12;
     }
 }
