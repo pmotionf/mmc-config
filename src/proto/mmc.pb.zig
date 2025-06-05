@@ -438,6 +438,7 @@ pub const Response = struct {
         command_id,
         command_status,
         system_error,
+        axis_info,
     };
     pub const response_union = union(_response_case) {
         line_config: LineConfig,
@@ -451,6 +452,7 @@ pub const Response = struct {
         command_id: CommandID,
         command_status: CommandStatus,
         system_error: SystemError,
+        axis_info: AxisInfo,
         pub const _union_desc = .{
             .line_config = fd(1, .{ .SubMessage = {} }),
             .server_version = fd(2, .{ .SubMessage = {} }),
@@ -463,6 +465,7 @@ pub const Response = struct {
             .command_id = fd(9, .{ .SubMessage = {} }),
             .command_status = fd(10, .{ .SubMessage = {} }),
             .system_error = fd(11, .{ .SubMessage = {} }),
+            .axis_info = fd(12, .{ .SubMessage = {} }),
         };
     };
 
@@ -1055,7 +1058,33 @@ pub const Response = struct {
     };
 
     pub const AxisInfo = struct {
-        pub const _desc_table = .{};
+        hall_alarm: ?HallAlarm = null,
+        motor_enabled: bool = false,
+        waiting_pull: bool = false,
+        waiting_push: bool = false,
+        overcurrent: bool = false,
+        carrier_id: i32 = 0,
+
+        pub const _desc_table = .{
+            .hall_alarm = fd(1, .{ .SubMessage = {} }),
+            .motor_enabled = fd(2, .{ .Varint = .Simple }),
+            .waiting_pull = fd(3, .{ .Varint = .Simple }),
+            .waiting_push = fd(4, .{ .Varint = .Simple }),
+            .overcurrent = fd(5, .{ .Varint = .Simple }),
+            .carrier_id = fd(6, .{ .Varint = .Simple }),
+        };
+
+        pub const HallAlarm = struct {
+            front: bool = false,
+            back: bool = false,
+
+            pub const _desc_table = .{
+                .front = fd(1, .{ .Varint = .Simple }),
+                .back = fd(2, .{ .Varint = .Simple }),
+            };
+
+            pub usingnamespace protobuf.MessageMixins(@This());
+        };
 
         pub usingnamespace protobuf.MessageMixins(@This());
     };
