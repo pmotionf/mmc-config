@@ -43,6 +43,7 @@ pub const SendCommand = struct {
         set_line_zero,
         processed_param,
         get_axis_info,
+        get_station_info,
     };
     pub const command_kind_union = union(_command_kind_case) {
         get_x: GetX,
@@ -68,6 +69,7 @@ pub const SendCommand = struct {
         set_line_zero: SetLineZero,
         processed_param: NoParam,
         get_axis_info: GetAxisInfo,
+        get_station_info: GetStationInfo,
         pub const _union_desc = .{
             .get_x = fd(3, .{ .SubMessage = {} }),
             .get_y = fd(4, .{ .SubMessage = {} }),
@@ -92,6 +94,7 @@ pub const SendCommand = struct {
             .set_line_zero = fd(24, .{ .SubMessage = {} }),
             .processed_param = fd(25, .{ .SubMessage = {} }),
             .get_axis_info = fd(26, .{ .SubMessage = {} }),
+            .get_station_info = fd(27, .{ .SubMessage = {} }),
         };
     };
 
@@ -154,6 +157,18 @@ pub const SendCommand = struct {
         pub const _desc_table = .{
             .line_idx = fd(1, .{ .Varint = .Simple }),
             .axis_idx = fd(2, .{ .PackedList = .{ .Varint = .Simple } }),
+        };
+
+        pub usingnamespace protobuf.MessageMixins(@This());
+    };
+
+    pub const GetStationInfo = struct {
+        line_idx: i32 = 0,
+        station_idx: ArrayList(i32),
+
+        pub const _desc_table = .{
+            .line_idx = fd(1, .{ .Varint = .Simple }),
+            .station_idx = fd(2, .{ .PackedList = .{ .Varint = .Simple } }),
         };
 
         pub usingnamespace protobuf.MessageMixins(@This());
@@ -439,6 +454,7 @@ pub const Response = struct {
         command_status,
         system_error,
         axis_info,
+        station_info,
     };
     pub const response_union = union(_response_case) {
         line_config: LineConfig,
@@ -453,6 +469,7 @@ pub const Response = struct {
         command_status: CommandStatus,
         system_error: SystemError,
         axis_info: AxisInfo,
+        station_info: StationInfo,
         pub const _union_desc = .{
             .line_config = fd(1, .{ .SubMessage = {} }),
             .server_version = fd(2, .{ .SubMessage = {} }),
@@ -466,6 +483,7 @@ pub const Response = struct {
             .command_status = fd(10, .{ .SubMessage = {} }),
             .system_error = fd(11, .{ .SubMessage = {} }),
             .axis_info = fd(12, .{ .SubMessage = {} }),
+            .station_info = fd(13, .{ .SubMessage = {} }),
         };
     };
 
@@ -1018,6 +1036,7 @@ pub const Response = struct {
             INVALID_AXIS = 14,
             UNEXPECTED = 15,
             INVALID_LINE = 16,
+            INVALID_STATION = 17,
             _,
         };
 
@@ -1089,6 +1108,66 @@ pub const Response = struct {
                 pub const _desc_table = .{
                     .front = fd(1, .{ .Varint = .Simple }),
                     .back = fd(2, .{ .Varint = .Simple }),
+                };
+
+                pub usingnamespace protobuf.MessageMixins(@This());
+            };
+
+            pub usingnamespace protobuf.MessageMixins(@This());
+        };
+
+        pub usingnamespace protobuf.MessageMixins(@This());
+    };
+
+    pub const StationInfo = struct {
+        stations: ArrayList(Station),
+
+        pub const _desc_table = .{
+            .stations = fd(1, .{ .List = .{ .SubMessage = {} } }),
+        };
+
+        pub const Station = struct {
+            connected: bool = false,
+            available: bool = false,
+            servo_enabled: bool = false,
+            stopped: bool = false,
+            paused: bool = false,
+            errors: ?StationError = null,
+
+            pub const _desc_table = .{
+                .connected = fd(1, .{ .Varint = .Simple }),
+                .available = fd(2, .{ .Varint = .Simple }),
+                .servo_enabled = fd(3, .{ .Varint = .Simple }),
+                .stopped = fd(4, .{ .Varint = .Simple }),
+                .paused = fd(5, .{ .Varint = .Simple }),
+                .errors = fd(6, .{ .SubMessage = {} }),
+            };
+
+            pub const StationError = struct {
+                sampling_time_exceeded: bool = false,
+                vdc_overvoltage: bool = false,
+                vdc_undervoltage: bool = false,
+                inverter_overheat: bool = false,
+                communication_error: ?CommError = null,
+
+                pub const _desc_table = .{
+                    .sampling_time_exceeded = fd(1, .{ .Varint = .Simple }),
+                    .vdc_overvoltage = fd(2, .{ .Varint = .Simple }),
+                    .vdc_undervoltage = fd(3, .{ .Varint = .Simple }),
+                    .inverter_overheat = fd(4, .{ .Varint = .Simple }),
+                    .communication_error = fd(5, .{ .SubMessage = {} }),
+                };
+
+                pub const CommError = struct {
+                    from_prev: bool = false,
+                    from_next: bool = false,
+
+                    pub const _desc_table = .{
+                        .from_prev = fd(1, .{ .Varint = .Simple }),
+                        .from_next = fd(2, .{ .Varint = .Simple }),
+                    };
+
+                    pub usingnamespace protobuf.MessageMixins(@This());
                 };
 
                 pub usingnamespace protobuf.MessageMixins(@This());
