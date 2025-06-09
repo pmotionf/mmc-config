@@ -44,6 +44,7 @@ pub const SendCommand = struct {
         processed_param,
         get_axis_info,
         get_station_info,
+        get_api_version,
     };
     pub const command_kind_union = union(_command_kind_case) {
         get_x: GetX,
@@ -70,6 +71,7 @@ pub const SendCommand = struct {
         processed_param: NoParam,
         get_axis_info: GetAxisInfo,
         get_station_info: GetStationInfo,
+        get_api_version: NoParam,
         pub const _union_desc = .{
             .get_x = fd(3, .{ .SubMessage = {} }),
             .get_y = fd(4, .{ .SubMessage = {} }),
@@ -95,6 +97,7 @@ pub const SendCommand = struct {
             .processed_param = fd(25, .{ .SubMessage = {} }),
             .get_axis_info = fd(26, .{ .SubMessage = {} }),
             .get_station_info = fd(27, .{ .SubMessage = {} }),
+            .get_api_version = fd(28, .{ .SubMessage = {} }),
         };
     };
 
@@ -455,10 +458,11 @@ pub const Response = struct {
         system_error,
         axis_info,
         station_info,
+        api_version,
     };
     pub const response_union = union(_response_case) {
         line_config: LineConfig,
-        server_version: ServerVersion,
+        server_version: SemanticVersion,
         hall: HallStatus,
         carrier: CarrierStatus,
         x: RegisterX,
@@ -470,6 +474,7 @@ pub const Response = struct {
         system_error: SystemError,
         axis_info: AxisInfo,
         station_info: StationInfo,
+        api_version: SemanticVersion,
         pub const _union_desc = .{
             .line_config = fd(1, .{ .SubMessage = {} }),
             .server_version = fd(2, .{ .SubMessage = {} }),
@@ -484,6 +489,7 @@ pub const Response = struct {
             .system_error = fd(11, .{ .SubMessage = {} }),
             .axis_info = fd(12, .{ .SubMessage = {} }),
             .station_info = fd(13, .{ .SubMessage = {} }),
+            .api_version = fd(14, .{ .SubMessage = {} }),
         };
     };
 
@@ -513,7 +519,7 @@ pub const Response = struct {
         pub usingnamespace protobuf.MessageMixins(@This());
     };
 
-    pub const ServerVersion = struct {
+    pub const SemanticVersion = struct {
         major: i32 = 0,
         minor: i32 = 0,
         patch: i32 = 0,

@@ -177,6 +177,7 @@ message SendCommand{
         NoParam processed_param = 25;
         GetAxisInfo get_axis_info = 26;
         GetStationInfo get_station_info = 27;
+        NoParam get_api_version = 28;
     }
 }
 
@@ -189,7 +190,7 @@ message Response{
         repeated Line lines = 1;
     }
 
-    message ServerVersion{
+    message SemanticVersion{
         int32 major = 1;
         int32 minor = 2;
         int32 patch = 3;
@@ -535,7 +536,7 @@ message Response{
 
     oneof response{
         LineConfig line_config = 1;
-        ServerVersion server_version = 2;
+        SemanticVersion server_version = 2;
         HallStatus hall = 3;
         CarrierStatus carrier = 4;
         RegisterX x = 5;
@@ -547,5 +548,6 @@ message Response{
         SystemError system_error = 11;
         AxisInfo axis_info = 12;
         StationInfo station_info = 13;
+        SemanticVersion api_version = 14;
     }
 }
