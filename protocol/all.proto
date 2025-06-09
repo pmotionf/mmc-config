@@ -34,6 +34,11 @@ message SendCommand{
         repeated int32 axis_idx = 2;
     }
 
+    message GetStationInfo{
+        int32 line_idx = 1;
+        repeated int32 station_idx = 2;
+    }
+
     message ReleaseAxisServo{
         int32 line_idx = 1;
         int32 axis_idx = 2;
@@ -171,6 +176,7 @@ message SendCommand{
         // Use this command kind when the param is utilized in client interface
         NoParam processed_param = 25;
         GetAxisInfo get_axis_info = 26;
+        GetStationInfo get_station_info = 27;
     }
 }
 
@@ -465,6 +471,7 @@ message Response{
             INVALID_AXIS = 14;
             UNEXPECTED = 15;
             INVALID_LINE = 16;
+            INVALID_STATION = 17;
         }
         optional ErrorType error_response = 2;
     }
@@ -503,6 +510,29 @@ message Response{
         repeated Axis axes = 1;
     }
 
+    message StationInfo{
+        message Station{
+            bool connected = 1;
+            bool available = 2;
+            bool servo_enabled = 3;
+            bool stopped = 4;
+            bool paused = 5;
+            message StationError{
+                bool sampling_time_exceeded = 1;
+                bool vdc_overvoltage = 2;
+                bool vdc_undervoltage = 3;
+                bool inverter_overheat = 4;
+                message CommError{
+                    bool from_prev = 1;
+                    bool from_next = 2;
+                }
+                CommError communication_error = 5;
+            }
+            StationError errors = 6;
+        }
+        repeated Station stations = 1;
+    }
+
     oneof response{
         LineConfig line_config = 1;
         ServerVersion server_version = 2;
@@ -516,5 +546,6 @@ message Response{
         CommandStatus command_status = 10;
         SystemError system_error = 11;
         AxisInfo axis_info = 12;
+        StationInfo station_info = 13;
     }
 }
