@@ -46,7 +46,11 @@ pub fn build(b: *std.Build) !void {
         target,
         .{
             .destination_directory = b.path("src/proto"),
-            .source_files = &.{"protocol/all.proto"},
+            .source_files = &.{
+                "protocol/core.proto",
+                "protocol/command.proto",
+                "protocol/info.proto",
+            },
             .include_directories = &.{},
         },
     );
