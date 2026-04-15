@@ -11,5 +11,5 @@ pub const protobuf = struct {
 pub const cclink = @import("cclink.zig");
 
 test {
-    std.testing.refAllDeclsRecursive(@This());
+    std.testing.refAllDecls(@This());
 }

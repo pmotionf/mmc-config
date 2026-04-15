@@ -177,3 +177,7 @@ pub const Y = packed struct(u64) {
 test "Y" {
     try std.testing.expectEqual(8, @sizeOf(Y));
 }
+
+test {
+    std.testing.refAllDecls(@This());
+}

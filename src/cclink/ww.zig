@@ -75,3 +75,7 @@ test "Ww" {
         ),
     );
 }
+
+test {
+    std.testing.refAllDecls(@This());
+}
