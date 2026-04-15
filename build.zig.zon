@@ -2,11 +2,11 @@
     .name = .mmc_api,
     .version = "0.0.0",
     .fingerprint = 0xdcdffdab47da9a3f,
-    .minimum_zig_version = "0.15.2",
+    .minimum_zig_version = "0.16.0",
     .dependencies = .{
         .protobuf = .{
-            .url = "https://github.com/mochalins/protobuf.zig/archive/477466e.tar.gz",
-            .hash = "protobuf-0.1.0-0e82aqvRAwBo5-ccOGlXywY9X4lkQUx02CwMBE_fq4AI",
+            .url = "https://github.com/Arwalk/zig-protobuf/archive/7673d62.tar.gz",
+            .hash = "protobuf-3.0.0-0e82auyUKACQqyLICPhWm6kJoAru5DNP-idAJMP1W94r",
         },
     },
     .paths = .{""},
