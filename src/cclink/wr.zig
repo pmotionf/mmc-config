@@ -120,3 +120,7 @@ pub const Wr = packed struct(u256) {
 test "Wr" {
     try std.testing.expectEqual(32, @sizeOf(Wr));
 }
+
+test {
+    std.testing.refAllDecls(@This());
+}
