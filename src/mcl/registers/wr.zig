@@ -189,38 +189,8 @@ pub const Wr = packed struct(u256) {
         ChainSlaveCompleted = 66,
     };
 
-    pub fn format(
-        wr: Wr,
-        comptime _: []const u8,
-        _: std.fmt.FormatOptions,
-        writer: anytype,
-    ) !void {
-        try writer.writeAll("Wr: {\n");
-        try writer.print(
-            "\tcommand_response: {},\n",
-            .{wr.command_response},
-        );
-        try writer.writeAll("\tslider_number: {\n");
-        try writer.print("\t\taxis1: {},\n", .{wr.slider_number.axis1});
-        try writer.print("\t\taxis2: {},\n", .{wr.slider_number.axis2});
-        try writer.print("\t\taxis3: {},\n", .{wr.slider_number.axis3});
-        try writer.writeAll("\t},\n");
-        try writer.writeAll("\tslider_location: {\n");
-        try writer.print("\t\taxis1: {},\n", .{wr.slider_location.axis1});
-        try writer.print("\t\taxis2: {},\n", .{wr.slider_location.axis2});
-        try writer.print("\t\taxis3: {},\n", .{wr.slider_location.axis3});
-        try writer.writeAll("\t},\n");
-        try writer.writeAll("\tslider_state: {\n");
-        try writer.print("\t\taxis1: {},\n", .{wr.slider_state.axis1});
-        try writer.print("\t\taxis2: {},\n", .{wr.slider_state.axis2});
-        try writer.print("\t\taxis3: {},\n", .{wr.slider_state.axis3});
-        try writer.writeAll("\t},\n");
-        try writer.writeAll("\tpitch_count: {\n");
-        try writer.print("\t\taxis1: {},\n", .{wr.pitch_count.axis1});
-        try writer.print("\t\taxis2: {},\n", .{wr.pitch_count.axis2});
-        try writer.print("\t\taxis3: {},\n", .{wr.pitch_count.axis3});
-        try writer.writeAll("\t},\n");
-        try writer.writeAll("}\n");
+    pub fn format(wr: Wr, writer: anytype) !void {
+        _ = try registers.nestedWrite("Wr", wr, 0, writer);
     }
 };
 
