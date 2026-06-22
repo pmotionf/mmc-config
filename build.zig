@@ -5,6 +5,23 @@ pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
+    // ***** Options for legacy MCL interface *****
+    const mdfunc_lib_path = b.option(
+        []const u8,
+        "mdfunc",
+        "Specify the path to the MELSEC static library artifact.",
+    ) orelse if (target.result.cpu.arch == .x86_64)
+        "vendor/mdfunc/lib/x64/MdFunc32.lib"
+    else
+        "vendor/mdfunc/lib/mdfunc32.lib";
+
+    const mdfunc_mock_build = b.option(
+        bool,
+        "mdfunc_mock",
+        "Enable building a mock version of the MELSEC data link library.",
+    ) orelse (target.result.os.tag != .windows);
+    // ***** Options for legacy MCL interface *****
+
     const protobuf_dep = b.dependency("protobuf", .{
         .target = target,
         .optimize = optimize,
@@ -53,21 +70,6 @@ pub fn build(b: *std.Build) !void {
     gen_proto.dependOn(&protoc_step.step);
 
     // ***** Building for legacy MCL interface *****
-    const mdfunc_lib_path = b.option(
-        []const u8,
-        "mdfunc",
-        "Specify the path to the MELSEC static library artifact.",
-    ) orelse if (target.result.cpu.arch == .x86_64)
-        "vendor/mdfunc/lib/x64/MdFunc32.lib"
-    else
-        "vendor/mdfunc/lib/mdfunc32.lib";
-
-    const mdfunc_mock_build = b.option(
-        bool,
-        "mdfunc_mock",
-        "Enable building a mock version of the MELSEC data link library.",
-    ) orelse (target.result.os.tag != .windows);
-
     const mdfunc = b.dependency("mdfunc", .{
         .target = target,
         .optimize = optimize,
