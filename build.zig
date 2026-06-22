@@ -89,7 +89,7 @@ pub fn build(b: *std.Build) !void {
         .target = target,
         .optimize = optimize,
         .mdfunc = mdfunc_lib_path,
-        .mock = mdfunc_mock_build,
+        .mock = true,
     });
 
     const test_mod = b.createModule(.{
