@@ -8,17 +8,18 @@ pub const Distance = packed struct(u32) {
     mm: i16 = 0,
     um: i16 = 0,
 
+    /// Cast distance value to millimeter floating point
     pub fn toFloat(self: @This()) f32 {
-        return @as(f32, @floatFromInt(self.mm)) * 0.001 +
-            @as(f32, @floatFromInt(self.um)) * 0.000001;
+        return @as(f32, @floatFromInt(self.mm)) * 1 +
+            @as(f32, @floatFromInt(self.um)) * 0.001;
     }
 
+    /// Cast millimiter unit value to Distance type
     pub fn fromFloat(f: f32) @This() {
-        const mult: f32 = f * 1000.0;
-        const mm: f32 = @trunc(mult);
+        const mm: f32 = @trunc(f);
         return .{
             .mm = @intFromFloat(mm),
-            .um = @intFromFloat((mult - mm) * 1000.0),
+            .um = @intFromFloat((f - mm) * 1000.0),
         };
     }
 };
