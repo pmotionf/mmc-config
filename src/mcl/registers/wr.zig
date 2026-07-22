@@ -6,7 +6,7 @@ const Distance = registers.Distance;
 /// Registers written through CC-Link's "DevWr" device. Used as a "read"
 /// register bank.
 pub const Wr = packed struct(u256) {
-    command_response: CommandResponseCode = .NoError,
+    command_response: CommandResponseCode = .no_error,
     slider_number: packed struct(u48) {
         axis1: u16 = 0,
         axis2: u16 = 0,
@@ -89,25 +89,27 @@ pub const Wr = packed struct(u256) {
     } = .{},
 
     pub const CommandResponseCode = enum(i16) {
-        NoError = 0,
-        InvalidCommand = 1,
-        SliderNotFound = 2,
-        HomingFailed = 3,
-        InvalidParameter = 4,
-        InvalidSystemState = 5,
-        SliderAlreadyExists = 6,
-        InvalidAxis = 7,
+        no_error = 0,
+        invalid_command = 1,
+        slider_not_found = 2,
+        homing_failed = 3,
+        invalid_parameter = 4,
+        invalid_system_state = 5,
+        slider_already_exists = 6,
+        invalid_axis = 7,
+        invalid_target_location = 8,
 
         pub fn throwError(code: CommandResponseCode) !void {
             return switch (code) {
-                .NoError => {},
-                .InvalidCommand => return error.InvalidCommand,
-                .SliderNotFound => return error.SliderNotFound,
-                .HomingFailed => return error.HomingFailed,
-                .InvalidParameter => return error.InvalidParameter,
-                .InvalidSystemState => return error.InvalidSystemState,
-                .SliderAlreadyExists => return error.SliderAlreadyExists,
-                .InvalidAxis => return error.InvalidAxis,
+                .no_error => {},
+                .invalid_command => return error.InvalidCommand,
+                .slider_not_found => return error.SliderNotFound,
+                .homing_failed => return error.HomingFailed,
+                .invalid_parameter => return error.InvalidParameter,
+                .invalid_system_state => return error.InvalidSystemState,
+                .slider_already_exists => return error.SliderAlreadyExists,
+                .invalid_axis => return error.InvalidAxis,
+                .invalid_target_location => return error.InvalidTargetLocation,
             };
         }
     };
