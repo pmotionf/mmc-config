@@ -58,6 +58,24 @@ message Request {
     Resume resume = 16;
     // Change an existing carrier ID to a new unique carrier ID.
     SetCarrierId set_carrier_id = 17;
+    // Send multiple moves and push commands at once. The order of execution
+    // depends on the order of the move in the buffer. Group move command
+    // removes the delay of commands sent to different driver caused by
+    // processing time of a driver to fully execute a command. Canceling this
+    // command will only cancel commands that are not being executed yet by the
+    // target driver.
+    Group group = 18;
+  }
+
+  message Group {
+      repeated CommandGroup commands = 1;
+  }
+
+  message CommandGroup {
+      oneof command {
+          Move move = 1;
+          Push push = 2;
+      }
   }
 
   // Release the control imposed by the motor to the carrier. If a target is
