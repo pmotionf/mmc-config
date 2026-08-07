@@ -55,6 +55,8 @@ message Response {
       float carrier_length = 5;
       // Total number of drivers in the line.
       uint32 drivers = 6;
+      // Carrier dimension perpendicular to carrier movement, in millimeters.
+      float carrier_width = 7;
     }
     // All configured lines in track.
     repeated Line lines = 1;
