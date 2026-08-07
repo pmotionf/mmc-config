@@ -126,7 +126,6 @@ pub const Response = struct {
             axis_length: f32 = 0,
             carrier_length: f32 = 0,
             drivers: u32 = 0,
-            carrier_width: f32 = 0,
 
             pub const _desc_table = .{
                 .id = fd(1, .{ .scalar = .uint32 }),
@@ -135,7 +134,6 @@ pub const Response = struct {
                 .axis_length = fd(4, .{ .scalar = .float }),
                 .carrier_length = fd(5, .{ .scalar = .float }),
                 .drivers = fd(6, .{ .scalar = .uint32 }),
-                .carrier_width = fd(7, .{ .scalar = .float }),
             };
 
             /// Encodes the message to the writer
