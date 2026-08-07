@@ -72,9 +72,9 @@ message Request {
       // Carrier ID.
       uint32 carrier = 2;
       // Axis ID range.
-      Range axes = 3;
+      root.Range axes = 3;
       // Driver ID range.
-      Range drivers = 4;
+      root.Range drivers = 4;
     }
   }
 
@@ -86,7 +86,7 @@ message Request {
     // Line ID.
     uint32 line = 1;
     // Axis ID range.
-    optional Range axes = 2;
+    optional root.Range axes = 2;
   }
 
   // Stop pushing a carrier from the specified axis. If no axis is provided,
@@ -97,7 +97,7 @@ message Request {
     // Line ID.
     uint32 line = 1;
     // Axis ID range.
-    optional Range axes = 2;
+    optional root.Range axes = 2;
   }
 
   // Clear all error information on the driver. If a target is specified,
@@ -110,9 +110,9 @@ message Request {
     uint32 line = 1;
     oneof target {
       // Driver ID range.
-      Range drivers = 2;
+      root.Range drivers = 2;
       // Axis ID range.
-      Range axes = 3;
+      root.Range axes = 3;
       // Carrier ID.
       uint32 carrier = 4;
     }
@@ -128,9 +128,9 @@ message Request {
     uint32 line = 1;
     oneof target {
       // Axis ID range.
-      Range axes = 2;
+      root.Range axes = 2;
       // Driver ID range.
-      Range drivers = 3;
+      root.Range drivers = 3;
       // Carrier ID.
       uint32 carrier = 4;
     }

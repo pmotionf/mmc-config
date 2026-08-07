@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+package root;
+
 message Range {
   // Start of range, inclusive.
   uint32 start = 1;

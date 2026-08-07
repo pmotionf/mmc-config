@@ -50,13 +50,13 @@ message Request {
       // include every axis belonging to the drivers in this range. Carrier
       // information flags will include every carrier currently controlled by
       // one of the drivers in this range.
-      Range drivers = 8;
+      root.Range drivers = 8;
       // Retrieve information from axis ID range. Driver information flags
       // will include drivers that contain one of the axes within this range.
       // Axis information flags will include axes within this range. Carrier
       // information flags will include every carrier currently controlled by
       // one of the axes in this range.
-      Range axes = 9;
+      root.Range axes = 9;
       // Retrieve information from carrier IDs. Driver information flags will
       // include drivers that control one of the carriers within this list.
       // Axis information flags will include axes that control one of the
