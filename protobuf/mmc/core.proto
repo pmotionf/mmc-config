@@ -53,8 +53,15 @@ message Response {
       float axis_length = 4;
       // Carrier dimension parallel to carrier movement, in millimeters.
       float carrier_length = 5;
-      // Total number of drivers in the line.
-      uint32 drivers = 6;
+      // All configured drivers in the line.
+      repeated Response.TrackConfig.Driver drivers = 6;
+    }
+
+    message Driver {
+        // Driver ID.
+        uint32 id = 1;
+        // Total number of axes in the driver.
+        uint32 axes = 2;
     }
     // All configured lines in track.
     repeated Line lines = 1;

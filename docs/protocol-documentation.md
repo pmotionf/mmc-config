@@ -10,7 +10,7 @@
     - [Request.Error](#mmc-Request-Error)
   
 - [range.proto](#range-proto)
-    - [Range](#-Range)
+    - [Range](#root-Range)
   
 - [mmc/command.proto](#mmc_command-proto)
     - [Request](#mmc-command-Request)
@@ -18,7 +18,9 @@
     - [Request.AutoInitialize.Line](#mmc-command-Request-AutoInitialize-Line)
     - [Request.Calibrate](#mmc-command-Request-Calibrate)
     - [Request.ClearErrors](#mmc-command-Request-ClearErrors)
+    - [Request.CommandGroup](#mmc-command-Request-CommandGroup)
     - [Request.Deinitialize](#mmc-command-Request-Deinitialize)
+    - [Request.Group](#mmc-command-Request-Group)
     - [Request.Initialize](#mmc-command-Request-Initialize)
     - [Request.Move](#mmc-command-Request-Move)
     - [Request.Pause](#mmc-command-Request-Pause)
@@ -47,6 +49,7 @@
     - [Response.SemanticVersion](#mmc-core-Response-SemanticVersion)
     - [Response.Server](#mmc-core-Response-Server)
     - [Response.TrackConfig](#mmc-core-Response-TrackConfig)
+    - [Response.TrackConfig.Driver](#mmc-core-Response-TrackConfig-Driver)
     - [Response.TrackConfig.Line](#mmc-core-Response-TrackConfig-Line)
   
     - [Request.Error](#mmc-core-Request-Error)
@@ -152,7 +155,7 @@ type.
 
 
 
-<a name="-Range"></a>
+<a name="root-Range"></a>
 
 ### Range
 
@@ -214,6 +217,7 @@ remains stored in a limited history buffer, and should be cleared with
 | pause | [Request.Pause](#mmc-command-Request-Pause) |  | Activate pause for all drivers in line(s). Pause will cause all carriers to decelerate to rest. On resume, the carriers will continue their previously assigned movement commands. |
 | resume | [Request.Resume](#mmc-command-Request-Resume) |  | Deactivate emergency stop and pause for all drivers in line(s). |
 | set_carrier_id | [Request.SetCarrierId](#mmc-command-Request-SetCarrierId) |  | Change an existing carrier ID to a new unique carrier ID. |
+| group | [Request.Group](#mmc-command-Request-Group) |  | Send multiple moves and push commands at once. The order of execution depends on the order of the move in the buffer. Group move command removes the delay of commands sent to different driver caused by processing time of a driver to fully execute a command. Canceling this command will only cancel commands that are not being executed yet by the target driver. |
 
 
 
@@ -285,9 +289,25 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | line | [uint32](#uint32) |  | Line ID. |
-| drivers | [Range](#-Range) |  | Driver ID range. |
-| axes | [Range](#-Range) |  | Axis ID range. |
+| drivers | [root.Range](#root-Range) |  | Driver ID range. |
+| axes | [root.Range](#root-Range) |  | Axis ID range. |
 | carrier | [uint32](#uint32) |  | Carrier ID. |
+
+
+
+
+
+
+<a name="mmc-command-Request-CommandGroup"></a>
+
+### Request.CommandGroup
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| move | [Request.Move](#mmc-command-Request-Move) |  |  |
+| push | [Request.Push](#mmc-command-Request-Push) |  |  |
 
 
 
@@ -307,9 +327,24 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | line | [uint32](#uint32) |  | Line ID. |
-| axes | [Range](#-Range) |  | Axis ID range. |
-| drivers | [Range](#-Range) |  | Driver ID range. |
+| axes | [root.Range](#root-Range) |  | Axis ID range. |
+| drivers | [root.Range](#root-Range) |  | Driver ID range. |
 | carrier | [uint32](#uint32) |  | Carrier ID. |
+
+
+
+
+
+
+<a name="mmc-command-Request-Group"></a>
+
+### Request.Group
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| commands | [Request.CommandGroup](#mmc-command-Request-CommandGroup) | repeated |  |
 
 
 
@@ -456,8 +491,8 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 | ----- | ---- | ----- | ----------- |
 | line | [uint32](#uint32) |  | Line ID. |
 | carrier | [uint32](#uint32) |  | Carrier ID. |
-| axes | [Range](#-Range) |  | Axis ID range. |
-| drivers | [Range](#-Range) |  | Driver ID range. |
+| axes | [root.Range](#root-Range) |  | Axis ID range. |
+| drivers | [root.Range](#root-Range) |  | Driver ID range. |
 
 
 
@@ -569,7 +604,7 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | line | [uint32](#uint32) |  | Line ID. |
-| axes | [Range](#-Range) | optional | Axis ID range. |
+| axes | [root.Range](#root-Range) | optional | Axis ID range. |
 
 
 
@@ -588,7 +623,7 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | line | [uint32](#uint32) |  | Line ID. |
-| axes | [Range](#-Range) | optional | Axis ID range. |
+| axes | [root.Range](#root-Range) | optional | Axis ID range. |
 
 
 
@@ -778,6 +813,22 @@ Server version and name.
 
 
 
+<a name="mmc-core-Response-TrackConfig-Driver"></a>
+
+### Response.TrackConfig.Driver
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| id | [uint32](#uint32) |  | Driver ID. |
+| axes | [uint32](#uint32) |  | Total number of axes in the driver. |
+
+
+
+
+
+
 <a name="mmc-core-Response-TrackConfig-Line"></a>
 
 ### Response.TrackConfig.Line
@@ -791,8 +842,7 @@ Server version and name.
 | axes | [uint32](#uint32) |  | Total number of axes in the line. |
 | axis_length | [float](#float) |  | Length of each axis in the line, in millimeters. |
 | carrier_length | [float](#float) |  | Carrier dimension parallel to carrier movement, in millimeters. |
-| drivers | [uint32](#uint32) |  | Total number of drivers in the line. |
-| carrier_width | [float](#float) |  | Carrier dimension perpendicular to carrier movement, in millimeters. |
+| drivers | [Response.TrackConfig.Driver](#mmc-core-Response-TrackConfig-Driver) | repeated | All configured drivers in the line. |
 
 
 
@@ -893,8 +943,8 @@ Expected response: `mmc.Response.body.info.body.track`
 | info_axis_state | [bool](#bool) |  | Retrieve axis state information. |
 | info_axis_errors | [bool](#bool) |  | Retrieve axis errors information. |
 | info_carrier_state | [bool](#bool) |  | Retrieve carrier state information. |
-| drivers | [Range](#-Range) |  | Retrieve information from driver ID range. Driver information flags will include drivers within this range. Axis information flags will include every axis belonging to the drivers in this range. Carrier information flags will include every carrier currently controlled by one of the drivers in this range. |
-| axes | [Range](#-Range) |  | Retrieve information from axis ID range. Driver information flags will include drivers that contain one of the axes within this range. Axis information flags will include axes within this range. Carrier information flags will include every carrier currently controlled by one of the axes in this range. |
+| drivers | [root.Range](#root-Range) |  | Retrieve information from driver ID range. Driver information flags will include drivers within this range. Axis information flags will include every axis belonging to the drivers in this range. Carrier information flags will include every carrier currently controlled by one of the drivers in this range. |
+| axes | [root.Range](#root-Range) |  | Retrieve information from axis ID range. Driver information flags will include drivers that contain one of the axes within this range. Axis information flags will include axes within this range. Carrier information flags will include every carrier currently controlled by one of the axes in this range. |
 | carriers | [Request.Track.Ids](#mmc-info-Request-Track-Ids) |  | Retrieve information from carrier IDs. Driver information flags will include drivers that control one of the carriers within this list. Axis information flags will include axes that control one of the carriers within this list. Carrier information flags will include carriers within this list. |
 
 
@@ -1230,3 +1280,4 @@ List of IDs. At least one ID must be provided.
 | <a name="bool" /> bool |  | bool | boolean | boolean | bool | bool | boolean | TrueClass/FalseClass |
 | <a name="string" /> string | A string must always contain UTF-8 encoded or 7-bit ASCII text. | string | String | str/unicode | string | string | string | String (UTF-8) |
 | <a name="bytes" /> bytes | May contain any arbitrary sequence of bytes. | string | ByteString | str | []byte | ByteString | string | String (ASCII-8BIT) |
+
