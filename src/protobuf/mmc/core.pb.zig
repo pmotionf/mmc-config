@@ -125,7 +125,7 @@ pub const Response = struct {
             axes: u32 = 0,
             axis_length: f32 = 0,
             carrier_length: f32 = 0,
-            drivers: u32 = 0,
+            drivers: std.ArrayList(Response.TrackConfig.Driver) = .empty,
 
             pub const _desc_table = .{
                 .id = fd(1, .{ .scalar = .uint32 }),
@@ -133,7 +133,79 @@ pub const Response = struct {
                 .axes = fd(3, .{ .scalar = .uint32 }),
                 .axis_length = fd(4, .{ .scalar = .float }),
                 .carrier_length = fd(5, .{ .scalar = .float }),
-                .drivers = fd(6, .{ .scalar = .uint32 }),
+                .drivers = fd(6, .{ .repeated = .submessage }),
+            };
+
+            /// Encodes the message to the writer
+            /// The allocator is used to generate submessages internally.
+            /// Hence, an ArenaAllocator is a preferred choice if allocations are a bottleneck.
+            pub fn encode(
+                self: @This(),
+                writer: *std.Io.Writer,
+                allocator: std.mem.Allocator,
+            ) (std.Io.Writer.Error || std.mem.Allocator.Error)!void {
+                return protobuf.encode(writer, allocator, self);
+            }
+
+            /// Decodes the message from the bytes read from the reader.
+            pub fn decode(
+                reader: *std.Io.Reader,
+                allocator: std.mem.Allocator,
+            ) (protobuf.DecodingError || std.Io.Reader.Error || std.mem.Allocator.Error)!@This() {
+                return protobuf.decode(@This(), reader, allocator);
+            }
+
+            /// Streaming pull-decoder: walks a `std.Io.Reader` one wire
+            /// field at a time without allocating. See `src/stream.zig`.
+            pub const StreamDecoder = protobuf.StreamDecoder(@This());
+
+            /// Deinitializes and frees the memory associated with the message.
+            pub fn deinit(self: *@This(), allocator: std.mem.Allocator) void {
+                return protobuf.deinit(allocator, self);
+            }
+
+            /// Duplicates the message.
+            pub fn dupe(self: @This(), allocator: std.mem.Allocator) std.mem.Allocator.Error!@This() {
+                return protobuf.dupe(@This(), self, allocator);
+            }
+
+            /// Decodes the message from the JSON string.
+            pub fn jsonDecode(
+                input: []const u8,
+                options: std.json.ParseOptions,
+                allocator: std.mem.Allocator,
+            ) !std.json.Parsed(@This()) {
+                return protobuf.json.decode(@This(), input, options, allocator);
+            }
+
+            /// Encodes the message to a JSON string.
+            pub fn jsonEncode(
+                self: @This(),
+                options: std.json.Stringify.Options,
+                pb_options: protobuf.json.Options,
+                allocator: std.mem.Allocator,
+            ) ![]const u8 {
+                return protobuf.json.encode(self, options, pb_options, allocator);
+            }
+
+            /// This method is used by std.json
+            /// internally for deserialization. DO NOT RENAME!
+            pub fn jsonParse(
+                allocator: std.mem.Allocator,
+                source: anytype,
+                options: std.json.ParseOptions,
+            ) !@This() {
+                return protobuf.json.parse(@This(), allocator, source, options);
+            }
+        };
+
+        pub const Driver = struct {
+            id: u32 = 0,
+            axes: u32 = 0,
+
+            pub const _desc_table = .{
+                .id = fd(1, .{ .scalar = .uint32 }),
+                .axes = fd(2, .{ .scalar = .uint32 }),
             };
 
             /// Encodes the message to the writer
