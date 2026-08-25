@@ -14,6 +14,12 @@ Run the following command to generate the documentation after installing [protoc
 protoc -I=protobuf --doc_out=./docs --doc_opt=markdown,protocol-documentation.md protobuf/*.proto protobuf/mmc/*.proto
 ```
 
+### Generating the documentations
+After generating the Markdown file from the protobuf files, generate the documentation site with the following
+```bash
+mkdocs build
+```
+
 ### View Documentation
 
 For full guidelines on how to use the API, open `site/index.html` in your 
