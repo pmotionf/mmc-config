@@ -493,10 +493,32 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#requestcommandgroup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request.CommandGroup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#requestdeinitialize" class="md-nav__link">
     <span class="md-ellipsis">
       
         Request.Deinitialize
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requestgroup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request.Group
       
     </span>
   </a>
@@ -784,6 +806,17 @@
     <span class="md-ellipsis">
       
         Response.TrackConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#responsetrackconfigdriver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response.TrackConfig.Driver
       
     </span>
   </a>
@@ -1278,10 +1311,32 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#requestcommandgroup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request.CommandGroup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#requestdeinitialize" class="md-nav__link">
     <span class="md-ellipsis">
       
         Request.Deinitialize
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requestgroup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request.Group
       
     </span>
   </a>
@@ -1569,6 +1624,17 @@
     <span class="md-ellipsis">
       
         Response.TrackConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#responsetrackconfigdriver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response.TrackConfig.Driver
       
     </span>
   </a>
@@ -1908,7 +1974,7 @@
 <li>
 <p><a href="#range-proto">range.proto</a></p>
 <ul>
-<li><a href="#-Range">Range</a></li>
+<li><a href="#root-Range">Range</a></li>
 </ul>
 </li>
 <li>
@@ -1919,7 +1985,9 @@
 <li><a href="#mmc-command-Request-AutoInitialize-Line">Request.AutoInitialize.Line</a></li>
 <li><a href="#mmc-command-Request-Calibrate">Request.Calibrate</a></li>
 <li><a href="#mmc-command-Request-ClearErrors">Request.ClearErrors</a></li>
+<li><a href="#mmc-command-Request-CommandGroup">Request.CommandGroup</a></li>
 <li><a href="#mmc-command-Request-Deinitialize">Request.Deinitialize</a></li>
+<li><a href="#mmc-command-Request-Group">Request.Group</a></li>
 <li><a href="#mmc-command-Request-Initialize">Request.Initialize</a></li>
 <li><a href="#mmc-command-Request-Move">Request.Move</a></li>
 <li><a href="#mmc-command-Request-Pause">Request.Pause</a></li>
@@ -1957,6 +2025,7 @@
 <li><a href="#mmc-core-Response-SemanticVersion">Response.SemanticVersion</a></li>
 <li><a href="#mmc-core-Response-Server">Response.Server</a></li>
 <li><a href="#mmc-core-Response-TrackConfig">Response.TrackConfig</a></li>
+<li><a href="#mmc-core-Response-TrackConfig-Driver">Response.TrackConfig.Driver</a></li>
 <li>
 <p><a href="#mmc-core-Response-TrackConfig-Line">Response.TrackConfig.Line</a></p>
 </li>
@@ -2105,7 +2174,7 @@ type.</p>
 <p align="right"><a href="#top">Top</a></p>
 
 <h2 id="rangeproto">range.proto</h2>
-<p><a name="-Range"></a></p>
+<p><a name="root-Range"></a></p>
 <h3 id="range">Range</h3>
 <table>
 <thead>
@@ -2254,6 +2323,12 @@ remains stored in a limited history buffer, and should be cleared with
 <td></td>
 <td>Change an existing carrier ID to a new unique carrier ID.</td>
 </tr>
+<tr>
+<td>group</td>
+<td><a href="#mmc-command-Request-Group">Request.Group</a></td>
+<td></td>
+<td>Send multiple moves and push commands at once. The order of execution depends on the order of the move in the buffer. Group move command removes the delay of commands sent to different driver caused by processing time of a driver to fully execute a command. Canceling this command will only cancel commands that are not being executed yet by the target driver.</td>
+</tr>
 </tbody>
 </table>
 <p><a name="mmc-command-Request-AutoInitialize"></a></p>
@@ -2357,13 +2432,13 @@ clear error information on all drivers of the specified line ID.</p>
 </tr>
 <tr>
 <td>drivers</td>
-<td><a href="#-Range">Range</a></td>
+<td><a href="#root-Range">root.Range</a></td>
 <td></td>
 <td>Driver ID range.</td>
 </tr>
 <tr>
 <td>axes</td>
-<td><a href="#-Range">Range</a></td>
+<td><a href="#root-Range">root.Range</a></td>
 <td></td>
 <td>Axis ID range.</td>
 </tr>
@@ -2372,6 +2447,32 @@ clear error information on all drivers of the specified line ID.</p>
 <td><a href="#uint32">uint32</a></td>
 <td></td>
 <td>Carrier ID.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="mmc-command-Request-CommandGroup"></a></p>
+<h3 id="requestcommandgroup">Request.CommandGroup</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>move</td>
+<td><a href="#mmc-command-Request-Move">Request.Move</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>push</td>
+<td><a href="#mmc-command-Request-Push">Request.Push</a></td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -2399,13 +2500,13 @@ clear all carrier information of the specified line ID.</p>
 </tr>
 <tr>
 <td>axes</td>
-<td><a href="#-Range">Range</a></td>
+<td><a href="#root-Range">root.Range</a></td>
 <td></td>
 <td>Axis ID range.</td>
 </tr>
 <tr>
 <td>drivers</td>
-<td><a href="#-Range">Range</a></td>
+<td><a href="#root-Range">root.Range</a></td>
 <td></td>
 <td>Driver ID range.</td>
 </tr>
@@ -2414,6 +2515,26 @@ clear all carrier information of the specified line ID.</p>
 <td><a href="#uint32">uint32</a></td>
 <td></td>
 <td>Carrier ID.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="mmc-command-Request-Group"></a></p>
+<h3 id="requestgroup">Request.Group</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>commands</td>
+<td><a href="#mmc-command-Request-CommandGroup">Request.CommandGroup</a></td>
+<td>repeated</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -2728,13 +2849,13 @@ Otherwise, all carriers on the provided line will be released from control.</p>
 </tr>
 <tr>
 <td>axes</td>
-<td><a href="#-Range">Range</a></td>
+<td><a href="#root-Range">root.Range</a></td>
 <td></td>
 <td>Axis ID range.</td>
 </tr>
 <tr>
 <td>drivers</td>
-<td><a href="#-Range">Range</a></td>
+<td><a href="#root-Range">root.Range</a></td>
 <td></td>
 <td>Driver ID range.</td>
 </tr>
@@ -2891,7 +3012,7 @@ then all pending carrier pulls on the line will be stopped.</p>
 </tr>
 <tr>
 <td>axes</td>
-<td><a href="#-Range">Range</a></td>
+<td><a href="#root-Range">root.Range</a></td>
 <td>optional</td>
 <td>Axis ID range.</td>
 </tr>
@@ -2920,7 +3041,7 @@ then all pending carrier pushes on the line will be stopped.</p>
 </tr>
 <tr>
 <td>axes</td>
-<td><a href="#-Range">Range</a></td>
+<td><a href="#root-Range">root.Range</a></td>
 <td>optional</td>
 <td>Axis ID range.</td>
 </tr>
@@ -3260,6 +3381,32 @@ then all pending carrier pushes on the line will be stopped.</p>
 </tr>
 </tbody>
 </table>
+<p><a name="mmc-core-Response-TrackConfig-Driver"></a></p>
+<h3 id="responsetrackconfigdriver">Response.TrackConfig.Driver</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td><a href="#uint32">uint32</a></td>
+<td></td>
+<td>Driver ID.</td>
+</tr>
+<tr>
+<td>axes</td>
+<td><a href="#uint32">uint32</a></td>
+<td></td>
+<td>Total number of axes in the driver.</td>
+</tr>
+</tbody>
+</table>
 <p><a name="mmc-core-Response-TrackConfig-Line"></a></p>
 <h3 id="responsetrackconfigline">Response.TrackConfig.Line</h3>
 <table>
@@ -3304,15 +3451,9 @@ then all pending carrier pushes on the line will be stopped.</p>
 </tr>
 <tr>
 <td>drivers</td>
-<td><a href="#uint32">uint32</a></td>
-<td></td>
-<td>Total number of drivers in the line.</td>
-</tr>
-<tr>
-<td>carrier_width</td>
-<td><a href="#float">float</a></td>
-<td></td>
-<td>Carrier dimension perpendicular to carrier movement, in millimeters.</td>
+<td><a href="#mmc-core-Response-TrackConfig-Driver">Response.TrackConfig.Driver</a></td>
+<td>repeated</td>
+<td>All configured drivers in the line.</td>
 </tr>
 </tbody>
 </table>
@@ -3475,13 +3616,13 @@ from the track.</p>
 </tr>
 <tr>
 <td>drivers</td>
-<td><a href="#-Range">Range</a></td>
+<td><a href="#root-Range">root.Range</a></td>
 <td></td>
 <td>Retrieve information from driver ID range. Driver information flags will include drivers within this range. Axis information flags will include every axis belonging to the drivers in this range. Carrier information flags will include every carrier currently controlled by one of the drivers in this range.</td>
 </tr>
 <tr>
 <td>axes</td>
-<td><a href="#-Range">Range</a></td>
+<td><a href="#root-Range">root.Range</a></td>
 <td></td>
 <td>Retrieve information from axis ID range. Driver information flags will include drivers that contain one of the axes within this range. Axis information flags will include axes within this range. Carrier information flags will include every carrier currently controlled by one of the axes in this range.</td>
 </tr>
