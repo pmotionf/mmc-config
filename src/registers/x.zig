@@ -1,7 +1,7 @@
 const std = @import("std");
-const cclink = @import("../cclink.zig");
+const registers = @import("../registers.zig");
 
-const Direction = cclink.Direction;
+const Direction = registers.Direction;
 
 /// Registers written through CC-Link's "DevX" device. Used as a "read"
 /// register bank.
@@ -264,7 +264,7 @@ pub const X = packed struct(u64) {
     _57: u7 = 0, //X39,X3A,X3B,X3C,X3D,X3E,X3F
 
     pub fn format(x: X, writer: anytype) !void {
-        _ = try cclink.nestedWrite("X", x, 0, writer);
+        _ = try registers.nestedWrite("X", x, 0, writer);
     }
 };
 

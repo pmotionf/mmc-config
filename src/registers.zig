@@ -1,9 +1,9 @@
-pub const X = @import("cclink/x.zig").X;
-pub const Y = @import("cclink/y.zig").Y;
-pub const Wr = @import("cclink/wr.zig").Wr;
-pub const Ww = @import("cclink/ww.zig").Ww;
+pub const X = @import("registers/x.zig").X;
+pub const Y = @import("registers/y.zig").Y;
+pub const Wr = @import("registers/wr.zig").Wr;
+pub const Ww = @import("registers/ww.zig").Ww;
 
-pub const version = std.SemanticVersion.parse("0.1.0") catch unreachable;
+pub const version = std.SemanticVersion.parse("2.0.6") catch unreachable;
 
 pub const Direction = enum(u1) {
     backward = 0,

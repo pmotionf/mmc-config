@@ -1,7 +1,7 @@
 const std = @import("std");
-const cclink = @import("../cclink.zig");
+const registers = @import("../registers.zig");
 
-const Distance = cclink.Distance;
+const Distance = registers.Distance;
 
 /// Registers written through CC-Link's "DevWw" device. Used as a "write"
 /// register bank.
@@ -43,7 +43,7 @@ pub const Ww = packed struct(u256) {
     };
 
     pub fn format(ww: Ww, writer: anytype) !void {
-        _ = try cclink.nestedWrite("Ww", ww, 0, writer);
+        _ = try registers.nestedWrite("Ww", ww, 0, writer);
     }
 };
 
