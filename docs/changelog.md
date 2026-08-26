@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-08-26
+
+### Changed
+- **BREAKING:** Track configuration returns `drivers` of a line as array of `Response.TrackConfig.Driver` instead of number of drivers in a line
+
+## [2.1.0] - 2026-08-11
+
+### Added
+- Allow sending multiple `push` and `move` commands at once using `group` command
+- Upgrade zig version to zig 0.16.0
+
 ## [2.0.0] - 2026-03-16
 
 ### Added
