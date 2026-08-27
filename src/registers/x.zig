@@ -209,7 +209,7 @@ pub const X = packed struct(u64) {
             };
         }
     } = .{},
-    _x2f: u1 = 0, //X2F
+    _2f: u1 = 0, //X2F
     hall_alarm_abnormal: packed struct(u6) {
         axis1: packed struct(u2) { //X30,X31
             back: bool = false,
@@ -261,7 +261,7 @@ pub const X = packed struct(u64) {
             };
         }
     } = .{},
-    _57: u7 = 0, //X39,X3A,X3B,X3C,X3D,X3E,X3F
+    _39: u7 = 0, //X39,X3A,X3B,X3C,X3D,X3E,X3F
 
     pub fn format(x: X, writer: anytype) !void {
         _ = try registers.nestedWrite("X", x, 0, writer);

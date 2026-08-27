@@ -153,6 +153,7 @@ pub const Wr = packed struct(u256) {
         BackwardCalibrationCompleted = 59,
         BackwardCalibrationFault = 60,
         ForwardCalibrationFault = 61,
+        LockedUp = 62,
         _,
     };
 

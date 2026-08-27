@@ -12,7 +12,7 @@ pub const Ww = packed struct(u256) {
     location_distance: Distance = .{},
     speed_percentage: u16 = 0,
     acceleration_percentage: u16 = 0,
-    _112: u144 = 0,
+    _07: u144 = 0,
 
     pub const CommandCode = enum(u16) {
         None = 0,
