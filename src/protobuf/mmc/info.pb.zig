@@ -126,6 +126,7 @@ pub const Request = struct {
         info_axis_state: bool = false,
         info_axis_errors: bool = false,
         info_carrier_state: bool = false,
+        register: Request.Track.Register = @enumFromInt(0),
         filter: ?filter_union = null,
 
         pub const _filter_case = enum {
@@ -151,7 +152,17 @@ pub const Request = struct {
             .info_axis_state = fd(4, .{ .scalar = .bool }),
             .info_axis_errors = fd(5, .{ .scalar = .bool }),
             .info_carrier_state = fd(6, .{ .scalar = .bool }),
+            .register = fd(11, .@"enum"),
             .filter = fd(null, .{ .oneof = filter_union }),
+        };
+
+        pub const Register = enum(i32) {
+            REGISTER_UNSPECIFIED = 0,
+            REGISTER_X = 1,
+            REGISTER_Y = 2,
+            REGISTER_WR = 3,
+            REGISTER_WW = 4,
+            _,
         };
 
         /// List of IDs. At least one ID must be provided.
@@ -617,6 +628,7 @@ pub const Response = struct {
         axis_state: std.ArrayList(Response.Line.Axis.State) = .empty,
         axis_errors: std.ArrayList(Response.Line.Axis.Error) = .empty,
         carrier_state: std.ArrayList(Response.Line.Carrier.State) = .empty,
+        register_values: std.ArrayList(Response.Line.RegisterValue) = .empty,
 
         pub const _desc_table = .{
             .id = fd(1, .{ .scalar = .uint32 }),
@@ -625,6 +637,79 @@ pub const Response = struct {
             .axis_state = fd(4, .{ .repeated = .submessage }),
             .axis_errors = fd(5, .{ .repeated = .submessage }),
             .carrier_state = fd(6, .{ .repeated = .submessage }),
+            .register_values = fd(7, .{ .repeated = .submessage }),
+        };
+
+        pub const RegisterValue = struct {
+            address: u32 = 0,
+            value: u32 = 0,
+
+            pub const _desc_table = .{
+                .address = fd(1, .{ .scalar = .uint32 }),
+                .value = fd(2, .{ .scalar = .uint32 }),
+            };
+
+            /// Encodes the message to the writer
+            /// The allocator is used to generate submessages internally.
+            /// Hence, an ArenaAllocator is a preferred choice if allocations are a bottleneck.
+            pub fn encode(
+                self: @This(),
+                writer: *std.Io.Writer,
+                allocator: std.mem.Allocator,
+            ) (std.Io.Writer.Error || std.mem.Allocator.Error)!void {
+                return protobuf.encode(writer, allocator, self);
+            }
+
+            /// Decodes the message from the bytes read from the reader.
+            pub fn decode(
+                reader: *std.Io.Reader,
+                allocator: std.mem.Allocator,
+            ) (protobuf.DecodingError || std.Io.Reader.Error || std.mem.Allocator.Error)!@This() {
+                return protobuf.decode(@This(), reader, allocator);
+            }
+
+            /// Streaming pull-decoder: walks a `std.Io.Reader` one wire
+            /// field at a time without allocating. See `src/stream.zig`.
+            pub const StreamDecoder = protobuf.StreamDecoder(@This());
+
+            /// Deinitializes and frees the memory associated with the message.
+            pub fn deinit(self: *@This(), allocator: std.mem.Allocator) void {
+                return protobuf.deinit(allocator, self);
+            }
+
+            /// Duplicates the message.
+            pub fn dupe(self: @This(), allocator: std.mem.Allocator) std.mem.Allocator.Error!@This() {
+                return protobuf.dupe(@This(), self, allocator);
+            }
+
+            /// Decodes the message from the JSON string.
+            pub fn jsonDecode(
+                input: []const u8,
+                options: std.json.ParseOptions,
+                allocator: std.mem.Allocator,
+            ) !std.json.Parsed(@This()) {
+                return protobuf.json.decode(@This(), input, options, allocator);
+            }
+
+            /// Encodes the message to a JSON string.
+            pub fn jsonEncode(
+                self: @This(),
+                options: std.json.Stringify.Options,
+                pb_options: protobuf.json.Options,
+                allocator: std.mem.Allocator,
+            ) ![]const u8 {
+                return protobuf.json.encode(self, options, pb_options, allocator);
+            }
+
+            /// This method is used by std.json
+            /// internally for deserialization. DO NOT RENAME!
+            pub fn jsonParse(
+                allocator: std.mem.Allocator,
+                source: anytype,
+                options: std.json.ParseOptions,
+            ) !@This() {
+                return protobuf.json.parse(@This(), allocator, source, options);
+            }
         };
 
         pub const Axis = struct {
