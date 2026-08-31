@@ -76,7 +76,6 @@
     - [Response.Track](#mmc-info-Response-Track)
   
     - [Request.Error](#mmc-info-Request-Error)
-    - [Request.Track.Register](#mmc-info-Request-Track-Register)
     - [Response.Command.Error](#mmc-info-Response-Command-Error)
     - [Response.Command.Status](#mmc-info-Response-Command-Status)
     - [Response.Line.Carrier.State.State](#mmc-info-Response-Line-Carrier-State-State)
@@ -945,7 +944,10 @@ Expected response: `mmc.Response.body.info.body.track`
 | info_axis_state | [bool](#bool) |  | Retrieve axis state information. |
 | info_axis_errors | [bool](#bool) |  | Retrieve axis errors information. |
 | info_carrier_state | [bool](#bool) |  | Retrieve carrier state information. |
-| register | [Request.Track.Register](#mmc-info-Request-Track-Register) |  |  |
+| register_x | [bool](#bool) |  | Retrieve CC-Link X register information. |
+| register_y | [bool](#bool) |  | Retrieve CC-Link Y register information. |
+| register_ww | [bool](#bool) |  | Retrieve CC-Link WW register information. |
+| register_wr | [bool](#bool) |  | Retrieve CC-Link WR register information. |
 | drivers | [root.Range](#root-Range) |  | Retrieve information from driver ID range. Driver information flags will include drivers within this range. Axis information flags will include every axis belonging to the drivers in this range. Carrier information flags will include every carrier currently controlled by one of the drivers in this range. |
 | axes | [root.Range](#root-Range) |  | Retrieve information from axis ID range. Driver information flags will include drivers that contain one of the axes within this range. Axis information flags will include axes within this range. Carrier information flags will include every carrier currently controlled by one of the axes in this range. |
 | carriers | [Request.Track.Ids](#mmc-info-Request-Track-Ids) |  | Retrieve information from carrier IDs. Driver information flags will include drivers that control one of the carriers within this list. Axis information flags will include axes that control one of the carriers within this list. Carrier information flags will include carriers within this list. |
@@ -1033,7 +1035,10 @@ List of IDs. At least one ID must be provided.
 | axis_state | [Response.Line.Axis.State](#mmc-info-Response-Line-Axis-State) | repeated | Axis state information list. Empty if request flag was disabled. |
 | axis_errors | [Response.Line.Axis.Error](#mmc-info-Response-Line-Axis-Error) | repeated | Axis error information list. Empty if request flag was disabled. |
 | carrier_state | [Response.Line.Carrier.State](#mmc-info-Response-Line-Carrier-State) | repeated | Carrier state information list. Empty if request flag was disabled. |
-| register_values | [Response.Line.RegisterValue](#mmc-info-Response-Line-RegisterValue) | repeated | Register Value information. |
+| register_x | [Response.Line.RegisterValue](#mmc-info-Response-Line-RegisterValue) | repeated | X register values. Empty if register_x was not requested. |
+| register_y | [Response.Line.RegisterValue](#mmc-info-Response-Line-RegisterValue) | repeated | Y register values. Empty if register_y was not requested. |
+| register_ww | [Response.Line.RegisterValue](#mmc-info-Response-Line-RegisterValue) | repeated | WW register values. Empty if register_ww was not requested. |
+| register_wr | [Response.Line.RegisterValue](#mmc-info-Response-Line-RegisterValue) | repeated | WR register values. Empty if register_wr was not requested. |
 
 
 
@@ -1217,21 +1222,6 @@ List of IDs. At least one ID must be provided.
 | INFO_REQUEST_ERROR_COMMAND_NOT_FOUND | 5 | Attempted to request information from a non-existing command. |
 | INFO_REQUEST_ERROR_INVALID_COMMAND | 6 | Command index is out of bounds for the configured command status buffer. |
 | INFO_REQUEST_ERROR_INVALID_CARRIER | 7 | Attempted to send a command to carrier outside of range. |
-
-
-
-<a name="mmc-info-Request-Track-Register"></a>
-
-### Request.Track.Register
-
-
-| Name | Number | Description |
-| ---- | ------ | ----------- |
-| REGISTER_UNSPECIFIED | 0 |  |
-| REGISTER_X | 1 |  |
-| REGISTER_Y | 2 |  |
-| REGISTER_WR | 3 |  |
-| REGISTER_WW | 4 |  |
 
 
 

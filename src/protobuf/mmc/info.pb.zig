@@ -126,7 +126,10 @@ pub const Request = struct {
         info_axis_state: bool = false,
         info_axis_errors: bool = false,
         info_carrier_state: bool = false,
-        register: Request.Track.Register = @enumFromInt(0),
+        register_x: bool = false,
+        register_y: bool = false,
+        register_ww: bool = false,
+        register_wr: bool = false,
         filter: ?filter_union = null,
 
         pub const _filter_case = enum {
@@ -152,17 +155,11 @@ pub const Request = struct {
             .info_axis_state = fd(4, .{ .scalar = .bool }),
             .info_axis_errors = fd(5, .{ .scalar = .bool }),
             .info_carrier_state = fd(6, .{ .scalar = .bool }),
-            .register = fd(11, .@"enum"),
+            .register_x = fd(11, .{ .scalar = .bool }),
+            .register_y = fd(12, .{ .scalar = .bool }),
+            .register_ww = fd(13, .{ .scalar = .bool }),
+            .register_wr = fd(14, .{ .scalar = .bool }),
             .filter = fd(null, .{ .oneof = filter_union }),
-        };
-
-        pub const Register = enum(i32) {
-            REGISTER_UNSPECIFIED = 0,
-            REGISTER_X = 1,
-            REGISTER_Y = 2,
-            REGISTER_WR = 3,
-            REGISTER_WW = 4,
-            _,
         };
 
         /// List of IDs. At least one ID must be provided.
@@ -628,7 +625,10 @@ pub const Response = struct {
         axis_state: std.ArrayList(Response.Line.Axis.State) = .empty,
         axis_errors: std.ArrayList(Response.Line.Axis.Error) = .empty,
         carrier_state: std.ArrayList(Response.Line.Carrier.State) = .empty,
-        register_values: std.ArrayList(Response.Line.RegisterValue) = .empty,
+        register_x: std.ArrayList(Response.Line.RegisterValue) = .empty,
+        register_y: std.ArrayList(Response.Line.RegisterValue) = .empty,
+        register_ww: std.ArrayList(Response.Line.RegisterValue) = .empty,
+        register_wr: std.ArrayList(Response.Line.RegisterValue) = .empty,
 
         pub const _desc_table = .{
             .id = fd(1, .{ .scalar = .uint32 }),
@@ -637,7 +637,10 @@ pub const Response = struct {
             .axis_state = fd(4, .{ .repeated = .submessage }),
             .axis_errors = fd(5, .{ .repeated = .submessage }),
             .carrier_state = fd(6, .{ .repeated = .submessage }),
-            .register_values = fd(7, .{ .repeated = .submessage }),
+            .register_x = fd(7, .{ .repeated = .submessage }),
+            .register_y = fd(8, .{ .repeated = .submessage }),
+            .register_ww = fd(9, .{ .repeated = .submessage }),
+            .register_wr = fd(10, .{ .repeated = .submessage }),
         };
 
         pub const RegisterValue = struct {
