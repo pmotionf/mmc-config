@@ -378,8 +378,8 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 | ----- | ---- | ----- | ----------- |
 | line | [uint32](#uint32) |  | Line ID. |
 | carrier | [uint32](#uint32) |  | Carrier ID. |
-| velocity | [float](#float) |  | Velocity of carrier movement. Floating point with range 0.1 - 6,000 mm/s. |
-| acceleration | [float](#float) |  | Acceleration of carrier movement. Floating point with range 100 - 24,500 mm/s^2. |
+| velocity_percent | [uint32](#uint32) |  | Velocity of carrier movement in percent. Maximum velocity 3 m/s. |
+| acceleration_percent | [uint32](#uint32) |  | Acceleration of carrier movement in percent. Maximum acceleration 3 g. |
 | axis | [uint32](#uint32) |  | Move carrier to the center of the axis. |
 | location | [float](#float) |  | Move carrier to relative location to the zero-point of the line, which is set by default at the center of the line&#39;s first axis after calibration command. |
 | distance | [float](#float) |  | Move carrier to relative distance to current carrier position. Negative distance moves the carrier backwards. |
@@ -422,8 +422,8 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 | axis | [uint32](#uint32) |  | Axis ID. |
 | carrier | [uint32](#uint32) |  | ID for the incoming carrier. |
 | direction | [Request.Direction](#mmc-command-Request-Direction) |  | The direction from which the incoming carrier is moving. |
-| velocity | [float](#float) |  | Velocity of carrier movement. Floating point with range 0.1 - 6,000 mm/s. When the transition location target is set to `NaN`, the velocity must be 0. |
-| acceleration | [float](#float) |  | Acceleration of carrier movement. Floating point with range 100 - 24,500 mm/s^2. When the transition location target is set to `NaN`, the acceleration must be 0. |
+| velocity_percent | [uint32](#uint32) |  | Velocity of carrier movement in percent. Maximum velocity 3 m/s. |
+| acceleration_percent | [uint32](#uint32) |  | Acceleration of carrier movement in percent. Maximum acceleration 3 g. |
 | transition | [Request.Pull.Transition](#mmc-command-Request-Pull-Transition) | optional | Smoothly transition to carrier movement after pull completion. |
 
 
@@ -460,8 +460,8 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 | line | [uint32](#uint32) |  | Line ID. |
 | axis | [uint32](#uint32) |  | Axis ID. |
 | direction | [Request.Direction](#mmc-command-Request-Direction) |  | Direction of carrier movement. |
-| velocity | [float](#float) |  | Velocity of carrier movement. Floating point with range 0.1 - 6,000 mm/s. |
-| acceleration | [float](#float) |  | Acceleration of carrier movement. Floating point with range 100 - 24,500 mm/s^2. |
+| velocity_percent | [uint32](#uint32) |  | Velocity of carrier movement in percent. Maximum velocity 3 m/s. |
+| acceleration_percent | [uint32](#uint32) |  | Acceleration of carrier movement in percent. Maximum acceleration 3 g. |
 | carrier | [uint32](#uint32) | optional | Carrier ID. If provided, wait for the specified carrier at the axis and push it once the carrier arrives. |
 
 
