@@ -1036,11 +1036,9 @@ pub const Request = struct {
         };
 
         pub const Transition = struct {
-            control: mmc.Control = @enumFromInt(0),
             target: f32 = 0,
 
             pub const _desc_table = .{
-                .control = fd(1, .@"enum"),
                 .target = fd(6, .{ .scalar = .float }),
             };
 

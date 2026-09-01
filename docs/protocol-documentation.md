@@ -439,7 +439,6 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| control | [mmc.Control](#mmc-Control) |  | Control method for moving carrier. |
 | target | [float](#float) |  | Move carrier to relative location to the zero-point of the line, which is set by default at the center of the line&#39;s first axis after calibration, but can also be set with the `SetZero` command. Pass NaN to pull carrier without motor control, allowing carrier to be pulled with external force. |
 
 

@@ -240,10 +240,8 @@ message Request {
     optional Transition transition = 7;
 
     message Transition {
-      reserved "axis", "location", "distance", "disable_cas";
-      reserved 2 to 5;
-      // Control method for moving carrier.
-      mmc.Control control = 1;
+      reserved "axis", "location", "distance", "disable_cas", "control";
+      reserved 1 to 5;
       // Move carrier to relative location to the zero-point of the line,
       // which is set by default at the center of the line's first axis after
       // calibration, but can also be set with the `SetZero` command.
