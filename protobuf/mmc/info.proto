@@ -188,8 +188,6 @@ message Response {
         bool motor_active = 2;
         // Axis is waiting to pull carrier.
         bool waiting_pull = 3;
-        // Axis is waiting to push carrier.
-        bool waiting_push = 4;
         // Carrier ID; non-zero if an initialized carrier is on the axis.
         uint32 carrier = 5;
         // Axis back hall alarm is active. Magnet is detected above back hall
@@ -279,8 +277,6 @@ message Response {
           // Carrier initialization completed. May now be used for normal
           // operation.
           CARRIER_STATE_INITIALIZE_COMPLETED = 6;
-          // Carrier is being pushed by axis. Used to eject carrier from line.
-          CARRIER_STATE_PUSHING = 7;
           // Carrier is being pulled by axis. Must not be used until pull is
           // completed.
           CARRIER_STATE_PULLING = 9;

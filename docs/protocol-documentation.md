@@ -1007,7 +1007,6 @@ List of IDs. At least one ID must be provided.
 | id | [uint32](#uint32) |  | Axis ID. |
 | motor_active | [bool](#bool) |  | Axis is currently controlling a carrier. |
 | waiting_pull | [bool](#bool) |  | Axis is waiting to pull carrier. |
-| waiting_push | [bool](#bool) |  | Axis is waiting to push carrier. |
 | carrier | [uint32](#uint32) |  | Carrier ID; non-zero if an initialized carrier is on the axis. |
 | hall_alarm_back | [bool](#bool) |  | Axis back hall alarm is active. Magnet is detected above back hall sensor. |
 | hall_alarm_front | [bool](#bool) |  | Axis front hall alarm is active. Magnet is detected above front hall sensor. |
@@ -1180,7 +1179,6 @@ List of IDs. At least one ID must be provided.
 | CARRIER_STATE_MOVE_COMPLETED | 4 | Carrier has arrived within threshold at target destination. |
 | CARRIER_STATE_INITIALIZING | 5 | Carrier is initializing. Must not be used until initialization is completed. |
 | CARRIER_STATE_INITIALIZE_COMPLETED | 6 | Carrier initialization completed. May now be used for normal operation. |
-| CARRIER_STATE_PUSHING | 7 | Carrier is being pushed by axis. Used to eject carrier from line. |
 | CARRIER_STATE_PULLING | 9 | Carrier is being pulled by axis. Must not be used until pull is completed. |
 | CARRIER_STATE_OVERCURRENT | 11 | Overcurrent detected in carrier axis motor. Carrier movement has been canceled. |
 
