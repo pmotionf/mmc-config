@@ -1083,8 +1083,6 @@ pub const Response = struct {
                 position: f32 = 0,
                 axis_main: u32 = 0,
                 axis_auxiliary: ?u32 = null,
-                cas_disabled: bool = false,
-                cas_triggered: bool = false,
                 state: Response.Line.Carrier.State.State = @enumFromInt(0),
 
                 pub const _desc_table = .{
@@ -1092,8 +1090,6 @@ pub const Response = struct {
                     .position = fd(2, .{ .scalar = .float }),
                     .axis_main = fd(3, .{ .scalar = .uint32 }),
                     .axis_auxiliary = fd(4, .{ .scalar = .uint32 }),
-                    .cas_disabled = fd(5, .{ .scalar = .bool }),
-                    .cas_triggered = fd(6, .{ .scalar = .bool }),
                     .state = fd(7, .@"enum"),
                 };
 

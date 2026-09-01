@@ -840,7 +840,6 @@ pub const Request = struct {
         velocity: f32 = 0,
         acceleration: f32 = 0,
         control: mmc.Control = @enumFromInt(0),
-        disable_cas: bool = false,
         target: ?target_union = null,
 
         pub const _target_case = enum {
@@ -865,7 +864,6 @@ pub const Request = struct {
             .velocity = fd(3, .{ .scalar = .float }),
             .acceleration = fd(4, .{ .scalar = .float }),
             .control = fd(8, .@"enum"),
-            .disable_cas = fd(9, .{ .scalar = .bool }),
             .target = fd(null, .{ .oneof = target_union }),
         };
 
@@ -1039,12 +1037,10 @@ pub const Request = struct {
 
         pub const Transition = struct {
             control: mmc.Control = @enumFromInt(0),
-            disable_cas: bool = false,
             target: f32 = 0,
 
             pub const _desc_table = .{
                 .control = fd(1, .@"enum"),
-                .disable_cas = fd(2, .{ .scalar = .bool }),
                 .target = fd(6, .{ .scalar = .float }),
             };
 

@@ -384,7 +384,6 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 | location | [float](#float) |  | Move carrier to relative location to the zero-point of the line, which is set by default at the center of the line&#39;s first axis after calibration command. |
 | distance | [float](#float) |  | Move carrier to relative distance to current carrier position. Negative distance moves the carrier backwards. |
 | control | [mmc.Control](#mmc-Control) |  | Control method for moving carrier. |
-| disable_cas | [bool](#bool) |  | Disable the carrier&#39;s collision avoidance system (CAS). |
 
 
 
@@ -441,7 +440,6 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | control | [mmc.Control](#mmc-Control) |  | Control method for moving carrier. |
-| disable_cas | [bool](#bool) |  | Disabling the carrier&#39;s collision avoidance system (CAS). |
 | target | [float](#float) |  | Move carrier to relative location to the zero-point of the line, which is set by default at the center of the line&#39;s first axis after calibration, but can also be set with the `SetZero` command. Pass NaN to pull carrier without motor control, allowing carrier to be pulled with external force. |
 
 
@@ -1042,8 +1040,6 @@ List of IDs. At least one ID must be provided.
 | position | [float](#float) |  | Position of the carrier in line, in meters. |
 | axis_main | [uint32](#uint32) |  | Carrier&#39;s primary axis ID. |
 | axis_auxiliary | [uint32](#uint32) | optional | Carrier&#39;s auxiliary axis ID, if carrier is on top of two axes. |
-| cas_disabled | [bool](#bool) |  | Collision avoidance system (CAS) disabled. |
-| cas_triggered | [bool](#bool) |  | Collision avoidance system (CAS) triggered. Carrier will automatically resume movement when path is clear. |
 | state | [Response.Line.Carrier.State.State](#mmc-info-Response-Line-Carrier-State-State) |  | Carrier state. |
 
 
