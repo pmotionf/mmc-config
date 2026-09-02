@@ -72,7 +72,7 @@
     - [Response.Line.Driver](#mmc-info-Response-Line-Driver)
     - [Response.Line.Driver.Error](#mmc-info-Response-Line-Driver-Error)
     - [Response.Line.Driver.State](#mmc-info-Response-Line-Driver-State)
-    - [Response.Line.RegisterValue](#mmc-info-Response-Line-RegisterValue)
+    - [Response.Line.Register](#mmc-info-Response-Line-Register)
     - [Response.Track](#mmc-info-Response-Track)
   
     - [Request.Error](#mmc-info-Request-Error)
@@ -1035,10 +1035,10 @@ List of IDs. At least one ID must be provided.
 | axis_state | [Response.Line.Axis.State](#mmc-info-Response-Line-Axis-State) | repeated | Axis state information list. Empty if request flag was disabled. |
 | axis_errors | [Response.Line.Axis.Error](#mmc-info-Response-Line-Axis-Error) | repeated | Axis error information list. Empty if request flag was disabled. |
 | carrier_state | [Response.Line.Carrier.State](#mmc-info-Response-Line-Carrier-State) | repeated | Carrier state information list. Empty if request flag was disabled. |
-| register_x | [Response.Line.RegisterValue](#mmc-info-Response-Line-RegisterValue) | repeated | X register values. Empty if register_x was not requested. |
-| register_y | [Response.Line.RegisterValue](#mmc-info-Response-Line-RegisterValue) | repeated | Y register values. Empty if register_y was not requested. |
-| register_ww | [Response.Line.RegisterValue](#mmc-info-Response-Line-RegisterValue) | repeated | WW register values. Empty if register_ww was not requested. |
-| register_wr | [Response.Line.RegisterValue](#mmc-info-Response-Line-RegisterValue) | repeated | WR register values. Empty if register_wr was not requested. |
+| register_x | [Response.Line.Register](#mmc-info-Response-Line-Register) | repeated | X register values. Empty if register_x was not requested. |
+| register_y | [Response.Line.Register](#mmc-info-Response-Line-Register) | repeated | Y register values. Empty if register_y was not requested. |
+| register_ww | [Response.Line.Register](#mmc-info-Response-Line-Register) | repeated | WW register values. Empty if register_ww was not requested. |
+| register_wr | [Response.Line.Register](#mmc-info-Response-Line-Register) | repeated | WR register values. Empty if register_wr was not requested. |
 
 
 
@@ -1174,16 +1174,16 @@ List of IDs. At least one ID must be provided.
 
 
 
-<a name="mmc-info-Response-Line-RegisterValue"></a>
+<a name="mmc-info-Response-Line-Register"></a>
 
-### Response.Line.RegisterValue
+### Response.Line.Register
 
 
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| address | [uint32](#uint32) |  |  |
-| value | [uint32](#uint32) |  |  |
+| driver | [uint32](#uint32) |  |  |
+| value | [uint64](#uint64) | repeated |  |
 
 
 

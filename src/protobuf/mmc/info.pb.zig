@@ -625,10 +625,10 @@ pub const Response = struct {
         axis_state: std.ArrayList(Response.Line.Axis.State) = .empty,
         axis_errors: std.ArrayList(Response.Line.Axis.Error) = .empty,
         carrier_state: std.ArrayList(Response.Line.Carrier.State) = .empty,
-        register_x: std.ArrayList(Response.Line.RegisterValue) = .empty,
-        register_y: std.ArrayList(Response.Line.RegisterValue) = .empty,
-        register_ww: std.ArrayList(Response.Line.RegisterValue) = .empty,
-        register_wr: std.ArrayList(Response.Line.RegisterValue) = .empty,
+        register_x: std.ArrayList(Response.Line.Register) = .empty,
+        register_y: std.ArrayList(Response.Line.Register) = .empty,
+        register_ww: std.ArrayList(Response.Line.Register) = .empty,
+        register_wr: std.ArrayList(Response.Line.Register) = .empty,
 
         pub const _desc_table = .{
             .id = fd(1, .{ .scalar = .uint32 }),
@@ -643,13 +643,13 @@ pub const Response = struct {
             .register_wr = fd(10, .{ .repeated = .submessage }),
         };
 
-        pub const RegisterValue = struct {
-            address: u32 = 0,
-            value: u32 = 0,
+        pub const Register = struct {
+            driver: u32 = 0,
+            value: std.ArrayList(u64) = .empty,
 
             pub const _desc_table = .{
-                .address = fd(1, .{ .scalar = .uint32 }),
-                .value = fd(2, .{ .scalar = .uint32 }),
+                .driver = fd(1, .{ .scalar = .uint32 }),
+                .value = fd(2, .{ .packed_repeated = .{ .scalar = .uint64 } }),
             };
 
             /// Encodes the message to the writer
