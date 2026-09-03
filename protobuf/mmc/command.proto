@@ -219,8 +219,8 @@ message Request {
   //
   // Expected response: `mmc.Response.body.command.body.id` (uint32).
   message Pull {
-    reserved "velocity_mode";
-    reserved 8;
+    reserved "velocity_mode", "transition";
+    reserved 7, 8;
     // Line ID.
     uint32 line = 1;
     // Axis ID.
@@ -233,19 +233,6 @@ message Request {
     float velocity = 5;
     // Acceleration of carrier movement in percent.
     float acceleration = 6;
-    // Smoothly transition to carrier movement after pull completion.
-    optional Transition transition = 7;
-
-    message Transition {
-      reserved "axis", "location", "distance", "disable_cas", "control";
-      reserved 1 to 5;
-      // Move carrier to relative location to the zero-point of the line,
-      // which is set by default at the center of the line's first axis after
-      // calibration, but can also be set with the `SetZero` command.
-      // Pass NaN to pull carrier without motor control, allowing carrier
-      // to be pulled with external force.
-      float target = 6;
-    }
   }
 
   // Initialize a carrier.
