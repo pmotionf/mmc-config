@@ -255,34 +255,18 @@ pub const Request = struct {
         }
     };
 
-    /// Release the control imposed by the motor to the carrier. If a target is
-    /// specified, all motors included in that target release control.
+    /// Release the control imposed by the motor to the carrier. If drivers are
+    /// specified, all motors included in those drivers release control.
     /// Otherwise, all carriers on the provided line will be released from control.
     ///
     /// Expected response: `mmc.Response.body.command.body.id` (uint32).
     pub const Release = struct {
         line: u32 = 0,
-        target: ?target_union = null,
-
-        pub const _target_case = enum {
-            carrier,
-            axes,
-            drivers,
-        };
-        pub const target_union = union(_target_case) {
-            carrier: u32,
-            axes: root.Range,
-            drivers: root.Range,
-            pub const _desc_table = .{
-                .carrier = fd(2, .{ .scalar = .uint32 }),
-                .axes = fd(3, .submessage),
-                .drivers = fd(4, .submessage),
-            };
-        };
+        drivers: ?root.Range = null,
 
         pub const _desc_table = .{
             .line = fd(1, .{ .scalar = .uint32 }),
-            .target = fd(null, .{ .oneof = target_union }),
+            .drivers = fd(4, .submessage),
         };
 
         /// Encodes the message to the writer

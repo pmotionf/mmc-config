@@ -71,22 +71,18 @@ message Request {
       }
   }
 
-  // Release the control imposed by the motor to the carrier. If a target is
-  // specified, all motors included in that target release control.
+  // Release the control imposed by the motor to the carrier. If drivers are
+  // specified, all motors included in those drivers release control.
   // Otherwise, all carriers on the provided line will be released from control.
   //
   // Expected response: `mmc.Response.body.command.body.id` (uint32).
   message Release {
+    reserved 2, 3;
+    reserved "axes", "carrier";
     // Line ID.
     uint32 line = 1;
-    oneof target {
-      // Carrier ID.
-      uint32 carrier = 2;
-      // Axis ID range.
-      root.Range axes = 3;
-      // Driver ID range.
-      root.Range drivers = 4;
-    }
+    // Driver ID range.
+    optional root.Range drivers = 4;
   }
 
   // Stop pulling a carrier to the specified axis. If no axis is provided,
