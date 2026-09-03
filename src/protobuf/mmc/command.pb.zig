@@ -923,7 +923,6 @@ pub const Request = struct {
         direction: Request.Direction = @enumFromInt(0),
         velocity: f32 = 0,
         acceleration: f32 = 0,
-        carrier: ?u32 = null,
 
         pub const _desc_table = .{
             .line = fd(1, .{ .scalar = .uint32 }),
@@ -931,7 +930,6 @@ pub const Request = struct {
             .direction = fd(3, .@"enum"),
             .velocity = fd(4, .{ .scalar = .float }),
             .acceleration = fd(5, .{ .scalar = .float }),
-            .carrier = fd(6, .{ .scalar = .uint32 }),
         };
 
         /// Encodes the message to the writer
