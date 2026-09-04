@@ -25,7 +25,6 @@
     - [Request.Move](#mmc-command-Request-Move)
     - [Request.Pause](#mmc-command-Request-Pause)
     - [Request.Pull](#mmc-command-Request-Pull)
-    - [Request.Pull.Transition](#mmc-command-Request-Pull-Transition)
     - [Request.Push](#mmc-command-Request-Push)
     - [Request.Release](#mmc-command-Request-Release)
     - [Request.RemoveCommand](#mmc-command-Request-RemoveCommand)
@@ -379,8 +378,8 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 | ----- | ---- | ----- | ----------- |
 | line | [uint32](#uint32) |  | Line ID. |
 | carrier | [uint32](#uint32) |  | Carrier ID. |
-| velocity_percent | [uint32](#uint32) |  | Velocity of carrier movement in percent. Maximum velocity 3 m/s. |
-| acceleration_percent | [uint32](#uint32) |  | Acceleration of carrier movement in percent. Maximum acceleration 3 g. |
+| velocity | [float](#float) |  | Velocity of carrier movement in percent. |
+| acceleration | [float](#float) |  | Acceleration of carrier movement in percent. |
 | axis | [uint32](#uint32) |  | Move carrier to the center of the axis. |
 | location | [float](#float) |  | Move carrier to relative location to the zero-point of the line, which is set by default at the center of the line&#39;s first axis after calibration command. |
 | distance | [float](#float) |  | Move carrier to relative distance to current carrier position. Negative distance moves the carrier backwards. |
@@ -423,24 +422,9 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 | axis | [uint32](#uint32) |  | Axis ID. |
 | carrier | [uint32](#uint32) |  | ID for the incoming carrier. |
 | direction | [Request.Direction](#mmc-command-Request-Direction) |  | The direction from which the incoming carrier is moving. |
-| velocity_percent | [uint32](#uint32) |  | Velocity of carrier movement in percent. Maximum velocity 3 m/s. |
-| acceleration_percent | [uint32](#uint32) |  | Acceleration of carrier movement in percent. Maximum acceleration 3 g. |
-| transition | [Request.Pull.Transition](#mmc-command-Request-Pull-Transition) | optional | Smoothly transition to carrier movement after pull completion. |
-
-
-
-
-
-
-<a name="mmc-command-Request-Pull-Transition"></a>
-
-### Request.Pull.Transition
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| target | [float](#float) |  | Move carrier to relative location to the zero-point of the line, which is set by default at the center of the line&#39;s first axis after calibration, but can also be set with the `SetZero` command. Pass NaN to pull carrier without motor control, allowing carrier to be pulled with external force. |
+| velocity | [float](#float) |  | Velocity of carrier movement in percent. |
+| acceleration | [float](#float) |  | Acceleration of carrier movement in percent. |
+| location | [float](#float) | optional | Move the Carrier to relative location to the zero-point of the Line upon detected to target Line, which is set by default at the center of the Line&#39;s first Axis after calibration command. If not specified, move the Carrier to the center of the axis. |
 
 
 
@@ -460,9 +444,8 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 | line | [uint32](#uint32) |  | Line ID. |
 | axis | [uint32](#uint32) |  | Axis ID. |
 | direction | [Request.Direction](#mmc-command-Request-Direction) |  | Direction of carrier movement. |
-| velocity_percent | [uint32](#uint32) |  | Velocity of carrier movement in percent. Maximum velocity 3 m/s. |
-| acceleration_percent | [uint32](#uint32) |  | Acceleration of carrier movement in percent. Maximum acceleration 3 g. |
-| carrier | [uint32](#uint32) | optional | Carrier ID. If provided, wait for the specified carrier at the axis and push it once the carrier arrives. |
+| velocity | [float](#float) |  | Velocity of carrier movement in percent. |
+| acceleration | [float](#float) |  | Acceleration of carrier movement in percent. |
 
 
 
@@ -472,8 +455,8 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 <a name="mmc-command-Request-Release"></a>
 
 ### Request.Release
-Release the control imposed by the motor to the carrier. If a target is
-specified, all motors included in that target release control.
+Release the control imposed by the motor to the carrier. If drivers are
+specified, all motors included in those drivers release control.
 Otherwise, all carriers on the provided line will be released from control.
 
 Expected response: `mmc.Response.body.command.body.id` (uint32).
@@ -482,9 +465,7 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | line | [uint32](#uint32) |  | Line ID. |
-| carrier | [uint32](#uint32) |  | Carrier ID. |
-| axes | [root.Range](#root-Range) |  | Axis ID range. |
-| drivers | [root.Range](#root-Range) |  | Driver ID range. |
+| drivers | [root.Range](#root-Range) | optional | Driver ID range. |
 
 
 

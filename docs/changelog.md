@@ -5,6 +5,92 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2026-09-03
+
+### Added 
+- Register information request
+```
+mmc.info.Request.Track.register_x
+mmc.info.Request.Track.register_y
+mmc.info.Request.Track.register_ww
+mmc.info.Request.Track.register_wr
+```
+
+- Register information response
+```
+mmc.info.Response.Line.register_x
+mmc.info.Response.Line.register_y
+mmc.info.Response.Line.register_ww
+mmc.info.Response.Line.register_wr
+```
+```
+mmc.info.Response.Line.Register.driver
+mmc.info.Response.Line.Register.value
+```
+
+### Changed
+- **BREAKING:** Release command structure  
+Removed:
+```
+mmc.command.Request.Release.target
+```
+Use instead:
+```
+mmc.command.Request.Release.drivers
+```
+Release command releases every carrier on the selected driver.
+
+- **BREAKING:** Push command structure  
+Removed: 
+```
+mmc.command.Request.Push.carrier
+mmc.info.Response.Line.Carrier.State.waiting_push
+```
+Push axis does not wait for a carrier to arrive. Push applies only when there is a carrier on the pushing axis.
+
+- **BREAKING:** Pull command structure  
+Removed: 
+```
+mmc.command.Request.Pull.transition
+```
+Use instead:
+```
+mmc.command.Request.Pull.location
+```
+
+- **BREAKING:** Acceleration and Velocity values have to be provided in percent 
+```
+mmc.command.Request.Move.velocity
+mmc.command.Request.Move.acceleration
+mmc.command.Request.Push.velocity
+mmc.command.Request.Push.acceleration
+mmc.command.Request.Pull.velocity
+mmc.command.Request.Pull.acceleration
+
+```
+
+### Removed
+- **BREAKING:** Removed commands  
+Removed: 
+```
+mmc.command.Request.set_zero
+mmc.command.Request.stop_push
+mmc.command.Request.set_carrier_id
+```
+The zero-point is set after using the `calibrate` command. 
+Push only works now when there is a carrier on the pushing axis. 
+To change a carrier ID, use `deinitialize` and `initialize` with a new ID.
+
+
+- **BREAKING:** Removed support for CAS  
+Removed: 
+```
+mmc.command.Request.Move.disable_cas
+mmc.command.Request.Pull.Transition.disable_cas
+mmc.info.Response.Line.Carrier.State.cas_disabled
+mmc.info.Response.Line.Carrier.State.cas_triggered
+```
+
 ## [2.2.0] - 2026-08-26
 
 ### Changed
