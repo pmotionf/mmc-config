@@ -42,6 +42,15 @@ message Request {
     // Retrieve carrier state information.
     bool info_carrier_state = 6;
 
+    // Retrieve CC-Link X register information.
+    bool register_x = 11;
+    // Retrieve CC-Link Y register information.
+    bool register_y = 12;
+    // Retrieve CC-Link WW register information.
+    bool register_ww = 13;
+    // Retrieve CC-Link WR register information.
+    bool register_wr = 14;
+
     // Filter information source if provided. Each filter is compatible with
     // every information flag.
     oneof filter {
@@ -179,6 +188,19 @@ message Response {
     repeated Axis.Error axis_errors = 5;
     // Carrier state information list. Empty if request flag was disabled.
     repeated Carrier.State carrier_state = 6;
+    // X register values. Empty if register_x was not requested.
+    repeated Register register_x = 7;
+    // Y register values. Empty if register_y was not requested.
+    repeated Register register_y = 8;
+    // WW register values. Empty if register_ww was not requested.
+    repeated Register register_ww = 9;
+    // WR register values. Empty if register_wr was not requested.
+    repeated Register register_wr = 10;
+
+    message Register {
+      uint32 driver = 1;
+      repeated uint64 value = 2;
+    }
 
     message Axis {
       message State {

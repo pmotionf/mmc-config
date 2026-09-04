@@ -69,6 +69,7 @@
     - [Response.Line.Driver](#mmc-info-Response-Line-Driver)
     - [Response.Line.Driver.Error](#mmc-info-Response-Line-Driver-Error)
     - [Response.Line.Driver.State](#mmc-info-Response-Line-Driver-State)
+    - [Response.Line.Register](#mmc-info-Response-Line-Register)
     - [Response.Track](#mmc-info-Response-Track)
   
     - [Request.Error](#mmc-info-Request-Error)
@@ -877,6 +878,10 @@ Expected response: `mmc.Response.body.info.body.track`
 | info_axis_state | [bool](#bool) |  | Retrieve axis state information. |
 | info_axis_errors | [bool](#bool) |  | Retrieve axis errors information. |
 | info_carrier_state | [bool](#bool) |  | Retrieve carrier state information. |
+| register_x | [bool](#bool) |  | Retrieve CC-Link X register information. |
+| register_y | [bool](#bool) |  | Retrieve CC-Link Y register information. |
+| register_ww | [bool](#bool) |  | Retrieve CC-Link WW register information. |
+| register_wr | [bool](#bool) |  | Retrieve CC-Link WR register information. |
 | drivers | [root.Range](#root-Range) |  | Retrieve information from driver ID range. Driver information flags will include drivers within this range. Axis information flags will include every axis belonging to the drivers in this range. Carrier information flags will include every carrier currently controlled by one of the drivers in this range. |
 | axes | [root.Range](#root-Range) |  | Retrieve information from axis ID range. Driver information flags will include drivers that contain one of the axes within this range. Axis information flags will include axes within this range. Carrier information flags will include every carrier currently controlled by one of the axes in this range. |
 | carriers | [Request.Track.Ids](#mmc-info-Request-Track-Ids) |  | Retrieve information from carrier IDs. Driver information flags will include drivers that control one of the carriers within this list. Axis information flags will include axes that control one of the carriers within this list. Carrier information flags will include carriers within this list. |
@@ -964,6 +969,10 @@ List of IDs. At least one ID must be provided.
 | axis_state | [Response.Line.Axis.State](#mmc-info-Response-Line-Axis-State) | repeated | Axis state information list. Empty if request flag was disabled. |
 | axis_errors | [Response.Line.Axis.Error](#mmc-info-Response-Line-Axis-Error) | repeated | Axis error information list. Empty if request flag was disabled. |
 | carrier_state | [Response.Line.Carrier.State](#mmc-info-Response-Line-Carrier-State) | repeated | Carrier state information list. Empty if request flag was disabled. |
+| register_x | [Response.Line.Register](#mmc-info-Response-Line-Register) | repeated | X register values. Empty if register_x was not requested. |
+| register_y | [Response.Line.Register](#mmc-info-Response-Line-Register) | repeated | Y register values. Empty if register_y was not requested. |
+| register_ww | [Response.Line.Register](#mmc-info-Response-Line-Register) | repeated | WW register values. Empty if register_ww was not requested. |
+| register_wr | [Response.Line.Register](#mmc-info-Response-Line-Register) | repeated | WR register values. Empty if register_wr was not requested. |
 
 
 
@@ -1090,6 +1099,22 @@ List of IDs. At least one ID must be provided.
 | motor_disabled | [bool](#bool) |  | Driver motor release activated. All driver motors are inactive. |
 | stopped | [bool](#bool) |  | Driver emergency stop activated. |
 | paused | [bool](#bool) |  | Driver pause activated. |
+
+
+
+
+
+
+<a name="mmc-info-Response-Line-Register"></a>
+
+### Response.Line.Register
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| driver | [uint32](#uint32) |  |  |
+| value | [uint64](#uint64) | repeated |  |
 
 
 
