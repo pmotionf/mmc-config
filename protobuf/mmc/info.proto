@@ -257,9 +257,10 @@ message Response {
         State state = 7;
 
         enum State {
-          reserved 8, 10;
+          reserved 7, 8, 10;
           reserved "CARRIER_STATE_PUSH_COMPLETED";
           reserved "CARRIER_STATE_PULL_COMPLETED";
+          reserved "CARRIER_STATE_PUSHING";
 
           CARRIER_STATE_NONE = 0;
           // Carrier is currently operating for line calibration.
