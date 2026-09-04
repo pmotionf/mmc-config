@@ -1005,6 +1005,7 @@ pub const Request = struct {
         direction: Request.Direction = @enumFromInt(0),
         velocity: f32 = 0,
         acceleration: f32 = 0,
+        location: ?f32 = null,
 
         pub const _desc_table = .{
             .line = fd(1, .{ .scalar = .uint32 }),
@@ -1013,6 +1014,7 @@ pub const Request = struct {
             .direction = fd(4, .@"enum"),
             .velocity = fd(5, .{ .scalar = .float }),
             .acceleration = fd(6, .{ .scalar = .float }),
+            .location = fd(9, .{ .scalar = .float }),
         };
 
         /// Encodes the message to the writer

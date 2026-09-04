@@ -226,6 +226,11 @@ message Request {
     float velocity = 5;
     // Acceleration of carrier movement in percent.
     float acceleration = 6;
+    // Move the Carrier to relative location to the zero-point of the Line upon
+    // detected to target Line, which is set by default at the center of the
+    // Line's first Axis after calibration command. If not specified, move the
+    // Carrier to the center of the axis.
+    optional float location = 9;
   }
 
   // Initialize a carrier.
