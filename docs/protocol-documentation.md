@@ -25,16 +25,12 @@
     - [Request.Move](#mmc-command-Request-Move)
     - [Request.Pause](#mmc-command-Request-Pause)
     - [Request.Pull](#mmc-command-Request-Pull)
-    - [Request.Pull.Transition](#mmc-command-Request-Pull-Transition)
     - [Request.Push](#mmc-command-Request-Push)
     - [Request.Release](#mmc-command-Request-Release)
     - [Request.RemoveCommand](#mmc-command-Request-RemoveCommand)
     - [Request.Resume](#mmc-command-Request-Resume)
-    - [Request.SetCarrierId](#mmc-command-Request-SetCarrierId)
-    - [Request.SetZero](#mmc-command-Request-SetZero)
     - [Request.Stop](#mmc-command-Request-Stop)
     - [Request.StopPull](#mmc-command-Request-StopPull)
-    - [Request.StopPush](#mmc-command-Request-StopPush)
     - [Response](#mmc-command-Response)
   
     - [Request.Direction](#mmc-command-Request-Direction)
@@ -72,6 +68,7 @@
     - [Response.Line.Driver](#mmc-info-Response-Line-Driver)
     - [Response.Line.Driver.Error](#mmc-info-Response-Line-Driver-Error)
     - [Response.Line.Driver.State](#mmc-info-Response-Line-Driver-State)
+    - [Response.Line.Register](#mmc-info-Response-Line-Register)
     - [Response.Track](#mmc-info-Response-Track)
   
     - [Request.Error](#mmc-info-Request-Error)
@@ -201,7 +198,6 @@ remains stored in a limited history buffer, and should be cleared with
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | calibrate | [Request.Calibrate](#mmc-command-Request-Calibrate) |  | Calibrate a line. This command only needs to be run once after hardware setup; calibrated values will remain stored in drivers even after a power cycle. |
-| set_zero | [Request.SetZero](#mmc-command-Request-SetZero) |  | Set the zero position of the specified line. This command can be run optionally after calibration, upon which all drivers will store the set zero position of the line. The set zero position will remain unchanged even after a power cycle. |
 | initialize | [Request.Initialize](#mmc-command-Request-Initialize) |  | Initialize a carrier. Carriers must be initialized before they can be moved. Initialization is required after every power cycle. |
 | auto_initialize | [Request.AutoInitialize](#mmc-command-Request-AutoInitialize) |  | Initialize all carriers of the specified line(s). If no lines are specified, initialize all carriers across all lines in the track. |
 | deinitialize | [Request.Deinitialize](#mmc-command-Request-Deinitialize) |  | Deinitialize a carrier. This removes all carrier information, such as recognized position and carrier ID. |
@@ -209,14 +205,12 @@ remains stored in a limited history buffer, and should be cleared with
 | pull | [Request.Pull](#mmc-command-Request-Pull) |  | Pull and initialize a new carrier into a line. |
 | push | [Request.Push](#mmc-command-Request-Push) |  | Push an initialized carrier to the specified direction. |
 | stop_pull | [Request.StopPull](#mmc-command-Request-StopPull) |  | Stop waiting to pull a new carrier at an axis. |
-| stop_push | [Request.StopPush](#mmc-command-Request-StopPush) |  | Stop waiting to push an initialized carrier at an axis. |
 | release | [Request.Release](#mmc-command-Request-Release) |  | Release the motor control of a carrier. |
 | clear_errors | [Request.ClearErrors](#mmc-command-Request-ClearErrors) |  | Clear all errors within the specified driver range. |
 | remove_command | [Request.RemoveCommand](#mmc-command-Request-RemoveCommand) |  | Cancel a running command or remove its status history. |
 | stop | [Request.Stop](#mmc-command-Request-Stop) |  | Activate emergency stop for all drivers in line(s). Emergency stop will cause all carriers to decelerate to rest, then reset all carriers&#39; movement commands. |
 | pause | [Request.Pause](#mmc-command-Request-Pause) |  | Activate pause for all drivers in line(s). Pause will cause all carriers to decelerate to rest. On resume, the carriers will continue their previously assigned movement commands. |
 | resume | [Request.Resume](#mmc-command-Request-Resume) |  | Deactivate emergency stop and pause for all drivers in line(s). |
-| set_carrier_id | [Request.SetCarrierId](#mmc-command-Request-SetCarrierId) |  | Change an existing carrier ID to a new unique carrier ID. |
 | group | [Request.Group](#mmc-command-Request-Group) |  | Send multiple moves and push commands at once. The order of execution depends on the order of the move in the buffer. Group move command removes the delay of commands sent to different driver caused by processing time of a driver to fully execute a command. Canceling this command will only cancel commands that are not being executed yet by the target driver. |
 
 
@@ -384,13 +378,12 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 | ----- | ---- | ----- | ----------- |
 | line | [uint32](#uint32) |  | Line ID. |
 | carrier | [uint32](#uint32) |  | Carrier ID. |
-| velocity | [float](#float) |  | Velocity of carrier movement. Floating point with range 0.1 - 6,000 mm/s. |
-| acceleration | [float](#float) |  | Acceleration of carrier movement. Floating point with range 100 - 24,500 mm/s^2. |
+| velocity | [float](#float) |  | Velocity of carrier movement in percent. |
+| acceleration | [float](#float) |  | Acceleration of carrier movement in percent. |
 | axis | [uint32](#uint32) |  | Move carrier to the center of the axis. |
-| location | [float](#float) |  | Move carrier to relative location to the zero-point of the line, which is set by default at the center of the line&#39;s first axis after calibration, but can also be set with the `SetZero` command. |
+| location | [float](#float) |  | Move carrier to relative location to the zero-point of the line, which is set by default at the center of the line&#39;s first axis after calibration command. |
 | distance | [float](#float) |  | Move carrier to relative distance to current carrier position. Negative distance moves the carrier backwards. |
 | control | [mmc.Control](#mmc-Control) |  | Control method for moving carrier. |
-| disable_cas | [bool](#bool) |  | Disable the carrier&#39;s collision avoidance system (CAS). |
 
 
 
@@ -429,26 +422,9 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 | axis | [uint32](#uint32) |  | Axis ID. |
 | carrier | [uint32](#uint32) |  | ID for the incoming carrier. |
 | direction | [Request.Direction](#mmc-command-Request-Direction) |  | The direction from which the incoming carrier is moving. |
-| velocity | [float](#float) |  | Velocity of carrier movement. Floating point with range 0.1 - 6,000 mm/s. When the transition location target is set to `NaN`, the velocity must be 0. |
-| acceleration | [float](#float) |  | Acceleration of carrier movement. Floating point with range 100 - 24,500 mm/s^2. When the transition location target is set to `NaN`, the acceleration must be 0. |
-| transition | [Request.Pull.Transition](#mmc-command-Request-Pull-Transition) | optional | Smoothly transition to carrier movement after pull completion. |
-
-
-
-
-
-
-<a name="mmc-command-Request-Pull-Transition"></a>
-
-### Request.Pull.Transition
-
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| control | [mmc.Control](#mmc-Control) |  | Control method for moving carrier. |
-| disable_cas | [bool](#bool) |  | Disabling the carrier&#39;s collision avoidance system (CAS). |
-| target | [float](#float) |  | Move carrier to relative location to the zero-point of the line, which is set by default at the center of the line&#39;s first axis after calibration, but can also be set with the `SetZero` command. Pass NaN to pull carrier without motor control, allowing carrier to be pulled with external force. |
+| velocity | [float](#float) |  | Velocity of carrier movement in percent. |
+| acceleration | [float](#float) |  | Acceleration of carrier movement in percent. |
+| location | [float](#float) | optional | Move the Carrier to relative location to the zero-point of the Line upon detected to target Line, which is set by default at the center of the Line&#39;s first Axis after calibration command. If not specified, move the Carrier to the center of the axis. |
 
 
 
@@ -468,9 +444,8 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 | line | [uint32](#uint32) |  | Line ID. |
 | axis | [uint32](#uint32) |  | Axis ID. |
 | direction | [Request.Direction](#mmc-command-Request-Direction) |  | Direction of carrier movement. |
-| velocity | [float](#float) |  | Velocity of carrier movement. Floating point with range 0.1 - 6,000 mm/s. |
-| acceleration | [float](#float) |  | Acceleration of carrier movement. Floating point with range 100 - 24,500 mm/s^2. |
-| carrier | [uint32](#uint32) | optional | Carrier ID. If provided, wait for the specified carrier at the axis and push it once the carrier arrives. |
+| velocity | [float](#float) |  | Velocity of carrier movement in percent. |
+| acceleration | [float](#float) |  | Acceleration of carrier movement in percent. |
 
 
 
@@ -480,8 +455,8 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 <a name="mmc-command-Request-Release"></a>
 
 ### Request.Release
-Release the control imposed by the motor to the carrier. If a target is
-specified, all motors included in that target release control.
+Release the control imposed by the motor to the carrier. If drivers are
+specified, all motors included in those drivers release control.
 Otherwise, all carriers on the provided line will be released from control.
 
 Expected response: `mmc.Response.body.command.body.id` (uint32).
@@ -490,9 +465,7 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | line | [uint32](#uint32) |  | Line ID. |
-| carrier | [uint32](#uint32) |  | Carrier ID. |
-| axes | [root.Range](#root-Range) |  | Axis ID range. |
-| drivers | [root.Range](#root-Range) |  | Driver ID range. |
+| drivers | [root.Range](#root-Range) | optional | Driver ID range. |
 
 
 
@@ -536,44 +509,6 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 
 
 
-<a name="mmc-command-Request-SetCarrierId"></a>
-
-### Request.SetCarrierId
-Change the carrier ID of an existing initialized carrier. If the new
-carrier ID already exists on the line, returns INVALID_CARRIER.
-
-Expected response: `mmc.Response.body.command.body.id` (uint32).
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| line | [uint32](#uint32) |  | Line ID. |
-| carrier | [uint32](#uint32) |  | Target existing initialized carrier ID. |
-| new_carrier | [uint32](#uint32) |  | New desired carrier ID (unique in line). |
-
-
-
-
-
-
-<a name="mmc-command-Request-SetZero"></a>
-
-### Request.SetZero
-Set a zero position of a line by positioning an initialized carrier on
-the first axis of the line.
-
-Expected response: `mmc.Response.body.command.body.id` (uint32).
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| line | [uint32](#uint32) |  | Line ID. |
-
-
-
-
-
-
 <a name="mmc-command-Request-Stop"></a>
 
 ### Request.Stop
@@ -597,25 +532,6 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 ### Request.StopPull
 Stop pulling a carrier to the specified axis. If no axis is provided,
 then all pending carrier pulls on the line will be stopped.
-
-Expected response: `mmc.Response.body.command.body.id` (uint32).
-
-
-| Field | Type | Label | Description |
-| ----- | ---- | ----- | ----------- |
-| line | [uint32](#uint32) |  | Line ID. |
-| axes | [root.Range](#root-Range) | optional | Axis ID range. |
-
-
-
-
-
-
-<a name="mmc-command-Request-StopPush"></a>
-
-### Request.StopPush
-Stop pushing a carrier from the specified axis. If no axis is provided,
-then all pending carrier pushes on the line will be stopped.
 
 Expected response: `mmc.Response.body.command.body.id` (uint32).
 
@@ -943,6 +859,10 @@ Expected response: `mmc.Response.body.info.body.track`
 | info_axis_state | [bool](#bool) |  | Retrieve axis state information. |
 | info_axis_errors | [bool](#bool) |  | Retrieve axis errors information. |
 | info_carrier_state | [bool](#bool) |  | Retrieve carrier state information. |
+| register_x | [bool](#bool) |  | Retrieve CC-Link X register information. |
+| register_y | [bool](#bool) |  | Retrieve CC-Link Y register information. |
+| register_ww | [bool](#bool) |  | Retrieve CC-Link WW register information. |
+| register_wr | [bool](#bool) |  | Retrieve CC-Link WR register information. |
 | drivers | [root.Range](#root-Range) |  | Retrieve information from driver ID range. Driver information flags will include drivers within this range. Axis information flags will include every axis belonging to the drivers in this range. Carrier information flags will include every carrier currently controlled by one of the drivers in this range. |
 | axes | [root.Range](#root-Range) |  | Retrieve information from axis ID range. Driver information flags will include drivers that contain one of the axes within this range. Axis information flags will include axes within this range. Carrier information flags will include every carrier currently controlled by one of the axes in this range. |
 | carriers | [Request.Track.Ids](#mmc-info-Request-Track-Ids) |  | Retrieve information from carrier IDs. Driver information flags will include drivers that control one of the carriers within this list. Axis information flags will include axes that control one of the carriers within this list. Carrier information flags will include carriers within this list. |
@@ -1030,6 +950,10 @@ List of IDs. At least one ID must be provided.
 | axis_state | [Response.Line.Axis.State](#mmc-info-Response-Line-Axis-State) | repeated | Axis state information list. Empty if request flag was disabled. |
 | axis_errors | [Response.Line.Axis.Error](#mmc-info-Response-Line-Axis-Error) | repeated | Axis error information list. Empty if request flag was disabled. |
 | carrier_state | [Response.Line.Carrier.State](#mmc-info-Response-Line-Carrier-State) | repeated | Carrier state information list. Empty if request flag was disabled. |
+| register_x | [Response.Line.Register](#mmc-info-Response-Line-Register) | repeated | X register values. Empty if register_x was not requested. |
+| register_y | [Response.Line.Register](#mmc-info-Response-Line-Register) | repeated | Y register values. Empty if register_y was not requested. |
+| register_ww | [Response.Line.Register](#mmc-info-Response-Line-Register) | repeated | WW register values. Empty if register_ww was not requested. |
+| register_wr | [Response.Line.Register](#mmc-info-Response-Line-Register) | repeated | WR register values. Empty if register_wr was not requested. |
 
 
 
@@ -1073,7 +997,6 @@ List of IDs. At least one ID must be provided.
 | id | [uint32](#uint32) |  | Axis ID. |
 | motor_active | [bool](#bool) |  | Axis is currently controlling a carrier. |
 | waiting_pull | [bool](#bool) |  | Axis is waiting to pull carrier. |
-| waiting_push | [bool](#bool) |  | Axis is waiting to push carrier. |
 | carrier | [uint32](#uint32) |  | Carrier ID; non-zero if an initialized carrier is on the axis. |
 | hall_alarm_back | [bool](#bool) |  | Axis back hall alarm is active. Magnet is detected above back hall sensor. |
 | hall_alarm_front | [bool](#bool) |  | Axis front hall alarm is active. Magnet is detected above front hall sensor. |
@@ -1105,8 +1028,6 @@ List of IDs. At least one ID must be provided.
 | position | [float](#float) |  | Position of the carrier in line, in meters. |
 | axis_main | [uint32](#uint32) |  | Carrier&#39;s primary axis ID. |
 | axis_auxiliary | [uint32](#uint32) | optional | Carrier&#39;s auxiliary axis ID, if carrier is on top of two axes. |
-| cas_disabled | [bool](#bool) |  | Collision avoidance system (CAS) disabled. |
-| cas_triggered | [bool](#bool) |  | Collision avoidance system (CAS) triggered. Carrier will automatically resume movement when path is clear. |
 | state | [Response.Line.Carrier.State.State](#mmc-info-Response-Line-Carrier-State-State) |  | Carrier state. |
 
 
@@ -1159,6 +1080,22 @@ List of IDs. At least one ID must be provided.
 | motor_disabled | [bool](#bool) |  | Driver motor release activated. All driver motors are inactive. |
 | stopped | [bool](#bool) |  | Driver emergency stop activated. |
 | paused | [bool](#bool) |  | Driver pause activated. |
+
+
+
+
+
+
+<a name="mmc-info-Response-Line-Register"></a>
+
+### Response.Line.Register
+
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| driver | [uint32](#uint32) |  |  |
+| value | [uint64](#uint64) | repeated |  |
 
 
 
@@ -1248,7 +1185,6 @@ List of IDs. At least one ID must be provided.
 | CARRIER_STATE_MOVE_COMPLETED | 4 | Carrier has arrived within threshold at target destination. |
 | CARRIER_STATE_INITIALIZING | 5 | Carrier is initializing. Must not be used until initialization is completed. |
 | CARRIER_STATE_INITIALIZE_COMPLETED | 6 | Carrier initialization completed. May now be used for normal operation. |
-| CARRIER_STATE_PUSHING | 7 | Carrier is being pushed by axis. Used to eject carrier from line. |
 | CARRIER_STATE_PULLING | 9 | Carrier is being pulled by axis. Must not be used until pull is completed. |
 | CARRIER_STATE_OVERCURRENT | 11 | Overcurrent detected in carrier axis motor. Carrier movement has been canceled. |
 

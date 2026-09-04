@@ -570,17 +570,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#requestpulltransition" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Request.Pull.Transition
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#requestpush" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -625,28 +614,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#requestsetcarrierid" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Request.SetCarrierId
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#requestsetzero" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Request.SetZero
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#requeststop" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -662,17 +629,6 @@
     <span class="md-ellipsis">
       
         Request.StopPull
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#requeststoppush" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Request.StopPush
       
     </span>
   </a>
@@ -1043,6 +999,17 @@
     <span class="md-ellipsis">
       
         Response.Line.Driver.State
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#responselineregister" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response.Line.Register
       
     </span>
   </a>
@@ -1388,17 +1355,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#requestpulltransition" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Request.Pull.Transition
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#requestpush" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1443,28 +1399,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#requestsetcarrierid" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Request.SetCarrierId
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#requestsetzero" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Request.SetZero
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#requeststop" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1480,17 +1414,6 @@
     <span class="md-ellipsis">
       
         Request.StopPull
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#requeststoppush" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Request.StopPush
       
     </span>
   </a>
@@ -1868,6 +1791,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#responselineregister" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response.Line.Register
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#responsetrack" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1992,16 +1926,12 @@
 <li><a href="#mmc-command-Request-Move">Request.Move</a></li>
 <li><a href="#mmc-command-Request-Pause">Request.Pause</a></li>
 <li><a href="#mmc-command-Request-Pull">Request.Pull</a></li>
-<li><a href="#mmc-command-Request-Pull-Transition">Request.Pull.Transition</a></li>
 <li><a href="#mmc-command-Request-Push">Request.Push</a></li>
 <li><a href="#mmc-command-Request-Release">Request.Release</a></li>
 <li><a href="#mmc-command-Request-RemoveCommand">Request.RemoveCommand</a></li>
 <li><a href="#mmc-command-Request-Resume">Request.Resume</a></li>
-<li><a href="#mmc-command-Request-SetCarrierId">Request.SetCarrierId</a></li>
-<li><a href="#mmc-command-Request-SetZero">Request.SetZero</a></li>
 <li><a href="#mmc-command-Request-Stop">Request.Stop</a></li>
 <li><a href="#mmc-command-Request-StopPull">Request.StopPull</a></li>
-<li><a href="#mmc-command-Request-StopPush">Request.StopPush</a></li>
 <li>
 <p><a href="#mmc-command-Response">Response</a></p>
 </li>
@@ -2054,6 +1984,7 @@
 <li><a href="#mmc-info-Response-Line-Driver">Response.Line.Driver</a></li>
 <li><a href="#mmc-info-Response-Line-Driver-Error">Response.Line.Driver.Error</a></li>
 <li><a href="#mmc-info-Response-Line-Driver-State">Response.Line.Driver.State</a></li>
+<li><a href="#mmc-info-Response-Line-Register">Response.Line.Register</a></li>
 <li>
 <p><a href="#mmc-info-Response-Track">Response.Track</a></p>
 </li>
@@ -2228,12 +2159,6 @@ remains stored in a limited history buffer, and should be cleared with
 <td>Calibrate a line. This command only needs to be run once after hardware setup; calibrated values will remain stored in drivers even after a power cycle.</td>
 </tr>
 <tr>
-<td>set_zero</td>
-<td><a href="#mmc-command-Request-SetZero">Request.SetZero</a></td>
-<td></td>
-<td>Set the zero position of the specified line. This command can be run optionally after calibration, upon which all drivers will store the set zero position of the line. The set zero position will remain unchanged even after a power cycle.</td>
-</tr>
-<tr>
 <td>initialize</td>
 <td><a href="#mmc-command-Request-Initialize">Request.Initialize</a></td>
 <td></td>
@@ -2276,12 +2201,6 @@ remains stored in a limited history buffer, and should be cleared with
 <td>Stop waiting to pull a new carrier at an axis.</td>
 </tr>
 <tr>
-<td>stop_push</td>
-<td><a href="#mmc-command-Request-StopPush">Request.StopPush</a></td>
-<td></td>
-<td>Stop waiting to push an initialized carrier at an axis.</td>
-</tr>
-<tr>
 <td>release</td>
 <td><a href="#mmc-command-Request-Release">Request.Release</a></td>
 <td></td>
@@ -2316,12 +2235,6 @@ remains stored in a limited history buffer, and should be cleared with
 <td><a href="#mmc-command-Request-Resume">Request.Resume</a></td>
 <td></td>
 <td>Deactivate emergency stop and pause for all drivers in line(s).</td>
-</tr>
-<tr>
-<td>set_carrier_id</td>
-<td><a href="#mmc-command-Request-SetCarrierId">Request.SetCarrierId</a></td>
-<td></td>
-<td>Change an existing carrier ID to a new unique carrier ID.</td>
 </tr>
 <tr>
 <td>group</td>
@@ -2614,13 +2527,13 @@ clear all carrier information of the specified line ID.</p>
 <td>velocity</td>
 <td><a href="#float">float</a></td>
 <td></td>
-<td>Velocity of carrier movement. Floating point with range 0.1 - 6,000 mm/s.</td>
+<td>Velocity of carrier movement in percent.</td>
 </tr>
 <tr>
 <td>acceleration</td>
 <td><a href="#float">float</a></td>
 <td></td>
-<td>Acceleration of carrier movement. Floating point with range 100 - 24,500 mm/s^2.</td>
+<td>Acceleration of carrier movement in percent.</td>
 </tr>
 <tr>
 <td>axis</td>
@@ -2632,7 +2545,7 @@ clear all carrier information of the specified line ID.</p>
 <td>location</td>
 <td><a href="#float">float</a></td>
 <td></td>
-<td>Move carrier to relative location to the zero-point of the line, which is set by default at the center of the line&#39;s first axis after calibration, but can also be set with the <code>SetZero</code> command.</td>
+<td>Move carrier to relative location to the zero-point of the line, which is set by default at the center of the line&#39;s first axis after calibration command.</td>
 </tr>
 <tr>
 <td>distance</td>
@@ -2645,12 +2558,6 @@ clear all carrier information of the specified line ID.</p>
 <td><a href="#mmc-Control">mmc.Control</a></td>
 <td></td>
 <td>Control method for moving carrier.</td>
-</tr>
-<tr>
-<td>disable_cas</td>
-<td><a href="#bool">bool</a></td>
-<td></td>
-<td>Disable the carrier&#39;s collision avoidance system (CAS).</td>
 </tr>
 </tbody>
 </table>
@@ -2719,51 +2626,19 @@ continued once the resume command is given.</p>
 <td>velocity</td>
 <td><a href="#float">float</a></td>
 <td></td>
-<td>Velocity of carrier movement. Floating point with range 0.1 - 6,000 mm/s. When the transition location target is set to <code>NaN</code>, the velocity must be 0.</td>
+<td>Velocity of carrier movement in percent.</td>
 </tr>
 <tr>
 <td>acceleration</td>
 <td><a href="#float">float</a></td>
 <td></td>
-<td>Acceleration of carrier movement. Floating point with range 100 - 24,500 mm/s^2. When the transition location target is set to <code>NaN</code>, the acceleration must be 0.</td>
+<td>Acceleration of carrier movement in percent.</td>
 </tr>
 <tr>
-<td>transition</td>
-<td><a href="#mmc-command-Request-Pull-Transition">Request.Pull.Transition</a></td>
-<td>optional</td>
-<td>Smoothly transition to carrier movement after pull completion.</td>
-</tr>
-</tbody>
-</table>
-<p><a name="mmc-command-Request-Pull-Transition"></a></p>
-<h3 id="requestpulltransition">Request.Pull.Transition</h3>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Label</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>control</td>
-<td><a href="#mmc-Control">mmc.Control</a></td>
-<td></td>
-<td>Control method for moving carrier.</td>
-</tr>
-<tr>
-<td>disable_cas</td>
-<td><a href="#bool">bool</a></td>
-<td></td>
-<td>Disabling the carrier&#39;s collision avoidance system (CAS).</td>
-</tr>
-<tr>
-<td>target</td>
+<td>location</td>
 <td><a href="#float">float</a></td>
-<td></td>
-<td>Move carrier to relative location to the zero-point of the line, which is set by default at the center of the line&#39;s first axis after calibration, but can also be set with the <code>SetZero</code> command. Pass NaN to pull carrier without motor control, allowing carrier to be pulled with external force.</td>
+<td>optional</td>
+<td>Move the Carrier to relative location to the zero-point of the Line upon detected to target Line, which is set by default at the center of the Line&#39;s first Axis after calibration command. If not specified, move the Carrier to the center of the axis.</td>
 </tr>
 </tbody>
 </table>
@@ -2803,26 +2678,20 @@ continued once the resume command is given.</p>
 <td>velocity</td>
 <td><a href="#float">float</a></td>
 <td></td>
-<td>Velocity of carrier movement. Floating point with range 0.1 - 6,000 mm/s.</td>
+<td>Velocity of carrier movement in percent.</td>
 </tr>
 <tr>
 <td>acceleration</td>
 <td><a href="#float">float</a></td>
 <td></td>
-<td>Acceleration of carrier movement. Floating point with range 100 - 24,500 mm/s^2.</td>
-</tr>
-<tr>
-<td>carrier</td>
-<td><a href="#uint32">uint32</a></td>
-<td>optional</td>
-<td>Carrier ID. If provided, wait for the specified carrier at the axis and push it once the carrier arrives.</td>
+<td>Acceleration of carrier movement in percent.</td>
 </tr>
 </tbody>
 </table>
 <p><a name="mmc-command-Request-Release"></a></p>
 <h3 id="requestrelease">Request.Release</h3>
-<p>Release the control imposed by the motor to the carrier. If a target is
-specified, all motors included in that target release control.
+<p>Release the control imposed by the motor to the carrier. If drivers are
+specified, all motors included in those drivers release control.
 Otherwise, all carriers on the provided line will be released from control.</p>
 <p>Expected response: <code>mmc.Response.body.command.body.id</code> (uint32).</p>
 <table>
@@ -2842,21 +2711,9 @@ Otherwise, all carriers on the provided line will be released from control.</p>
 <td>Line ID.</td>
 </tr>
 <tr>
-<td>carrier</td>
-<td><a href="#uint32">uint32</a></td>
-<td></td>
-<td>Carrier ID.</td>
-</tr>
-<tr>
-<td>axes</td>
-<td><a href="#root-Range">root.Range</a></td>
-<td></td>
-<td>Axis ID range.</td>
-</tr>
-<tr>
 <td>drivers</td>
 <td><a href="#root-Range">root.Range</a></td>
-<td></td>
+<td>optional</td>
 <td>Driver ID range.</td>
 </tr>
 </tbody>
@@ -2908,64 +2765,6 @@ or emergency stopped, this command will succeed without any effect.</p>
 </tr>
 </tbody>
 </table>
-<p><a name="mmc-command-Request-SetCarrierId"></a></p>
-<h3 id="requestsetcarrierid">Request.SetCarrierId</h3>
-<p>Change the carrier ID of an existing initialized carrier. If the new
-carrier ID already exists on the line, returns INVALID_CARRIER.</p>
-<p>Expected response: <code>mmc.Response.body.command.body.id</code> (uint32).</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Label</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>line</td>
-<td><a href="#uint32">uint32</a></td>
-<td></td>
-<td>Line ID.</td>
-</tr>
-<tr>
-<td>carrier</td>
-<td><a href="#uint32">uint32</a></td>
-<td></td>
-<td>Target existing initialized carrier ID.</td>
-</tr>
-<tr>
-<td>new_carrier</td>
-<td><a href="#uint32">uint32</a></td>
-<td></td>
-<td>New desired carrier ID (unique in line).</td>
-</tr>
-</tbody>
-</table>
-<p><a name="mmc-command-Request-SetZero"></a></p>
-<h3 id="requestsetzero">Request.SetZero</h3>
-<p>Set a zero position of a line by positioning an initialized carrier on
-the first axis of the line.</p>
-<p>Expected response: <code>mmc.Response.body.command.body.id</code> (uint32).</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Label</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>line</td>
-<td><a href="#uint32">uint32</a></td>
-<td></td>
-<td>Line ID.</td>
-</tr>
-</tbody>
-</table>
 <p><a name="mmc-command-Request-Stop"></a></p>
 <h3 id="requeststop">Request.Stop</h3>
 <p>Send an emergency stop command to stop any operation in PMF LMS. This
@@ -2993,35 +2792,6 @@ command also removes all queued commands in the server.</p>
 <h3 id="requeststoppull">Request.StopPull</h3>
 <p>Stop pulling a carrier to the specified axis. If no axis is provided,
 then all pending carrier pulls on the line will be stopped.</p>
-<p>Expected response: <code>mmc.Response.body.command.body.id</code> (uint32).</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Label</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>line</td>
-<td><a href="#uint32">uint32</a></td>
-<td></td>
-<td>Line ID.</td>
-</tr>
-<tr>
-<td>axes</td>
-<td><a href="#root-Range">root.Range</a></td>
-<td>optional</td>
-<td>Axis ID range.</td>
-</tr>
-</tbody>
-</table>
-<p><a name="mmc-command-Request-StopPush"></a></p>
-<h3 id="requeststoppush">Request.StopPush</h3>
-<p>Stop pushing a carrier from the specified axis. If no axis is provided,
-then all pending carrier pushes on the line will be stopped.</p>
 <p>Expected response: <code>mmc.Response.body.command.body.id</code> (uint32).</p>
 <table>
 <thead>
@@ -3615,6 +3385,30 @@ from the track.</p>
 <td>Retrieve carrier state information.</td>
 </tr>
 <tr>
+<td>register_x</td>
+<td><a href="#bool">bool</a></td>
+<td></td>
+<td>Retrieve CC-Link X register information.</td>
+</tr>
+<tr>
+<td>register_y</td>
+<td><a href="#bool">bool</a></td>
+<td></td>
+<td>Retrieve CC-Link Y register information.</td>
+</tr>
+<tr>
+<td>register_ww</td>
+<td><a href="#bool">bool</a></td>
+<td></td>
+<td>Retrieve CC-Link WW register information.</td>
+</tr>
+<tr>
+<td>register_wr</td>
+<td><a href="#bool">bool</a></td>
+<td></td>
+<td>Retrieve CC-Link WR register information.</td>
+</tr>
+<tr>
 <td>drivers</td>
 <td><a href="#root-Range">root.Range</a></td>
 <td></td>
@@ -3787,6 +3581,30 @@ from the track.</p>
 <td>repeated</td>
 <td>Carrier state information list. Empty if request flag was disabled.</td>
 </tr>
+<tr>
+<td>register_x</td>
+<td><a href="#mmc-info-Response-Line-Register">Response.Line.Register</a></td>
+<td>repeated</td>
+<td>X register values. Empty if register_x was not requested.</td>
+</tr>
+<tr>
+<td>register_y</td>
+<td><a href="#mmc-info-Response-Line-Register">Response.Line.Register</a></td>
+<td>repeated</td>
+<td>Y register values. Empty if register_y was not requested.</td>
+</tr>
+<tr>
+<td>register_ww</td>
+<td><a href="#mmc-info-Response-Line-Register">Response.Line.Register</a></td>
+<td>repeated</td>
+<td>WW register values. Empty if register_ww was not requested.</td>
+</tr>
+<tr>
+<td>register_wr</td>
+<td><a href="#mmc-info-Response-Line-Register">Response.Line.Register</a></td>
+<td>repeated</td>
+<td>WR register values. Empty if register_wr was not requested.</td>
+</tr>
 </tbody>
 </table>
 <p><a name="mmc-info-Response-Line-Axis"></a></p>
@@ -3848,12 +3666,6 @@ from the track.</p>
 <td>Axis is waiting to pull carrier.</td>
 </tr>
 <tr>
-<td>waiting_push</td>
-<td><a href="#bool">bool</a></td>
-<td></td>
-<td>Axis is waiting to push carrier.</td>
-</tr>
-<tr>
 <td>carrier</td>
 <td><a href="#uint32">uint32</a></td>
 <td></td>
@@ -3910,18 +3722,6 @@ from the track.</p>
 <td><a href="#uint32">uint32</a></td>
 <td>optional</td>
 <td>Carrier&#39;s auxiliary axis ID, if carrier is on top of two axes.</td>
-</tr>
-<tr>
-<td>cas_disabled</td>
-<td><a href="#bool">bool</a></td>
-<td></td>
-<td>Collision avoidance system (CAS) disabled.</td>
-</tr>
-<tr>
-<td>cas_triggered</td>
-<td><a href="#bool">bool</a></td>
-<td></td>
-<td>Collision avoidance system (CAS) triggered. Carrier will automatically resume movement when path is clear.</td>
 </tr>
 <tr>
 <td>state</td>
@@ -4036,6 +3836,32 @@ from the track.</p>
 <td><a href="#bool">bool</a></td>
 <td></td>
 <td>Driver pause activated.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="mmc-info-Response-Line-Register"></a></p>
+<h3 id="responselineregister">Response.Line.Register</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>driver</td>
+<td><a href="#uint32">uint32</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>value</td>
+<td><a href="#uint64">uint64</a></td>
+<td>repeated</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -4253,11 +4079,6 @@ from the track.</p>
 <td>CARRIER_STATE_INITIALIZE_COMPLETED</td>
 <td>6</td>
 <td>Carrier initialization completed. May now be used for normal operation.</td>
-</tr>
-<tr>
-<td>CARRIER_STATE_PUSHING</td>
-<td>7</td>
-<td>Carrier is being pushed by axis. Used to eject carrier from line.</td>
 </tr>
 <tr>
 <td>CARRIER_STATE_PULLING</td>

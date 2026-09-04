@@ -126,6 +126,10 @@ pub const Request = struct {
         info_axis_state: bool = false,
         info_axis_errors: bool = false,
         info_carrier_state: bool = false,
+        register_x: bool = false,
+        register_y: bool = false,
+        register_ww: bool = false,
+        register_wr: bool = false,
         filter: ?filter_union = null,
 
         pub const _filter_case = enum {
@@ -151,6 +155,10 @@ pub const Request = struct {
             .info_axis_state = fd(4, .{ .scalar = .bool }),
             .info_axis_errors = fd(5, .{ .scalar = .bool }),
             .info_carrier_state = fd(6, .{ .scalar = .bool }),
+            .register_x = fd(11, .{ .scalar = .bool }),
+            .register_y = fd(12, .{ .scalar = .bool }),
+            .register_ww = fd(13, .{ .scalar = .bool }),
+            .register_wr = fd(14, .{ .scalar = .bool }),
             .filter = fd(null, .{ .oneof = filter_union }),
         };
 
@@ -617,6 +625,10 @@ pub const Response = struct {
         axis_state: std.ArrayList(Response.Line.Axis.State) = .empty,
         axis_errors: std.ArrayList(Response.Line.Axis.Error) = .empty,
         carrier_state: std.ArrayList(Response.Line.Carrier.State) = .empty,
+        register_x: std.ArrayList(Response.Line.Register) = .empty,
+        register_y: std.ArrayList(Response.Line.Register) = .empty,
+        register_ww: std.ArrayList(Response.Line.Register) = .empty,
+        register_wr: std.ArrayList(Response.Line.Register) = .empty,
 
         pub const _desc_table = .{
             .id = fd(1, .{ .scalar = .uint32 }),
@@ -625,6 +637,82 @@ pub const Response = struct {
             .axis_state = fd(4, .{ .repeated = .submessage }),
             .axis_errors = fd(5, .{ .repeated = .submessage }),
             .carrier_state = fd(6, .{ .repeated = .submessage }),
+            .register_x = fd(7, .{ .repeated = .submessage }),
+            .register_y = fd(8, .{ .repeated = .submessage }),
+            .register_ww = fd(9, .{ .repeated = .submessage }),
+            .register_wr = fd(10, .{ .repeated = .submessage }),
+        };
+
+        pub const Register = struct {
+            driver: u32 = 0,
+            value: std.ArrayList(u64) = .empty,
+
+            pub const _desc_table = .{
+                .driver = fd(1, .{ .scalar = .uint32 }),
+                .value = fd(2, .{ .packed_repeated = .{ .scalar = .uint64 } }),
+            };
+
+            /// Encodes the message to the writer
+            /// The allocator is used to generate submessages internally.
+            /// Hence, an ArenaAllocator is a preferred choice if allocations are a bottleneck.
+            pub fn encode(
+                self: @This(),
+                writer: *std.Io.Writer,
+                allocator: std.mem.Allocator,
+            ) (std.Io.Writer.Error || std.mem.Allocator.Error)!void {
+                return protobuf.encode(writer, allocator, self);
+            }
+
+            /// Decodes the message from the bytes read from the reader.
+            pub fn decode(
+                reader: *std.Io.Reader,
+                allocator: std.mem.Allocator,
+            ) (protobuf.DecodingError || std.Io.Reader.Error || std.mem.Allocator.Error)!@This() {
+                return protobuf.decode(@This(), reader, allocator);
+            }
+
+            /// Streaming pull-decoder: walks a `std.Io.Reader` one wire
+            /// field at a time without allocating. See `src/stream.zig`.
+            pub const StreamDecoder = protobuf.StreamDecoder(@This());
+
+            /// Deinitializes and frees the memory associated with the message.
+            pub fn deinit(self: *@This(), allocator: std.mem.Allocator) void {
+                return protobuf.deinit(allocator, self);
+            }
+
+            /// Duplicates the message.
+            pub fn dupe(self: @This(), allocator: std.mem.Allocator) std.mem.Allocator.Error!@This() {
+                return protobuf.dupe(@This(), self, allocator);
+            }
+
+            /// Decodes the message from the JSON string.
+            pub fn jsonDecode(
+                input: []const u8,
+                options: std.json.ParseOptions,
+                allocator: std.mem.Allocator,
+            ) !std.json.Parsed(@This()) {
+                return protobuf.json.decode(@This(), input, options, allocator);
+            }
+
+            /// Encodes the message to a JSON string.
+            pub fn jsonEncode(
+                self: @This(),
+                options: std.json.Stringify.Options,
+                pb_options: protobuf.json.Options,
+                allocator: std.mem.Allocator,
+            ) ![]const u8 {
+                return protobuf.json.encode(self, options, pb_options, allocator);
+            }
+
+            /// This method is used by std.json
+            /// internally for deserialization. DO NOT RENAME!
+            pub fn jsonParse(
+                allocator: std.mem.Allocator,
+                source: anytype,
+                options: std.json.ParseOptions,
+            ) !@This() {
+                return protobuf.json.parse(@This(), allocator, source, options);
+            }
         };
 
         pub const Axis = struct {
@@ -634,7 +722,6 @@ pub const Response = struct {
                 id: u32 = 0,
                 motor_active: bool = false,
                 waiting_pull: bool = false,
-                waiting_push: bool = false,
                 carrier: u32 = 0,
                 hall_alarm_back: bool = false,
                 hall_alarm_front: bool = false,
@@ -643,7 +730,6 @@ pub const Response = struct {
                     .id = fd(1, .{ .scalar = .uint32 }),
                     .motor_active = fd(2, .{ .scalar = .bool }),
                     .waiting_pull = fd(3, .{ .scalar = .bool }),
-                    .waiting_push = fd(4, .{ .scalar = .bool }),
                     .carrier = fd(5, .{ .scalar = .uint32 }),
                     .hall_alarm_back = fd(6, .{ .scalar = .bool }),
                     .hall_alarm_front = fd(7, .{ .scalar = .bool }),
@@ -1083,8 +1169,6 @@ pub const Response = struct {
                 position: f32 = 0,
                 axis_main: u32 = 0,
                 axis_auxiliary: ?u32 = null,
-                cas_disabled: bool = false,
-                cas_triggered: bool = false,
                 state: Response.Line.Carrier.State.State = @enumFromInt(0),
 
                 pub const _desc_table = .{
@@ -1092,8 +1176,6 @@ pub const Response = struct {
                     .position = fd(2, .{ .scalar = .float }),
                     .axis_main = fd(3, .{ .scalar = .uint32 }),
                     .axis_auxiliary = fd(4, .{ .scalar = .uint32 }),
-                    .cas_disabled = fd(5, .{ .scalar = .bool }),
-                    .cas_triggered = fd(6, .{ .scalar = .bool }),
                     .state = fd(7, .@"enum"),
                 };
 
@@ -1105,7 +1187,6 @@ pub const Response = struct {
                     CARRIER_STATE_MOVE_COMPLETED = 4,
                     CARRIER_STATE_INITIALIZING = 5,
                     CARRIER_STATE_INITIALIZE_COMPLETED = 6,
-                    CARRIER_STATE_PUSHING = 7,
                     CARRIER_STATE_PULLING = 9,
                     CARRIER_STATE_OVERCURRENT = 11,
                     _,
