@@ -134,4 +134,4 @@ mmc.command.Request.Pull.velocity_mode
 - Changelog starting point
 
 [2.0.0]: https://github.com/pmotionf/mmc-api/releases/tag/protobuf-api-2.0.0
-[1.2.1]: https://github.com/pmotionf/mmc-api/releases/tag/protobuf-api-1.2.0
+[1.2.0]: https://github.com/pmotionf/mmc-api/releases/tag/protobuf-api-1.2.0
