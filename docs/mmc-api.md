@@ -449,9 +449,9 @@ This section demonstrates how to construct and encode a request for transmission
 
 #### [Release Carrier](protocol-documentation.md#requestrelease)
 !!! info
-    Put the initialized carrier into the `NONE` state, allowing it to be moved manually or by external systems.
+    Release control of one or multiple carriers on a specified driver, allowing these carriers to be moved manually or by external systems.
 !!! example
-    Release control of carrier 1 on line 1.
+    Release control of driver 1 on line 1.
     === "zig"
         ``` zig
         const api = @import("mmc-api");
@@ -463,7 +463,10 @@ This section demonstrates how to construct and encode a request for transmission
                     .body = .{
                         .release = .{
                             .line = 1,
-                            .target = .{.carrier = 1},
+                            .drivers = .{
+                                .start = 1,
+                                .end = 1,
+                            },
                         },
                     },
                 },
@@ -477,7 +480,8 @@ This section demonstrates how to construct and encode a request for transmission
         # Create a request
         request = mmc.Request()
         request.command.release.line = 1
-        request.command.release.carrier = 1
+        request.command.release.drivers.start = 1
+        request.command.release.drivers.end = 1
         ```
 
 #### [Calibrate Line](protocol-documentation.md#requestcalibrate)
