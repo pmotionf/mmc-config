@@ -458,9 +458,7 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 <a name="mmc-command-Request-Release"></a>
 
 ### Request.Release
-Release the control imposed by the motor to the carrier. If drivers are
-specified, all motors included in those drivers release control.
-Otherwise, all carriers on the provided line will be released from control.
+Release control of the driver&#39;s motors to all carriers on the selected driver.
 
 Expected response: `mmc.Response.body.command.body.id` (uint32).
 

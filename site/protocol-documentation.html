@@ -2693,9 +2693,7 @@ continued once the resume command is given.</p>
 </table>
 <p><a name="mmc-command-Request-Release"></a></p>
 <h3 id="requestrelease">Request.Release</h3>
-<p>Release the control imposed by the motor to the carrier. If drivers are
-specified, all motors included in those drivers release control.
-Otherwise, all carriers on the provided line will be released from control.</p>
+<p>Release control of the driver&#39;s motors to all carriers on the selected driver.</p>
 <p>Expected response: <code>mmc.Response.body.command.body.id</code> (uint32).</p>
 <table>
 <thead>
