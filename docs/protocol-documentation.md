@@ -1095,8 +1095,8 @@ List of IDs. At least one ID must be provided.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| driver | [uint32](#uint32) |  |  |
-| value | [uint64](#uint64) | repeated |  |
+| driver | [uint32](#uint32) |  | Driver ID |
+| value | [uint64](#uint64) | repeated | Register bit values |
 
 
 

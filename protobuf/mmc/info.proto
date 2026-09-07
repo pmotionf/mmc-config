@@ -198,8 +198,10 @@ message Response {
     repeated Register register_wr = 10;
 
     message Register {
-      uint32 driver = 1;
-      repeated uint64 value = 2;
+        // Driver ID
+        uint32 driver = 1;
+        // Register bit values
+        repeated uint64 value = 2;
     }
 
     message Axis {
