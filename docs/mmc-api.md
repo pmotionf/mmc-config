@@ -482,7 +482,7 @@ This section demonstrates how to construct and encode a request for transmission
 
 #### [Calibrate Line](protocol-documentation.md#requestcalibrate)
 !!! info
-    To calibrate the drivers' configuration on a line, an uninitialized carrier must be located at the center of the first axis
+    To calibrate the drivers' configuration on a line, an uninitialized carrier must be located at the center of the first axis. The line must be void of carriers except for the carrier placed on the first axis. During calibration, the carrier will move along all axes and return to the first axis. After this, the line is calibrated and the zero-point is set.
 !!! example
     Calibrate the drivers' configuration on the first line.
     === "zig"
