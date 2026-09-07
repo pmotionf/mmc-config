@@ -1,14 +1,14 @@
 # MMC-API Guidelines
-This page covers how to use MMC-API to operate on LMS connected to PMF's MMC system.
+This page covers how to use MMC-API to operate on LMS connected to Premo Robotics' MMC system.
 
 ## MMC-API Structure
 The MMC API consists of three categories: **core, command, and info**. Each category contains corresponding **requests and responses**. Please refer to the [protocol documentation](protocol-documentation.md) page for the expected response for each request.
 
 ### MMC Core
-Use MMC core messages to retrieve server information and track configuration. PMF recommends that clients verify compatibility with the server API version before operation. Starting from version 2.0.0, breaking changes may occur between major versions, therefore clients must ensure they are compatible with the server's API version. Mismatched versions may result in invalid requests or undefined behavior. Clients must fetch the **track configuration** prior to operating the PMF MMC system to ensure all messages passed to the server contain valid parameters. Refer to the [MMC core documentation](protocol-documentation.md#mmccoreproto) for a comprehensive list of message types and expected responses.
+Use MMC core messages to retrieve server information and track configuration. Premo Robotics recommends that clients verify compatibility with the server API version before operation. Starting from version 2.0.0, breaking changes may occur between major versions, therefore clients must ensure they are compatible with the server's API version. Mismatched versions may result in invalid requests or undefined behavior. Clients must fetch the **track configuration** prior to operating the Premo Robotics MMC system to ensure all messages passed to the server contain valid parameters. Refer to the [MMC core documentation](protocol-documentation.md#mmccoreproto) for a comprehensive list of message types and expected responses.
 
 ### MMC Command
-Use MMC command messages to operate the PMF MMC system. Clients must use the following rules when sending MMC command messages.
+Use MMC command messages to operate the Premo Robotics MMC system. Clients must use the following rules when sending MMC command messages.
 
 - **Command ID**: Each command returns a command ID in the response. Clients must use this ID to monitor the command's state.
 - **Cleanup**: Clients must invoke `remove_command` once the command state becomes `COMPLETED`. **Failure to do so will block the queue and prevent the server from accepting further commands**.

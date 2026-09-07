@@ -158,7 +158,7 @@ message Response {
       // Driver connection failed while command progressing.
       COMMAND_ERROR_DRIVER_DISCONNECTED = 3;
       // Unexpected command execution error. This is likely an implementation
-      // bug; please contact PMF support for assistance.
+      // bug; please contact Premo Robotics support for assistance.
       COMMAND_ERROR_UNEXPECTED = 4;
       // Target carrier is removed while command progressing.
       COMMAND_ERROR_CARRIER_NOT_FOUND = 5;

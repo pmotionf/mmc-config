@@ -23,7 +23,7 @@
     
     
       
-        <title>MMC-API Guidelines - PMF Motor Motion Control Documentation</title>
+        <title>MMC-API Guidelines - Premo Robotics Motor Motion Control Documentation</title>
       
     
     
@@ -82,7 +82,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="index.html" title="PMF Motor Motion Control Documentation" class="md-header__button md-logo" aria-label="PMF Motor Motion Control Documentation" data-md-component="logo">
+    <a href="index.html" title="Premo Robotics Motor Motion Control Documentation" class="md-header__button md-logo" aria-label="Premo Robotics Motor Motion Control Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +96,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            PMF Motor Motion Control Documentation
+            Premo Robotics Motor Motion Control Documentation
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -180,13 +180,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="index.html" title="PMF Motor Motion Control Documentation" class="md-nav__button md-logo" aria-label="PMF Motor Motion Control Documentation" data-md-component="logo">
+    <a href="index.html" title="Premo Robotics Motor Motion Control Documentation" class="md-nav__button md-logo" aria-label="Premo Robotics Motor Motion Control Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    PMF Motor Motion Control Documentation
+    Premo Robotics Motor Motion Control Documentation
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -205,7 +205,7 @@
   <span class="md-ellipsis">
     
   
-    PMF MMC system
+    Premo Robotics MMC system
   
 
     
@@ -1032,13 +1032,13 @@
 
 
 <h1 id="mmc-api-guidelines">MMC-API Guidelines</h1>
-<p>This page covers how to use MMC-API to operate on LMS connected to PMF's MMC system.</p>
+<p>This page covers how to use MMC-API to operate on LMS connected to Premo Robotics' MMC system.</p>
 <h2 id="mmc-api-structure">MMC-API Structure</h2>
 <p>The MMC API consists of three categories: <strong>core, command, and info</strong>. Each category contains corresponding <strong>requests and responses</strong>. Please refer to the <a href="protocol-documentation.html">protocol documentation</a> page for the expected response for each request.</p>
 <h3 id="mmc-core">MMC Core</h3>
-<p>Use MMC core messages to retrieve server information and track configuration. PMF recommends that clients verify compatibility with the server API version before operation. Starting from version 2.0.0, breaking changes may occur between major versions, therefore clients must ensure they are compatible with the server's API version. Mismatched versions may result in invalid requests or undefined behavior. Clients must fetch the <strong>track configuration</strong> prior to operating the PMF MMC system to ensure all messages passed to the server contain valid parameters. Refer to the <a href="protocol-documentation.html#mmccoreproto">MMC core documentation</a> for a comprehensive list of message types and expected responses.</p>
+<p>Use MMC core messages to retrieve server information and track configuration. Premo Robotics recommends that clients verify compatibility with the server API version before operation. Starting from version 2.0.0, breaking changes may occur between major versions, therefore clients must ensure they are compatible with the server's API version. Mismatched versions may result in invalid requests or undefined behavior. Clients must fetch the <strong>track configuration</strong> prior to operating the Premo Robotics MMC system to ensure all messages passed to the server contain valid parameters. Refer to the <a href="protocol-documentation.html#mmccoreproto">MMC core documentation</a> for a comprehensive list of message types and expected responses.</p>
 <h3 id="mmc-command">MMC Command</h3>
-<p>Use MMC command messages to operate the PMF MMC system. Clients must use the following rules when sending MMC command messages.</p>
+<p>Use MMC command messages to operate the Premo Robotics MMC system. Clients must use the following rules when sending MMC command messages.</p>
 <ul>
 <li><strong>Command ID</strong>: Each command returns a command ID in the response. Clients must use this ID to monitor the command's state.</li>
 <li><strong>Cleanup</strong>: Clients must invoke <code>remove_command</code> once the command state becomes <code>COMPLETED</code>. <strong>Failure to do so will block the queue and prevent the server from accepting further commands</strong>.</li>

@@ -21,7 +21,7 @@
     
     
       
-        <title>PMF Motor Motion Control Documentation</title>
+        <title>Premo Robotics Motor Motion Control Documentation</title>
       
     
     
@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pmf-mmc-system" class="md-skip">
+        <a href="#premo-robotics-mmc-system" class="md-skip">
           Skip to content
         </a>
       
@@ -80,7 +80,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="index.html" title="PMF Motor Motion Control Documentation" class="md-header__button md-logo" aria-label="PMF Motor Motion Control Documentation" data-md-component="logo">
+    <a href="index.html" title="Premo Robotics Motor Motion Control Documentation" class="md-header__button md-logo" aria-label="Premo Robotics Motor Motion Control Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -94,13 +94,13 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            PMF Motor Motion Control Documentation
+            Premo Robotics Motor Motion Control Documentation
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              PMF MMC system
+              Premo Robotics MMC system
             
           </span>
         </div>
@@ -178,13 +178,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="index.html" title="PMF Motor Motion Control Documentation" class="md-nav__button md-logo" aria-label="PMF Motor Motion Control Documentation" data-md-component="logo">
+    <a href="index.html" title="Premo Robotics Motor Motion Control Documentation" class="md-nav__button md-logo" aria-label="Premo Robotics Motor Motion Control Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    PMF Motor Motion Control Documentation
+    Premo Robotics Motor Motion Control Documentation
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -212,7 +212,7 @@
   <span class="md-ellipsis">
     
   
-    PMF MMC system
+    Premo Robotics MMC system
   
 
     
@@ -230,7 +230,7 @@
   <span class="md-ellipsis">
     
   
-    PMF MMC system
+    Premo Robotics MMC system
   
 
     
@@ -543,8 +543,8 @@
 
 
 
-<h1 id="pmf-mmc-system">PMF MMC system</h1>
-<p>PMF provides the Motion Motor Control (MMC) system for controlling Linear Motor Systems (LMS) with ease and high precision.</p>
+<h1 id="premo-robotics-mmc-system">Premo Robotics MMC system</h1>
+<p>Premo Robotics provides the Motion Motor Control (MMC) system for controlling Linear Motor Systems (LMS) with ease and high precision.</p>
 <h2 id="getting-started">Getting started</h2>
 <h3 id="mmc-server">MMC Server</h3>
 <p>The MMC Server acts as an endpoint that allows multiple clients to interface with the LMS. The server must run on a PC connected to the first driver of the LMS. Contact our engineers to obtain the MMC Server files and organize them as follows:
@@ -562,16 +562,16 @@ cross-language compatibility to support your programming language of choice. To
 integrate our API into your program, ensure your working environment supports 
 Protobuf. For complete integration instructions, see the <a href="mmc-api.html">MMC-API Guidelines</a> page.</p>
 <h2 id="conventions">Conventions</h2>
-<p>This section defines the terminology used throughout the PMF MMC documentation.</p>
+<p>This section defines the terminology used throughout the Premo Robotics MMC documentation.</p>
 <h3 id="system-hierarchy">System Hierarchy</h3>
-<p>The following terms apply to the PMF MMC system:</p>
+<p>The following terms apply to the Premo Robotics MMC system:</p>
 <ul>
 <li><code>Sensor</code>: A hall sensor installed next to a motor to determine the precise location of a carrier on a line.</li>
 <li><code>Axis</code>: A functional unit consisting of one motor and the two adjacent hall sensors.</li>
 <li><code>Driver</code>: A physical board responsible for controlling one or more axes. The number of axes per driver is defined in the <code>config.json5</code> file. A single driver can control up to <strong>3 axes</strong>.</li>
 <li><code>Line</code>: A unit consisting of one or more drivers. Driver, axis, and carrier states are determined on a per-line basis.</li>
-<li><code>Track</code>: The highest-level unit in the PMF MMC system, consisting of one or more lines. One MMC Server operates exactly one track.</li>
-<li><code>Carrier</code>: Magnet to be moved by PMF's MMC system that is placed on top of LMS. Every carrier must have unique ID per line.</li>
+<li><code>Track</code>: The highest-level unit in the Premo Robotics MMC system, consisting of one or more lines. One MMC Server operates exactly one track.</li>
+<li><code>Carrier</code>: Magnet to be moved by Premo Robotics' MMC system that is placed on top of LMS. Every carrier must have unique ID per line.</li>
 </ul>
 <h3 id="id-constraints">ID Constraints</h3>
 <div class="admonition info">
