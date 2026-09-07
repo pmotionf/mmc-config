@@ -256,7 +256,10 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 
 ### Request.Calibrate
 Calibrate a line by positioning an uninitialized carrier on the first axis
-of the line.
+of the line. The line must be void of carriers except for the carrier placed
+on the first axis. During calibration, the carrier will move along all axes
+and return to the first axis. After this, the line is calibrated and the
+zero-point is set.
 
 Expected response: `mmc.Response.body.command.body.id` (uint32).
 
