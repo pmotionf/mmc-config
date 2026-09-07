@@ -341,13 +341,9 @@ This section demonstrates how to construct and encode a request for transmission
 #### [Push](protocol-documentation.md#requestpush)
 !!! info
     Forcefully moves an initialized carrier on the specified axis by one carrier length. Use this movement to cross a line boundary, which deinitializes the carrier from the current line upon completion. 
-
-    If the `carrier` field is provided in the push command, the axis enters a **pushing state**. In this state, the axis remains busy and waits for the specified carrier to arrive; once it arrives, the axis automatically pushes the carrier.
   
     !!! warning
         When pushing the carrier to a different line, the receiving axis on the destination line must be in a **pulling state**.
-    !!! tip
-        To disable the **pushing state** on an axis, utilize the [stop push](protocol-documentation.md#requeststoppush) command.
       
 !!! example
     Push carrier on axis 1 of line 2 backward to line 1. 

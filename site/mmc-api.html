@@ -1347,14 +1347,9 @@
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <p>Forcefully moves an initialized carrier on the specified axis by one carrier length. Use this movement to cross a line boundary, which deinitializes the carrier from the current line upon completion. </p>
-<p>If the <code>carrier</code> field is provided in the push command, the axis enters a <strong>pushing state</strong>. In this state, the axis remains busy and waits for the specified carrier to arrive; once it arrives, the axis automatically pushes the carrier.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>When pushing the carrier to a different line, the receiving axis on the destination line must be in a <strong>pulling state</strong>.</p>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>To disable the <strong>pushing state</strong> on an axis, utilize the <a href="protocol-documentation.html#requeststoppush">stop push</a> command.</p>
 </div>
 </div>
 <div class="admonition example">
