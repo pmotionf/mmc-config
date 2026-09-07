@@ -509,44 +509,6 @@ This section demonstrates how to construct and encode a request for transmission
         request.command.calibrate.line = 1
         ```
 
-#### [Stop Push](protocol-documentation.md#requeststoppush)
-!!! tip
-    To reset pushing state on all axis, ignore the `axes` field.
-  
-!!! example
-    Reset the pushing state on axes 1 to 4 of the first line. 
-    === "zig"
-        ``` zig
-        const api = @import("mmc-api");
-      
-        // Create a request
-        const request: api.protobuf.mmc.Request = .{
-            .body = .{
-                .command = .{
-                    .body = .{
-                        .stop_push = .{
-                            .line = 1,
-                            .axes = .{
-                                .start = 1,
-                                .end = 4,
-                            },
-                        },
-                    },
-                },
-            },
-        };
-        ```
-    === "python"
-        ``` python
-        import mmc_pb2 as mmc
-        
-        # Create a request
-        request = mmc.Request()
-        request.command.stop_push.line = 1
-        request.command.stop_push.axes.start = 1
-        request.command.stop_push.axes.end = 4
-        ```
-
 #### [Stop Pull](protocol-documentation.md#requeststoppull)
 !!! tip
     To reset the pulling state on all axes, omit the `axes` field.
