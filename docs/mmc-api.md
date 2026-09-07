@@ -551,41 +551,6 @@ This section demonstrates how to construct and encode a request for transmission
         request.command.stop_pull.axes.end = 4
         ```
 
-#### [Set Carrier ID](protocol-documentation.md#requestsetcarrierid)
-!!! warning
-    The carrier ID of each carrier must be unique within a line.
-!!! example
-    Change the carrier ID of carrier 1 to 4 on the first line.
-    === "zig"
-        ``` zig
-        const api = @import("mmc-api");
-      
-        // Create a request
-        const request: api.protobuf.mmc.Request = .{
-            .body = .{
-                .command = .{
-                    .body = .{
-                        .set_carrier_id = .{
-                            .line = 1,
-                            .carrier = 1,
-                            .new_carrier = 4,
-                        },
-                    },
-                },
-            },
-        };
-        ```
-    === "python"
-        ``` python
-        import mmc_pb2 as mmc
-        
-        # Create a request
-        request = mmc.Request()
-        request.command.set_carrier_id.line = 1
-        request.command.set_carrier_id.carrier = 1
-        request.command.set_carrier_id.new_carrier = 4
-        ```
-
 #### [Set Zero](protocol-documentation.md#requestsetzero)
 !!! example
     Set the zero point of the first line.
