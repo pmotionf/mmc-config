@@ -551,34 +551,6 @@ This section demonstrates how to construct and encode a request for transmission
         request.command.stop_pull.axes.end = 4
         ```
 
-#### [Set Zero](protocol-documentation.md#requestsetzero)
-!!! example
-    Set the zero point of the first line.
-    !!! warning
-        An initialized carrier must be located on the first axis of the first line.
-    === "zig"
-        ``` zig
-        const api = @import("mmc-api");
-      
-        // Create a request
-        const request: api.protobuf.mmc.Request = .{
-            .body = .{
-                .command = .{
-                    .body = .{
-                        .set_zero = .{.line = 1},
-                    },
-                },
-            },
-        };
-        ```
-    === "python"
-        ``` python
-        import mmc_pb2 as mmc
-        
-        # Create a request
-        request = mmc.Request()
-        request.command.set_zero.line = 1
-        ```
 #### [Clear Errors](protocol-documentation.md#requestclearerrors)
 !!! warning
     Always clear errors whenever an error is detected on an axis or driver. Failing to clear errors may result in unwanted behavior.
