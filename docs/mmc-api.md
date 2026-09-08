@@ -435,9 +435,9 @@ This section demonstrates how to construct and encode a request for transmission
 
 #### [Release Carrier](protocol-documentation.md#requestrelease)
 !!! info
-    Release control of one or multiple carriers on a specified driver, allowing these carriers to be moved manually or by external systems.
+    Release control of carriers on a specified driver, allowing these carriers to be moved manually or by external systems.
 !!! example
-    Release control of driver 1 on line 1.
+    Release control of carriers on driver 1, line 1.
     === "zig"
         ``` zig
         const api = @import("mmc-api");
