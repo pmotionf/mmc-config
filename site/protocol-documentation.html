@@ -21,7 +21,7 @@
     
     
       
-        <title>Protocol Documentation - PMF Motor Motion Control Documentation</title>
+        <title>Protocol Documentation - Premo Robotics Motor Motion Control Documentation</title>
       
     
     
@@ -80,7 +80,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="index.html" title="PMF Motor Motion Control Documentation" class="md-header__button md-logo" aria-label="PMF Motor Motion Control Documentation" data-md-component="logo">
+    <a href="index.html" title="Premo Robotics Motor Motion Control Documentation" class="md-header__button md-logo" aria-label="Premo Robotics Motor Motion Control Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -94,7 +94,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            PMF Motor Motion Control Documentation
+            Premo Robotics Motor Motion Control Documentation
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -178,13 +178,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="index.html" title="PMF Motor Motion Control Documentation" class="md-nav__button md-logo" aria-label="PMF Motor Motion Control Documentation" data-md-component="logo">
+    <a href="index.html" title="Premo Robotics Motor Motion Control Documentation" class="md-nav__button md-logo" aria-label="Premo Robotics Motor Motion Control Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    PMF Motor Motion Control Documentation
+    Premo Robotics Motor Motion Control Documentation
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -203,7 +203,7 @@
   <span class="md-ellipsis">
     
   
-    PMF MMC system
+    Premo Robotics MMC system
   
 
     
@@ -2137,7 +2137,7 @@ type.</p>
 <h2 id="mmccommandproto">mmc/command.proto</h2>
 <p><a name="mmc-command-Request"></a></p>
 <h3 id="request_1">Request</h3>
-<p>Command API: List of commands to operate the PMF&#39;s motion system.</p>
+<p>Command API: List of commands to operate the Premo Robotics&#39; motion system.</p>
 <p>When a command is sent to the server, it will be queued for execution.
 Command execution status can be polled through the Info API. The status
 remains stored in a limited history buffer, and should be cleared with
@@ -2301,7 +2301,10 @@ remains stored in a limited history buffer, and should be cleared with
 <p><a name="mmc-command-Request-Calibrate"></a></p>
 <h3 id="requestcalibrate">Request.Calibrate</h3>
 <p>Calibrate a line by positioning an uninitialized carrier on the first axis
-of the line.</p>
+of the line. The line must be void of carriers except for the carrier placed
+on the first axis. During calibration, the carrier will move along all axes
+and return to the first axis. After this, the line is calibrated and the
+zero-point is set.</p>
 <p>Expected response: <code>mmc.Response.body.command.body.id</code> (uint32).</p>
 <table>
 <thead>
@@ -2563,7 +2566,7 @@ clear all carrier information of the specified line ID.</p>
 </table>
 <p><a name="mmc-command-Request-Pause"></a></p>
 <h3 id="requestpause">Request.Pause</h3>
-<p>Pause any operation in PMF LMS. Any queued commands in the server will be
+<p>Pause any operation in Premo Robotics LMS. Any queued commands in the server will be
 continued once the resume command is given.</p>
 <p>Expected response: <code>mmc.Response.body.command.body.id</code> (uint32).</p>
 <table>
@@ -2690,9 +2693,7 @@ continued once the resume command is given.</p>
 </table>
 <p><a name="mmc-command-Request-Release"></a></p>
 <h3 id="requestrelease">Request.Release</h3>
-<p>Release the control imposed by the motor to the carrier. If drivers are
-specified, all motors included in those drivers release control.
-Otherwise, all carriers on the provided line will be released from control.</p>
+<p>Release control of the driver&#39;s motors to all carriers on the selected driver.</p>
 <p>Expected response: <code>mmc.Response.body.command.body.id</code> (uint32).</p>
 <table>
 <thead>
@@ -2767,7 +2768,7 @@ or emergency stopped, this command will succeed without any effect.</p>
 </table>
 <p><a name="mmc-command-Request-Stop"></a></p>
 <h3 id="requeststop">Request.Stop</h3>
-<p>Send an emergency stop command to stop any operation in PMF LMS. This
+<p>Send an emergency stop command to stop any operation in Premo Robotics LMS. This
 command also removes all queued commands in the server.</p>
 <p>Expected response: <code>mmc.Response.body.command.body.id</code> (uint32).</p>
 <table>
@@ -3855,13 +3856,13 @@ from the track.</p>
 <td>driver</td>
 <td><a href="#uint32">uint32</a></td>
 <td></td>
-<td></td>
+<td>Driver ID</td>
 </tr>
 <tr>
 <td>value</td>
 <td><a href="#uint64">uint64</a></td>
 <td>repeated</td>
-<td></td>
+<td>Register bit values</td>
 </tr>
 </tbody>
 </table>
@@ -3972,7 +3973,7 @@ from the track.</p>
 <tr>
 <td>COMMAND_ERROR_UNEXPECTED</td>
 <td>4</td>
-<td>Unexpected command execution error. This is likely an implementation bug; please contact PMF support for assistance.</td>
+<td>Unexpected command execution error. This is likely an implementation bug; please contact Premo Robotics support for assistance.</td>
 </tr>
 <tr>
 <td>COMMAND_ERROR_CARRIER_NOT_FOUND</td>

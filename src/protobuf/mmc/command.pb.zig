@@ -9,7 +9,7 @@ const root = @import("../root.pb.zig");
 /// import package mmc
 const mmc = @import("../mmc.pb.zig");
 
-/// Command API: List of commands to operate the PMF's motion system.
+/// Command API: List of commands to operate the Premo Robotics' motion system.
 ///
 /// When a command is sent to the server, it will be queued for execution.
 /// Command execution status can be polled through the Info API. The status
@@ -255,9 +255,7 @@ pub const Request = struct {
         }
     };
 
-    /// Release the control imposed by the motor to the carrier. If drivers are
-    /// specified, all motors included in those drivers release control.
-    /// Otherwise, all carriers on the provided line will be released from control.
+    /// Release control of the driver's motors to all carriers on the selected driver.
     ///
     /// Expected response: `mmc.Response.body.command.body.id` (uint32).
     pub const Release = struct {
@@ -595,7 +593,10 @@ pub const Request = struct {
     };
 
     /// Calibrate a line by positioning an uninitialized carrier on the first axis
-    /// of the line.
+    /// of the line. The line must be void of carriers except for the carrier placed
+    /// on the first axis. During calibration, the carrier will move along all axes
+    /// and return to the first axis. After this, the line is calibrated and the
+    /// zero-point is set.
     ///
     /// Expected response: `mmc.Response.body.command.body.id` (uint32).
     pub const Calibrate = struct {
@@ -1236,7 +1237,7 @@ pub const Request = struct {
         }
     };
 
-    /// Send an emergency stop command to stop any operation in PMF LMS. This
+    /// Send an emergency stop command to stop any operation in Premo Robotics LMS. This
     /// command also removes all queued commands in the server.
     ///
     /// Expected response: `mmc.Response.body.command.body.id` (uint32).
@@ -1310,7 +1311,7 @@ pub const Request = struct {
         }
     };
 
-    /// Pause any operation in PMF LMS. Any queued commands in the server will be
+    /// Pause any operation in Premo Robotics LMS. Any queued commands in the server will be
     /// continued once the resume command is given.
     ///
     /// Expected response: `mmc.Response.body.command.body.id` (uint32).

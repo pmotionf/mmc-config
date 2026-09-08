@@ -187,7 +187,7 @@ type.
 <a name="mmc-command-Request"></a>
 
 ### Request
-Command API: List of commands to operate the PMF&#39;s motion system.
+Command API: List of commands to operate the Premo Robotics&#39; motion system.
 
 When a command is sent to the server, it will be queued for execution.
 Command execution status can be polled through the Info API. The status
@@ -256,7 +256,10 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 
 ### Request.Calibrate
 Calibrate a line by positioning an uninitialized carrier on the first axis
-of the line.
+of the line. The line must be void of carriers except for the carrier placed
+on the first axis. During calibration, the carrier will move along all axes
+and return to the first axis. After this, the line is calibrated and the
+zero-point is set.
 
 Expected response: `mmc.Response.body.command.body.id` (uint32).
 
@@ -393,7 +396,7 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 <a name="mmc-command-Request-Pause"></a>
 
 ### Request.Pause
-Pause any operation in PMF LMS. Any queued commands in the server will be
+Pause any operation in Premo Robotics LMS. Any queued commands in the server will be
 continued once the resume command is given.
 
 Expected response: `mmc.Response.body.command.body.id` (uint32).
@@ -455,9 +458,7 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 <a name="mmc-command-Request-Release"></a>
 
 ### Request.Release
-Release the control imposed by the motor to the carrier. If drivers are
-specified, all motors included in those drivers release control.
-Otherwise, all carriers on the provided line will be released from control.
+Release control of the driver&#39;s motors to all carriers on the selected driver.
 
 Expected response: `mmc.Response.body.command.body.id` (uint32).
 
@@ -512,7 +513,7 @@ Expected response: `mmc.Response.body.command.body.id` (uint32).
 <a name="mmc-command-Request-Stop"></a>
 
 ### Request.Stop
-Send an emergency stop command to stop any operation in PMF LMS. This
+Send an emergency stop command to stop any operation in Premo Robotics LMS. This
 command also removes all queued commands in the server.
 
 Expected response: `mmc.Response.body.command.body.id` (uint32).
@@ -1094,8 +1095,8 @@ List of IDs. At least one ID must be provided.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| driver | [uint32](#uint32) |  |  |
-| value | [uint64](#uint64) | repeated |  |
+| driver | [uint32](#uint32) |  | Driver ID |
+| value | [uint64](#uint64) | repeated | Register bit values |
 
 
 
@@ -1148,7 +1149,7 @@ List of IDs. At least one ID must be provided.
 | COMMAND_ERROR_INVALID_SYSTEM_STATE | 1 | System state prevented successful command execution. Ensure that all preconditions are met with track info request before sending command. |
 | COMMAND_ERROR_INVALID_CARRIER_ID | 2 | Deprecated. Check `COMMAND_REQUEST_ERROR_INVALID_CARRIER` on `Command.Request.Error`. |
 | COMMAND_ERROR_DRIVER_DISCONNECTED | 3 | Driver connection failed while command progressing. |
-| COMMAND_ERROR_UNEXPECTED | 4 | Unexpected command execution error. This is likely an implementation bug; please contact PMF support for assistance. |
+| COMMAND_ERROR_UNEXPECTED | 4 | Unexpected command execution error. This is likely an implementation bug; please contact Premo Robotics support for assistance. |
 | COMMAND_ERROR_CARRIER_NOT_FOUND | 5 | Target carrier is removed while command progressing. |
 | COMMAND_ERROR_CARRIER_ALREADY_INITIALIZED | 6 | Attempted to initialize an initialized carrier. |
 | COMMAND_ERROR_DRIVER_STOPPED | 7 | Target driver is stopped while command progressing. Consider resume the driver before sending further command. |

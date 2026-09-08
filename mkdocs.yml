@@ -1,4 +1,4 @@
-site_name: PMF Motor Motion Control Documentation
+site_name: Premo Robotics Motor Motion Control Documentation
 theme:
   name: material
   features:
