@@ -388,12 +388,12 @@ This section demonstrates how to construct and encode a request for transmission
 !!! info
     Initialize an incoming carrier located outside the current line. This command puts the specified axis into **pulling state**. This initialization procedure has the following behavior:
 
-    - **Center Alignment**: Omit the `transition` field to initialize the carrier at the center of the pulling axis
-    - **Smooth Transition**: Provide a `transition` field to automatically move to the specified destination as soon as the carrier is recognized.
-    - **Manual Mode (External Force)**: Omit the `transition`, `velocity`, and `acceleration` fields to initializes the carrier in the NONE state (not controlled by the motor), allowing it to be moved manually or by external systems.
+    - **Center Alignment**: Omit the `location` field to initialize the carrier at the center of the pulling axis
+    - **Smooth Transition**: Provide a `location` field to automatically move to the specified location as soon as the carrier is recognized.
+  
 
 !!! example
-    Set axis 6 of line 1 to pulling state, and move the pulled carrier to axis 3.
+    Set axis 6 of line 1 to pulling state, and move the pulled carrier to location 500 mm from the zero-point.
     === "zig"
         ``` zig
         const api = @import("mmc-api");
@@ -410,10 +410,7 @@ This section demonstrates how to construct and encode a request for transmission
                             .velocity = 100,
                             .acceleration = 100,
                             .direction = .DIRECTION_BACKWARD,
-                            .transition = .{
-                                .control = .CONTROL_POSITION,
-                                .target = .{.axis = 3},
-                            },
+                            .location = 500,
                         },
                     },
                 },
@@ -432,11 +429,8 @@ This section demonstrates how to construct and encode a request for transmission
         request.command.pull.carrier = 1
         request.command.pull.direction = Command.Direction.DIRECTION_BACKWARD
         request.command.pull.velocity = 100
-        request.command.pull.acceleration = 100
-        request.command.pull.transition.control = 1
-        request.command.pull.transition.axis = 3
-
-    
+        request.command.pull.acceleration = 100  
+        request.command.pull.location = 500  
         ```
 
 #### [Release Carrier](protocol-documentation.md#requestrelease)

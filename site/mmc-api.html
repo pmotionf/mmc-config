@@ -1401,14 +1401,13 @@
 <p class="admonition-title">Info</p>
 <p>Initialize an incoming carrier located outside the current line. This command puts the specified axis into <strong>pulling state</strong>. This initialization procedure has the following behavior:</p>
 <ul>
-<li><strong>Center Alignment</strong>: Omit the <code>transition</code> field to initialize the carrier at the center of the pulling axis</li>
-<li><strong>Smooth Transition</strong>: Provide a <code>transition</code> field to automatically move to the specified destination as soon as the carrier is recognized.</li>
-<li><strong>Manual Mode (External Force)</strong>: Omit the <code>transition</code>, <code>velocity</code>, and <code>acceleration</code> fields to initializes the carrier in the NONE state (not controlled by the motor), allowing it to be moved manually or by external systems.</li>
+<li><strong>Center Alignment</strong>: Omit the <code>location</code> field to initialize the carrier at the center of the pulling axis</li>
+<li><strong>Smooth Transition</strong>: Provide a <code>location</code> field to automatically move to the specified location as soon as the carrier is recognized.</li>
 </ul>
 </div>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
-<p>Set axis 6 of line 1 to pulling state, and move the pulled carrier to axis 3.</p>
+<p>Set axis 6 of line 1 to pulling state, and move the pulled carrier to location 500 mm from the zero-point.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">zig</label><label for="__tabbed_7_2">python</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -1426,15 +1425,12 @@
 <a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">                    </span><span class="p">.</span><span class="n">velocity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
 <a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">                    </span><span class="p">.</span><span class="n">acceleration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
 <a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="w">                    </span><span class="p">.</span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">DIRECTION_BACKWARD</span><span class="p">,</span>
-<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="w">                    </span><span class="p">.</span><span class="n">transition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.{</span>
-<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="w">                        </span><span class="p">.</span><span class="n">control</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">CONTROL_POSITION</span><span class="p">,</span>
-<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="w">                        </span><span class="p">.</span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.{.</span><span class="n">axis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">},</span>
-<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="w">                    </span><span class="p">},</span>
-<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="w">                </span><span class="p">},</span>
-<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="w">            </span><span class="p">},</span>
-<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="w">        </span><span class="p">},</span>
-<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="p">};</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="w">                    </span><span class="p">.</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="w">                </span><span class="p">},</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="w">            </span><span class="p">},</span>
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="w">        </span><span class="p">},</span>
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="p">};</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -1448,9 +1444,8 @@
 <a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="n">request</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">pull</span><span class="o">.</span><span class="n">carrier</span> <span class="o">=</span> <span class="mi">1</span>
 <a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="n">request</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">pull</span><span class="o">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">Command</span><span class="o">.</span><span class="n">Direction</span><span class="o">.</span><span class="n">DIRECTION_BACKWARD</span>
 <a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="n">request</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">pull</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="mi">100</span>
-<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="n">request</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">pull</span><span class="o">.</span><span class="n">acceleration</span> <span class="o">=</span> <span class="mi">100</span>
-<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="n">request</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">pull</span><span class="o">.</span><span class="n">transition</span><span class="o">.</span><span class="n">control</span> <span class="o">=</span> <span class="mi">1</span>
-<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="n">request</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">pull</span><span class="o">.</span><span class="n">transition</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">3</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="n">request</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">pull</span><span class="o">.</span><span class="n">acceleration</span> <span class="o">=</span> <span class="mi">100</span>  
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="n">request</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">pull</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="mi">500</span>  
 </code></pre></div>
 </div>
 </div>
