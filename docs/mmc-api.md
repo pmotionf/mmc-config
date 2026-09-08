@@ -796,6 +796,7 @@ This section demonstrates how to construct and encode a request for transmission
     * **Move**: Wait until the carrier state is `MOVE_COMPLETED` before sending a new command to that carrier.
     * **Calibrate**: Wait until the carrier state is `CALIBRATE_COMPLETED` to ensure the driver configuration is valid.
     * **Initialize**: Wait until the carrier state is `INITIALIZE_COMPLETED` before performing further operations on the carrier.
+    * **Pull**: Wait until the carrier state is `MOVE_COMPLETED` before sending a new command to that carrier.
 
 !!! warning
     Monitor the `error` flags of driver, axis and carriers to prevent damage to the motor or driver board. Pay close attention to `inverter_overheat` on the driver and `overcurrent` flags on the axis; immediately deinitialize any carrier on the affected axes and drivers if these are detected. The `overvoltage` and `undervoltage` flags indicate that the system voltage supply may have a problem; please consult with our engineers to resolve the issue.
