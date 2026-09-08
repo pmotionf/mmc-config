@@ -312,7 +312,6 @@ This section demonstrates how to construct and encode a request for transmission
                             .acceleration = 100,
                             .target = .{.axis = 3},
                             .control = .CONTROL_POSITION,
-                            .disable_cas = false,
                         },
                     },
                 },
@@ -335,7 +334,6 @@ This section demonstrates how to construct and encode a request for transmission
         # 1 for CONTROL_POSITION
         # 2 for CONTROL_VELOCITY.
         request.command.move.control = 1
-        request.command.move.disable_cas = False
         ```
 
 #### [Push](protocol-documentation.md#requestpush)
@@ -414,7 +412,6 @@ This section demonstrates how to construct and encode a request for transmission
                             .direction = .DIRECTION_BACKWARD,
                             .transition = .{
                                 .control = .CONTROL_POSITION,
-                                .disable_cas = false,
                                 .target = .{.axis = 3},
                             },
                         },
@@ -437,7 +434,6 @@ This section demonstrates how to construct and encode a request for transmission
         request.command.pull.velocity = 100
         request.command.pull.acceleration = 100
         request.command.pull.transition.control = 1
-        request.command.pull.transition.disable_cas = False
         request.command.pull.transition.axis = 3
 
     

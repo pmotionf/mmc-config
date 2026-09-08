@@ -1314,12 +1314,11 @@
 <a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">                    </span><span class="p">.</span><span class="n">acceleration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
 <a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">                    </span><span class="p">.</span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.{.</span><span class="n">axis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">},</span>
 <a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">                    </span><span class="p">.</span><span class="n">control</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">CONTROL_POSITION</span><span class="p">,</span>
-<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">                    </span><span class="p">.</span><span class="n">disable_cas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">                </span><span class="p">},</span>
-<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">            </span><span class="p">},</span>
-<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">        </span><span class="p">},</span>
-<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="p">};</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">                </span><span class="p">},</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">            </span><span class="p">},</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">        </span><span class="p">},</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="p">};</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -1337,7 +1336,6 @@
 <a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="c1"># 1 for CONTROL_POSITION</span>
 <a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="c1"># 2 for CONTROL_VELOCITY.</span>
 <a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="n">request</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">move</span><span class="o">.</span><span class="n">control</span> <span class="o">=</span> <span class="mi">1</span>
-<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="n">request</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">move</span><span class="o">.</span><span class="n">disable_cas</span> <span class="o">=</span> <span class="kc">False</span>
 </code></pre></div>
 </div>
 </div>
@@ -1430,14 +1428,13 @@
 <a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="w">                    </span><span class="p">.</span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">DIRECTION_BACKWARD</span><span class="p">,</span>
 <a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="w">                    </span><span class="p">.</span><span class="n">transition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.{</span>
 <a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="w">                        </span><span class="p">.</span><span class="n">control</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">CONTROL_POSITION</span><span class="p">,</span>
-<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="w">                        </span><span class="p">.</span><span class="n">disable_cas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="w">                        </span><span class="p">.</span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.{.</span><span class="n">axis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">},</span>
-<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="w">                    </span><span class="p">},</span>
-<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="w">                </span><span class="p">},</span>
-<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="w">            </span><span class="p">},</span>
-<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="w">        </span><span class="p">},</span>
-<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a><span class="p">};</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="w">                        </span><span class="p">.</span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.{.</span><span class="n">axis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">},</span>
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="w">                    </span><span class="p">},</span>
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="w">                </span><span class="p">},</span>
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="w">            </span><span class="p">},</span>
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="w">        </span><span class="p">},</span>
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="p">};</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -1453,8 +1450,7 @@
 <a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="n">request</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">pull</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="mi">100</span>
 <a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="n">request</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">pull</span><span class="o">.</span><span class="n">acceleration</span> <span class="o">=</span> <span class="mi">100</span>
 <a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="n">request</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">pull</span><span class="o">.</span><span class="n">transition</span><span class="o">.</span><span class="n">control</span> <span class="o">=</span> <span class="mi">1</span>
-<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="n">request</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">pull</span><span class="o">.</span><span class="n">transition</span><span class="o">.</span><span class="n">disable_cas</span> <span class="o">=</span> <span class="kc">False</span>
-<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="n">request</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">pull</span><span class="o">.</span><span class="n">transition</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">3</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="n">request</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">pull</span><span class="o">.</span><span class="n">transition</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">3</span>
 </code></pre></div>
 </div>
 </div>
